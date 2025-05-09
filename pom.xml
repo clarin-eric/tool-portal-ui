@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.clarin.cmdi</groupId>
-    <artifactId>component-registry-ui-parent</artifactId>
+    <artifactId>tool-portal-ui-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     
     <name>Component Registry UI parent project</name>
 
     <modules>
-        <module>openapi-client-generator</module> 
+        <!--<module>openapi-client-generator</module>--> 
         <module>vlo-api-client</module>
         <module>tool-portal-ui</module>
     </modules>
