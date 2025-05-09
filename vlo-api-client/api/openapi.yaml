@@ -1,0 +1,405 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- description: Generated server url
+  url: https://vlo.clarin-dev.eu/api
+tags:
+- description: "Searching, retrieving and submitting of VLO records"
+  name: Records
+- description: "Searching, retrieving and submitting of VLO records"
+  name: Facets
+paths:
+  /records:
+    get:
+      operationId: getRecords
+      parameters:
+      - explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          default: '*:*'
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: fq
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VloRecordSearchResult'
+          description: OK
+      summary: Retrieve one or more records by query and/or filtered
+      tags:
+      - Records
+      x-accepts:
+      - '*/*'
+      - application/json
+    post:
+      operationId: saveRecord
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VloRecord'
+        required: true
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VloRecord'
+          description: OK
+      summary: Submit a new record
+      tags:
+      - Records
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+      - application/json
+  /records/{id}:
+    get:
+      operationId: getRecord
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VloRecord'
+          description: A record with the specified identifier that is present in the
+            catalogue
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VloRecord'
+          description: No record with the specified identifier is present in the catalogue
+      summary: Retrieve an individual record by its identifier
+      tags:
+      - Records
+      x-accepts:
+      - '*/*'
+      - application/json
+  /records/count:
+    get:
+      operationId: getRecordsCount
+      parameters:
+      - explode: true
+        in: query
+        name: query
+        required: false
+        schema:
+          default: '*:*'
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: fq
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: object
+          description: OK
+      summary: Retrieve the exact number of records that can be retrieved by query
+        and/or filtered as JSON object with a single property 'numFound'
+      tags:
+      - Records
+      x-accepts:
+      - '*/*'
+      - application/json
+  /facets:
+    get:
+      operationId: getFacets
+      parameters:
+      - explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          default: '*:*'
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: fq
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Facet'
+                type: array
+          description: OK
+      summary: Get the facets and their (top) values and their counts
+      tags:
+      - Facets
+      x-accepts:
+      - '*/*'
+      - application/json
+  /facets/{facetName}:
+    get:
+      operationId: getFacet
+      parameters:
+      - explode: false
+        in: path
+        name: facetName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: q
+        required: false
+        schema:
+          default: '*:*'
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: fq
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facet'
+          description: OK
+      summary: Get the facets and their (top) values and their counts
+      tags:
+      - Facets
+      x-accepts:
+      - '*/*'
+      - application/json
+components:
+  schemas:
+    Resource:
+      example:
+        ref: ref
+        mediaType: mediaType
+        id: id
+        type: type
+      properties:
+        id:
+          type: string
+        ref:
+          type: string
+        type:
+          type: string
+        mediaType:
+          type: string
+    VloRecord:
+      example:
+        pathValuesMap:
+          key:
+          - pathValuesMap
+          - pathValuesMap
+        selflink: selflink
+        profileId: profileId
+        resources:
+        - ref: ref
+          mediaType: mediaType
+          id: id
+          type: type
+        - ref: ref
+          mediaType: mediaType
+          id: id
+          type: type
+        id: id
+        fields:
+          key:
+          - "{}"
+          - "{}"
+        dataRoot: dataRoot
+        sourcePath: sourcePath
+      properties:
+        id:
+          type: string
+        dataRoot:
+          type: string
+        sourcePath:
+          type: string
+        selflink:
+          type: string
+        profileId:
+          type: string
+        resources:
+          items:
+            $ref: '#/components/schemas/Resource'
+          type: array
+        pathValuesMap:
+          additionalProperties:
+            items:
+              type: string
+        fields:
+          additionalProperties:
+            items:
+              type: object
+    VloRecordSearchResult:
+      example:
+        records:
+        - pathValuesMap:
+            key:
+            - pathValuesMap
+            - pathValuesMap
+          selflink: selflink
+          profileId: profileId
+          resources:
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          id: id
+          fields:
+            key:
+            - "{}"
+            - "{}"
+          dataRoot: dataRoot
+          sourcePath: sourcePath
+        - pathValuesMap:
+            key:
+            - pathValuesMap
+            - pathValuesMap
+          selflink: selflink
+          profileId: profileId
+          resources:
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          id: id
+          fields:
+            key:
+            - "{}"
+            - "{}"
+          dataRoot: dataRoot
+          sourcePath: sourcePath
+        numFound: 0
+        start: 6
+      properties:
+        records:
+          items:
+            $ref: '#/components/schemas/VloRecord'
+          type: array
+        numFound:
+          format: int64
+          type: integer
+        start:
+          format: int64
+          type: integer
+    Facet:
+      example:
+        valueCount: 0
+        values: "{}"
+        name: name
+      properties:
+        name:
+          type: string
+        valueCount:
+          format: int64
+          type: integer
+        values:
+          type: object
+
