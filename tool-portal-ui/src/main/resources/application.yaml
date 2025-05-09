@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: CLARIN Tool Portal UI
+
+server:
+    port: 8091
