@@ -8,20 +8,24 @@
     <name>VLO API client generator</name>
     <description>VLO API client generator (OpenAPI based)</description>
     <url/>
+    
     <licenses>
-        <license/>
+        <license>
+            <name>General Public License 3.0</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+        </license>
     </licenses>
+    
     <developers>
-        <developer/>
+        <developer>
+            <email>twan@clarin.eu</email>
+        </developer>
     </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    
     <properties>
         <java.version>21</java.version>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>                                              
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>      
     </properties>
     
     <build>
