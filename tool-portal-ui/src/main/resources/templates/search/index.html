@@ -22,33 +22,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>CLARIN Tool Portal</h1>        
-        <form action="/search">
+        <h1>CLARIN Tool Portal</h1>
+        <main>
+            <form action="/search">
 
-            <input type="search" name="q" th:value="${query}" />
-            <input type="submit" value="Search" />
-        </form>
+                <input type="search" name="q" th:value="${query}" />
+                <input type="submit" value="Search" />
+            </form>
 
-        <section class="search-results">
-            <h2>Search results</h2>
-            <th:div th:unless="${result}">
-                No search results
-            </th:div>
-            <th:div th:if="${result}" th:object="${result}">
-                <span>[[*{numFound}]] record(s) found</span>
-                <ul class="results-list">
-                    <li th:each="record: *{records}">
-                        <article th:object="${record}">
-                            <h3>
-                                <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
-                                    Record title
-                                </a>
-                            </h3>
-                            <div th:text="*{fields.description}"></div>
-                        </article>
-                    </li>
-                </ul>
-            </th:div>
-        </section>
+            <section class="search-results">
+                <h2>Search results</h2>
+                <th:div th:unless="${result}">
+                    No search results
+                </th:div>
+                <th:div th:if="${result}" th:object="${result}">
+                    <span>[[*{numFound}]] record(s) found</span>
+                    <ul class="results-list">
+                        <li th:each="record: *{records}">
+                            <article th:object="${record}">
+                                <h3>
+                                    <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
+                                        Record title
+                                    </a>
+                                </h3>
+                                <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
+                                    <div th:text="${description}">description</div>
+                                </div>
+                            </article>
+                        </li>
+                    </ul>
+                </th:div>
+            </section>
+        </main>
     </body>
 </html>
