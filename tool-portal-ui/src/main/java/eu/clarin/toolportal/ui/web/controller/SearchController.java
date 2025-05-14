@@ -18,9 +18,12 @@ package eu.clarin.toolportal.ui.web.controller;
 
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.service.SearchService;
+import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,14 +43,21 @@ public class SearchController {
 
     @GetMapping
     public String index(Model model,
-            @RequestParam(name = "q", defaultValue = "*:*") String query) {
+            @RequestParam(name = "q", defaultValue = "*:*") String query,
+            @RequestHeader Map<String, String> headers) {
         final VloRecordSearchResult search = service.search(query);
-        model.addAttribute("query", query);
         model.addAttribute("result", search);
         //search.getRecords()
         //search.getNumFound()
         //search.getStart()
 
-        return "search/search";
+        if (isHtmxRequest(headers)) {
+            //return search results
+            return "search/search :: #search-results";
+        } else {
+            //return entire page
+            model.addAttribute("query", query);
+            return "search/search";
+        }
     }
 }

@@ -23,14 +23,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <h1>CLARIN Tool Portal</h1>
-        <main>
-            <form action="/search">
-
+        <main hx-swap="outerHTML show:none">
+            <form action="/search" hx-boost="true" hx-target="#search-results">
                 <input type="search" name="q" th:value="${query}" />
                 <input type="submit" value="Search" />
             </form>
 
-            <section class="search-results">
+            <section id="search-results">
                 <h2>Search results</h2>
                 <th:div th:unless="${result}">
                     No search results
