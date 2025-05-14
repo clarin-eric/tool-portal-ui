@@ -48,6 +48,6 @@ public class SearchController {
         //search.getNumFound()
         //search.getStart()
 
-        return "search/index";
+        return "search/search";
     }
 }
