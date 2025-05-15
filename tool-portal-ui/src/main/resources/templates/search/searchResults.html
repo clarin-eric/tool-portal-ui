@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2025 twagoo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+
+    <body>
+        <div th:fragment="search-results(result)">
+
+            <div>[[${result.numFound}]] record(s) found</div>
+
+            <div th:if="${result.numFound > 0}" th:object="${result}">
+                <h2>Search results</h2>
+
+                <nav th:replace="~{:: pagination(results)}">
+                    [Pagination]
+                </nav>
+
+                <ul id="results-list" class="d-block ps-0">
+                    <li class="card mb-2 p-2" th:each="record: *{records}">
+                        <article th:object="${record}">
+                            <h3>
+                                <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
+                                    Record title
+                                </a>
+                            </h3>
+                            <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
+                                <div th:text="${description}">description</div>
+                            </div>
+                        </article>
+                    </li>
+                </ul>
+
+            </div> <!-- more than 0 results -->
+        </div>
+
+        <!-- Pagination -->
+        <nav th:fragment="pagination(results)" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+
+    </body>
+</html>

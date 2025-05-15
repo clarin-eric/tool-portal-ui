@@ -24,12 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div class="container-xl">
 
+            <!-- Page header -->
             <nav th:replace="~{fragments/base :: top-navigation('search')}">
                 [Navigation]
             </nav>
 
             <main hx-swap="outerHTML show:none">
 
+                <!-- Search form -->
                 <div class="m-3">
                     <form action="/search" hx-boost="true" hx-target="#search-results-and-facets">
                         <div class="d-flex">
@@ -45,62 +47,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </form>
                 </div>
 
-
-
+                <!-- Search results and facets -->
                 <div class="row" id="search-results-and-facets">
+                    
+                    <!-- Facets -->
                     <section id="facets" class="col-lg-3">
                         <h2 class="h3">Result filters</h2>
-                        <h3 class="h4">Research domain</h3>
+                        <div th:unless="${facets}">
+                            No facet information
+                        </div>
+                        <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets})}">
+                            [Facets]
+                        </div>
                     </section>
 
+                    <!-- Search results -->
                     <section id="search-results" class="col-lg-9">
-
-
-                        <th:div th:if="${result}">[[${result.numFound}]] record(s) found</th:div>
-                        <th:div th:unless="${result}">
+                        <div th:unless="${result}">
                             No search results
-                        </th:div>
-
-                        <th:div th:if="${result} and ${result.numFound > 0}" th:object="${result}">
-                            <h2>Search results</h2>
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
-
-                            <ul id="results-list" class="d-block ps-0">
-                                <li class="card mb-2 p-2" th:each="record: *{records}">
-                                    <article th:object="${record}">
-                                        <h3>
-                                            <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
-                                                Record title
-                                            </a>
-                                        </h3>
-                                        <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
-                                            <div th:text="${description}">description</div>
-                                        </div>
-                                    </article>
-                                </li>
-                            </ul>
-
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
-
-                        </th:div> <!-- more than 0 results -->
+                        </div>
+                        <div th:if="${result}" th:replace="~{search/searchResults :: search-results(${result})}">
+                            [Search results]
+                        </div>
                     </section>
+                    
                 </div>
             </main>
         </div>
