@@ -24,26 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div class="container-xl">
 
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">CLARIN Tool Portal</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contributors</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Help</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <nav th:replace="~{fragments/base :: top-navigation('search')}">
+                [Navigation]
             </nav>
 
             <main hx-swap="outerHTML show:none">

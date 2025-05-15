@@ -30,15 +30,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
     </head>
     <body>
-        <header class="my-2">
-            <div class="container">
-                <h1>Base template</h1>
+        <!-- Page header / navigation bar -->
+        <nav th:fragment="top-navigation(current)" class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">CLARIN Tool Portal</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li th:replace="~{::top-navigation-item('search','Search','/search',${current})}">
+                            [Search]
+                        </li>
+                        <li th:replace="~{::top-navigation-item('contributors','Contributors','/contributors',${current})}">
+                            [Contributors]
+                        </li>
+                        <li th:replace="~{::top-navigation-item('help','Help','/help',${current})}">
+                            [Help]
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </header>
-        <main class="my-2">
-            <div class="container">
-                ...
-            </div>
-        </main>
+        </nav>
+
+        <!-- menu item in the top navigation bar -->
+        <li th:fragment="top-navigation-item(id,label,link,current)"
+            class="nav-item">
+            <a class="nav-link" 
+               th:classappend="${current == id} ? 'active'"
+               th:aria-current="${current == id} ? 'page' : null" 
+               th:href="${link}" th:text="${label}">
+                [link text]
+            </a>
+        </li>
     </body>
 </html>

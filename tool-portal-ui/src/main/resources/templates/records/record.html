@@ -20,14 +20,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <title>CLARIN Tool Portal</title> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
-    
-    <body>
-        <main th:object="${record}">
-            <h1 th:text="*{fields?.name[0]}">Title</h1>
 
-            <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
-                <p th:text="${description}">description</p>
-            </div>
-        </main>
+    <body>
+        <div class="container-xl">
+            
+            <nav th:replace="~{fragments/base :: top-navigation('record')}">
+                [Navigation]
+            </nav>
+
+            <main th:object="${record}">
+                <h1 th:text="*{fields?.name[0]}">Title</h1>
+
+                <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
+                    <p th:text="${description}">description</p>
+                </div>
+            </main>
+            
+        </div>
     </body>
 </html>
