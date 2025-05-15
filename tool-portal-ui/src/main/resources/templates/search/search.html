@@ -22,36 +22,105 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </head>
 
     <body>
-        <h1>CLARIN Tool Portal</h1>
-        <main hx-swap="outerHTML show:none">
-            <form action="/search" hx-boost="true" hx-target="#search-results">
-                <input type="search" name="q" th:value="${query}" />
-                <input type="submit" value="Search" />
-            </form>
+        <div class="container-xl">
 
-            <section id="search-results">
-                <h2>Search results</h2>
-                <th:div th:unless="${result}">
-                    No search results
-                </th:div>
-                <th:div th:if="${result}" th:object="${result}">
-                    <span>[[*{numFound}]] record(s) found</span>
-                    <ul class="results-list">
-                        <li th:each="record: *{records}">
-                            <article th:object="${record}">
-                                <h3>
-                                    <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
-                                        Record title
-                                    </a>
-                                </h3>
-                                <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
-                                    <div th:text="${description}">description</div>
-                                </div>
-                            </article>
-                        </li>
-                    </ul>
-                </th:div>
-            </section>
-        </main>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">CLARIN Tool Portal</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contributors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Help</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <main hx-swap="outerHTML show:none">
+
+                <div class="m-3">
+                    <form action="/search" hx-boost="true" hx-target="#search-results-and-facets">
+                        <div class="d-flex">
+                            <div class="ms-auto w-50 p-2">
+                                <input type="search" class="form-control"
+                                       name="q" th:value="${query}" />
+                            </div>
+                            <div class="p-2">
+                                <input type="submit" class="btn btn-primary"
+                                       value="Search" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div class="row" id="search-results-and-facets">
+                    <section id="facets" class="col-lg-3">
+                        <h2 class="h3">Result filters</h2>
+                        <h3 class="h4">Research domain</h3>
+                    </section>
+
+                    <section id="search-results" class="col-lg-9">
+
+
+                        <th:div th:if="${result}">[[${result.numFound}]] record(s) found</th:div>
+                        <th:div th:unless="${result}">
+                            No search results
+                        </th:div>
+
+                        <th:div th:if="${result} and ${result.numFound > 0}" th:object="${result}">
+                            <h2>Search results</h2>
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+
+                            <ul id="results-list" class="d-block ps-0">
+                                <li class="card mb-2 p-2" th:each="record: *{records}">
+                                    <article th:object="${record}">
+                                        <h3>
+                                            <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
+                                                Record title
+                                            </a>
+                                        </h3>
+                                        <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
+                                            <div th:text="${description}">description</div>
+                                        </div>
+                                    </article>
+                                </li>
+                            </ul>
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+
+                        </th:div> <!-- more than 0 results -->
+                    </section>
+                </div>
+            </main>
+        </div>
     </body>
 </html>

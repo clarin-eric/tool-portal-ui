@@ -47,13 +47,10 @@ public class SearchController {
             @RequestHeader Map<String, String> headers) {
         final VloRecordSearchResult search = service.search(query);
         model.addAttribute("result", search);
-        //search.getRecords()
-        //search.getNumFound()
-        //search.getStart()
 
         if (isHtmxRequest(headers)) {
             //return search results
-            return "search/search :: #search-results";
+            return "search/search :: #search-results-and-facets";
         } else {
             //return entire page
             model.addAttribute("query", query);
