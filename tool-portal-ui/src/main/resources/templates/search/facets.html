@@ -18,17 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 
     <body>
-        <div th:fragment="facets(facets)">
-            <ul>
-                <li th:each="facet: ${facets}">
-                    <h3 th:text="${facet.name}">Facet name</h3>
-                    <ul>
-                        <li th:each="facetValue : ${facet.values}">
-                            [[${facetValue.value}]] ([[${facetValue.count}]])
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <div th:fragment="facets(facets, query, filterQuery)">
+            <div th:each="facet: ${facets}"
+                 class="facet ms-0 mb-3" >
+                <h3 class="h4" th:text="${facet.name}">Facet name</h3>
+                <ul class="m-0 p-0" style="list-style: none;">
+                    <li th:each="facetValue : ${facet.values}"
+                        class="p-0 m-0">
+                        <a th:href="@{/search(q=${query})}">[[${facetValue.value}]]</a>
+                         ([[${facetValue.count}]])
+                    </li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
