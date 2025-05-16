@@ -16,11 +16,15 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
+import com.google.common.collect.ImmutableList;
+import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
+import eu.clarin.toolportal.ui.service.FacetsService;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,10 +45,14 @@ public class SearchController {
     public static final String DEFAULT_FROM = "0";
     public static final String DEFAULT_SIZE = "10";
 
-    private final RecordsService service;
+    private final RecordsService recordsService;
+    private final FacetsService facetsService;
 
-    public SearchController(RecordsService searchService) {
-        this.service = searchService;
+    private List<String> facetsFilter = ImmutableList.of("resourceClass", "languageCode", "keyword");
+
+    public SearchController(RecordsService recordService, FacetsService facetsService) {
+        this.recordsService = recordService;
+        this.facetsService = facetsService;
     }
 
     @GetMapping
@@ -55,7 +63,7 @@ public class SearchController {
             @RequestHeader Map<String, String> headers) {
         // Query record service 
         // TODO: use search service once available
-        final VloRecordSearchResult result = service.getRecords(query, Collections.emptyList(), from, size);
+        final VloRecordSearchResult result = recordsService.getRecords(query, Collections.emptyList(), from, size);
 
         // Set model attributes
         model.addAttribute("result", result);
@@ -72,14 +80,23 @@ public class SearchController {
                 return "search/search :: #search-results";
             } else {
                 //return search results and facets
-                //TODO: add facets to model
+                addFacetsToModel(model, query);
                 return "search/search :: #search-results-and-facets";
             }
         } else {
             //return entire page
-            //TODO: add facets to model
+            addFacetsToModel(model, query);
+
             return "search/search";
         }
+    }
+
+    public Model addFacetsToModel(Model model, String query) {
+        return model.addAttribute("facets", getFilteredFacets(query));
+    }
+
+    public List<Facet> getFilteredFacets(String query) {
+        return facetsService.getFacets(query, Collections.emptyList(), facetsFilter);
     }
 
 }
