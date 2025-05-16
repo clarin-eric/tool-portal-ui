@@ -19,6 +19,7 @@ package eu.clarin.toolportal.ui.web.controller;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.service.SearchService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
+import java.util.Collections;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,17 +44,23 @@ public class SearchController {
 
     @GetMapping
     public String index(Model model,
-            @RequestParam(name = "q", defaultValue = "*:*") String query,
+            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "from", defaultValue = "1") Integer from,
+            @RequestParam(name = "size", defaultValue = "10") Integer size,
             @RequestHeader Map<String, String> headers) {
-        final VloRecordSearchResult search = service.search(query);
+        final VloRecordSearchResult search
+                = service.search(query, Collections.emptyList(), from, size);
         model.addAttribute("result", search);
+        model.addAttribute("query", query);
+        model.addAttribute("resultsPerPage", size);
+        model.addAttribute("pageCount", Math.ceilDiv(search.getNumFound(), size));
+        model.addAttribute("currentPage", 1 + (from / size));
 
         if (isHtmxRequest(headers)) {
             //return search results
             return "search/search :: #search-results-and-facets";
         } else {
             //return entire page
-            model.addAttribute("query", query);
             return "search/search";
         }
     }

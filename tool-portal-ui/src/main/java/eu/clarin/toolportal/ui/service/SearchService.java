@@ -19,7 +19,7 @@ package eu.clarin.toolportal.ui.service;
 import eu.clarin.cmdi.vlo.openapi.client.api.FacetsApi;
 import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
-import java.util.Collections;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,8 +37,8 @@ public class SearchService {
         this.facets = facets;
     }
 
-    public VloRecordSearchResult search(String query) {
-        return records.getRecords(query, Collections.emptyList(), 1, 10);
+    public VloRecordSearchResult search(String query, List<String> filters, Integer from, Integer size) {
+        return records.getRecords(query, filters, from, size);
     }
 
 }
