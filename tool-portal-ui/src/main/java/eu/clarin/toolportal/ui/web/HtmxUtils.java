@@ -17,6 +17,7 @@
 package eu.clarin.toolportal.ui.web;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -25,6 +26,7 @@ import java.util.Map;
 public class HtmxUtils {
 
     public static final String HX_REQUEST_HEADER = "hx-request";
+    public static final String HX_TARGET_HEADER = "hx-target";
 
     /**
      * Determines whether the request headers indicate an request triggered via
@@ -35,6 +37,10 @@ public class HtmxUtils {
      */
     public static boolean isHtmxRequest(Map<String, String> headers) {
         return headers.containsKey(HX_REQUEST_HEADER);
+    }
+
+    public static boolean isHtmxTarget(Map<String, String> headers, String target) {
+        return Objects.equals(target, headers.get(HX_TARGET_HEADER));
     }
 
 }

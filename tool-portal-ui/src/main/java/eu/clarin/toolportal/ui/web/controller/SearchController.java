@@ -19,6 +19,7 @@ package eu.clarin.toolportal.ui.web.controller;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.service.SearchService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
+import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
 import java.util.Collections;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/search")
 public class SearchController {
 
+    public static final String DEFAULT_QUERY = "";
+    public static final String DEFAULT_FROM = "0";
+    public static final String DEFAULT_SIZE = "10";
+
     private final SearchService service;
 
     public SearchController(SearchService searchService) {
@@ -44,24 +49,41 @@ public class SearchController {
 
     @GetMapping
     public String index(Model model,
-            @RequestParam(name = "q", defaultValue = "") String query,
-            @RequestParam(name = "from", defaultValue = "0") Integer from,
-            @RequestParam(name = "size", defaultValue = "10") Integer size,
+            @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
+            @RequestParam(name = "from", defaultValue = DEFAULT_FROM) Integer from,
+            @RequestParam(name = "size", defaultValue = DEFAULT_SIZE) Integer size,
             @RequestHeader Map<String, String> headers) {
+        final VloRecordSearchResult result = query(query, from, size);
+        setSearchPageModelAttributes(model, result, query, size, from);
+
+        if (isHtmxRequest(headers)) {
+            if (isHtmxTarget(headers, "search-results")) {
+                //pagination, return only search results
+                return "search/search :: #search-results";
+            } else {
+                //return search results and facets
+                //TODO: facets
+                return "search/search :: #search-results-and-facets";
+            }
+        } else {
+            //return entire page
+            //TODO: facets
+            return "search/search";
+        }
+    }
+
+    private VloRecordSearchResult query(String query, Integer from, Integer size) {
         final VloRecordSearchResult search
                 = service.search(query, Collections.emptyList(), from, size);
+        return search;
+    }
+
+    private void setSearchPageModelAttributes(Model model, final VloRecordSearchResult search, String query, Integer size, Integer from) {
         model.addAttribute("result", search);
         model.addAttribute("query", query);
         model.addAttribute("resultsPerPage", size);
         model.addAttribute("pageCount", Math.ceilDiv(search.getNumFound(), size));
         model.addAttribute("currentPage", 1 + (from / size));
-
-        if (isHtmxRequest(headers)) {
-            //return search results
-            return "search/search :: #search-results-and-facets";
-        } else {
-            //return entire page
-            return "search/search";
-        }
     }
+
 }

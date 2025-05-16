@@ -103,15 +103,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </nav>
 
         <!-- Link in the search result pagination -->
-        <!-- TODO: make a method in the controller that returns only the result list -->
     <li th:fragment="paginationLink(label, pageNumber, query, currentPage, resultsPerPage)" class="page-item">
         <a class="page-link" th:classappend="${pageNumber == currentPage} ? 'active'" 
            hx-boost="true"
            th:href="@{/search(
            q=${query},
            from=${(pageNumber - 1) * resultsPerPage},
-           size=${resultsPerPage}
-           )}"
+           size=${resultsPerPage})}"
            th:text="${label}">[NUMBER]</a>
     </li>
 
