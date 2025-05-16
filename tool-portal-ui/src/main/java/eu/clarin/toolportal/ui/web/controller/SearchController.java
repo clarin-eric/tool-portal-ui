@@ -45,7 +45,7 @@ public class SearchController {
     @GetMapping
     public String index(Model model,
             @RequestParam(name = "q", defaultValue = "") String query,
-            @RequestParam(name = "from", defaultValue = "1") Integer from,
+            @RequestParam(name = "from", defaultValue = "0") Integer from,
             @RequestParam(name = "size", defaultValue = "10") Integer size,
             @RequestHeader Map<String, String> headers) {
         final VloRecordSearchResult search

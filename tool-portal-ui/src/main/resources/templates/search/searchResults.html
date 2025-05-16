@@ -109,7 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
            hx-boost="true"
            th:href="@{/search(
            q=${query},
-           from=${1 + ((pageNumber - 1) * resultsPerPage)},
+           from=${(pageNumber - 1) * resultsPerPage},
            size=${resultsPerPage}
            )}"
            th:text="${label}">[NUMBER]</a>
