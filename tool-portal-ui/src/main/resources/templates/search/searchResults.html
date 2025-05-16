@@ -73,28 +73,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <!-- First page -->
                 <th:block th:if="${currentPage > (1+linkCount/2)}">
-                    <li th:replace="~{::paginationLink('1',1,${query},${currentPage},${resultsPerPage})}"></li>
-                    <li th:if="${currentPage > (2+linkCount/2)}" class="page-item disabled"><span class="page-link">...</span></li>
+                    <li th:replace="~{::paginationLink('1',1,${query},${currentPage},${resultsPerPage})}">[first]</li>
+                    <li th:if="${currentPage > (2+linkCount/2)}" class="page-item disabled"><span class="page-link disabled">...</span></li>
                 </th:block>
 
                 <!-- Page numbers -->
                 <th:block th:with="start=${(currentPage <= linkCount / 2) ? 1 : currentPage-(linkCount/2)},
                           end=${((start + linkCount) < pageCount) ? (start+linkCount) : pageCount}">
-                    <!--[[|${start} -> ${end}|]]-->
                     <th:block th:each="page: ${#numbers.sequence(start,end)}">
-                        <li th:replace="~{::paginationLink(${page},${page},${query},${currentPage},${resultsPerPage})}"></li>
+                        <li th:replace="~{::paginationLink(${page},${page},${query},${currentPage},${resultsPerPage})}">[page]</li>
                     </th:block>
                 </th:block>
 
                 <!-- Last page -->
                 <th:block th:if="${currentPage + 1 < (pageCount - linkCount/2)}">
-                    <li th:if="${currentPage + 2 < (pageCount - linkCount/2)}" class="page-item disabled"><span class="page-link">...</span></li>
-                    <li th:replace="~{::paginationLink(${pageCount},${pageCount},${query},${currentPage},${resultsPerPage})}"></li>
+                    <li th:if="${currentPage + 2 < (pageCount - linkCount/2)}" class="page-item disabled"><span class="page-link disabled">...</span></li>
+                    <li th:replace="~{::paginationLink(${pageCount},${pageCount},${query},${currentPage},${resultsPerPage})}">[last]</li>
                 </th:block>
 
                 <!-- Next page -->
                 <th:block th:if="${currentPage < pageCount}">
-                    <li th:replace="~{::paginationLink('Next',${currentPage + 1},${query},${currentPage},${resultsPerPage})}"></li>
+                    <li th:replace="~{::paginationLink('Next',${currentPage + 1},${query},${currentPage},${resultsPerPage})}">[next]</li>
                 </th:block>
                 <th:block th:if="${currentPage >= pageCount}">
                     <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
