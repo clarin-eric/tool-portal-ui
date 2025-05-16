@@ -36,8 +36,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <li class="card mb-2 p-2" th:each="record: *{records}">
                         <article th:object="${record}">
                             <h3>
-                                <a th:href="|records/${record.id}|" th:text="*{fields.name[0]}">
-                                    Record title
+                                <a th:href="|records/${record.id}|">
+                                    <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">Record title</span>
+                                    <span th:unless="*{fields['name']}">Untitled record</span>
                                 </a>
                             </h3>
                             <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
@@ -84,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <li th:replace="~{::paginationLink(${page},${page},${query},${currentPage},${resultsPerPage})}"></li>
                     </th:block>
                 </th:block>
-                
+
                 <!-- Last page -->
                 <th:block th:if="${currentPage + 1 < (pageCount - linkCount/2)}">
                     <li th:if="${currentPage + 2 < (pageCount - linkCount/2)}" class="page-item disabled"><span class="page-link">...</span></li>
