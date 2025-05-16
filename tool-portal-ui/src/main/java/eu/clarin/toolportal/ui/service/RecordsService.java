@@ -18,6 +18,8 @@ package eu.clarin.toolportal.ui.service;
 
 import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
+import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,5 +37,9 @@ public class RecordsService {
 
     public VloRecord getRecordById(String id) {
         return records.getRecord(id);
+    }
+
+    public VloRecordSearchResult getRecords(String query, List<String> filters, Integer from, Integer size) {
+        return records.getRecords(query, filters, from, size);
     }
 }

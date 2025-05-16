@@ -27,18 +27,14 @@ import org.springframework.stereotype.Service;
  * @author twagoo
  */
 @Service
-public class SearchService {
+public class FacetsService {
 
     private final RecordsApi records;
     private final FacetsApi facets;
 
-    public SearchService(RecordsApi records, FacetsApi facets) {
+    public FacetsService(RecordsApi records, FacetsApi facets) {
         this.records = records;
         this.facets = facets;
-    }
-
-    public VloRecordSearchResult search(String query, List<String> filters, Integer from, Integer size) {
-        return records.getRecords(query, filters, from, size);
     }
 
 }

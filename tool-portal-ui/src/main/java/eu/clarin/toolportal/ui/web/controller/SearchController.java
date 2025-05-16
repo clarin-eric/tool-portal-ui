@@ -17,7 +17,7 @@
 package eu.clarin.toolportal.ui.web.controller;
 
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
-import eu.clarin.toolportal.ui.service.SearchService;
+import eu.clarin.toolportal.ui.service.RecordsService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
 import java.util.Collections;
@@ -41,9 +41,9 @@ public class SearchController {
     public static final String DEFAULT_FROM = "0";
     public static final String DEFAULT_SIZE = "10";
 
-    private final SearchService service;
+    private final RecordsService service;
 
-    public SearchController(SearchService searchService) {
+    public SearchController(RecordsService searchService) {
         this.service = searchService;
     }
 
@@ -53,37 +53,33 @@ public class SearchController {
             @RequestParam(name = "from", defaultValue = DEFAULT_FROM) Integer from,
             @RequestParam(name = "size", defaultValue = DEFAULT_SIZE) Integer size,
             @RequestHeader Map<String, String> headers) {
-        final VloRecordSearchResult result = query(query, from, size);
-        setSearchPageModelAttributes(model, result, query, size, from);
+        // Query record service 
+        // TODO: use search service once available
+        final VloRecordSearchResult result = service.getRecords(query, Collections.emptyList(), from, size);
 
+        // Set model attributes
+        model.addAttribute("result", result);
+        model.addAttribute("query", query);
+        model.addAttribute("resultsPerPage", size);
+        model.addAttribute("pageCount", Math.ceilDiv(result.getNumFound(), size));
+        model.addAttribute("currentPage", 1 + (from / size));
+
+        // Determine response content
         if (isHtmxRequest(headers)) {
+            // HTMX: partial response
             if (isHtmxTarget(headers, "search-results")) {
-                //pagination, return only search results
+                //request from pagination, return only search results
                 return "search/search :: #search-results";
             } else {
                 //return search results and facets
-                //TODO: facets
+                //TODO: add facets to model
                 return "search/search :: #search-results-and-facets";
             }
         } else {
             //return entire page
-            //TODO: facets
+            //TODO: add facets to model
             return "search/search";
         }
-    }
-
-    private VloRecordSearchResult query(String query, Integer from, Integer size) {
-        final VloRecordSearchResult search
-                = service.search(query, Collections.emptyList(), from, size);
-        return search;
-    }
-
-    private void setSearchPageModelAttributes(Model model, final VloRecordSearchResult search, String query, Integer size, Integer from) {
-        model.addAttribute("result", search);
-        model.addAttribute("query", query);
-        model.addAttribute("resultsPerPage", size);
-        model.addAttribute("pageCount", Math.ceilDiv(search.getNumFound(), size));
-        model.addAttribute("currentPage", 1 + (from / size));
     }
 
 }
