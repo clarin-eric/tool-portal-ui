@@ -16,10 +16,15 @@
  */
 package eu.clarin.toolportal.ui.helper;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Multimap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,11 +34,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterQueryFacetSelectionConverter {
 
-    public Map<String, List<String>> filterQueryToFacetMap(List<String> filterQuery) {
-        ImmutableMap.Builder<String, List<String>> map = ImmutableMap.builder();
+    public static final Splitter SPLITTER = Splitter.on(':').trimResults();
+    public static final Joiner JOINER = Joiner.on(":");
+
+    public Multimap<String, String> filterQueryToFacetMap(List<String> filterQuery) {
+        final ImmutableListMultimap.Builder<String, String> map
+                = ImmutableListMultimap.builderWithExpectedKeys(filterQuery.size());
         filterQuery.forEach(fq -> {
-            map.put(fq, ImmutableList.of(fq));
+            entryFor(fq).ifPresent(map::put);
         });
         return map.build();
     }
+
+    private Optional<Map.Entry<String, String>> entryFor(String fq) {
+        Iterator<String> iterator = SPLITTER.split(fq).iterator();
+        final String key = iterator.next();
+        if (!Strings.isNullOrEmpty(key) && iterator.hasNext()) {
+            final String value = JOINER.join(iterator);
+            if (!Strings.isNullOrEmpty(value)) {
+                return Optional.of(Map.entry(key, value));
+            }
+        }
+        return Optional.empty();
+    }
+
 }

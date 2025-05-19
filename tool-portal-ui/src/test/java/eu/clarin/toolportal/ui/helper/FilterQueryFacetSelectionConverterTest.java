@@ -17,15 +17,15 @@
 package eu.clarin.toolportal.ui.helper;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -58,17 +58,54 @@ public class FilterQueryFacetSelectionConverterTest {
      */
     @Test
     public void testFilterQueryToFacetMap() {
-        System.out.println("filterQueryToFacetMap");
         List<String> filterQuery = ImmutableList.of(
                 "facetA:value1",
                 "facetB:value2",
                 "facetB:value3",
-                "facetC:value4");
+                "facetC:value:4");
         FilterQueryFacetSelectionConverter instance = new FilterQueryFacetSelectionConverter();
-        Map<String, List<String>> result = instance.filterQueryToFacetMap(filterQuery);
+        Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
         assertThat(result).isNotNull();
-        assertThat(result).hasSize(4);
-        assertThat(result).containsKeys("facetA", "facetB", "facetC");
+        assertThat(result.asMap()).hasSize(3);
+        assertThat(result.asMap()).containsKeys("facetA", "facetB", "facetC");
+        assertThat(result.asMap()).extractingByKey("facetA")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 1)
+                .matches(c -> c.contains("value1"));
+        assertThat(result.asMap()).extractingByKey("facetB")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 2)
+                .matches(c -> c.contains("value2"))
+                .matches(c -> c.contains("value3"));
+        assertThat(result.asMap()).extractingByKey("facetC")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 1)
+                .matches(c -> c.contains("value:4"));
+    }
+
+    @Test
+    public void testSkipErroneousValuesMap() {
+        List<String> filterQuery = ImmutableList.of(
+                "facetA:value1",
+                "facetBvalue2",
+                "",
+                "facetD:value3",
+                "facetE:",
+                ":value4");
+        FilterQueryFacetSelectionConverter instance = new FilterQueryFacetSelectionConverter();
+        Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
+        assertThat(result).isNotNull();
+        assertThat(result.asMap()).hasSize(2);
+        assertThat(result.asMap()).containsKeys("facetA", "facetD");
+        assertThat(result.asMap()).extractingByKey("facetA")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 1)
+                .matches(c -> c.contains("value1"));
+
+        assertThat(result.asMap()).extractingByKey("facetD")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 1)
+                .matches(c -> c.contains("value3"));
     }
 
 }
