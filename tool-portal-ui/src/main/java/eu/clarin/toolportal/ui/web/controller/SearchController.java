@@ -17,7 +17,6 @@
 package eu.clarin.toolportal.ui.web.controller;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.helper.FilterQueryFacetSelectionConverter;
@@ -25,6 +24,7 @@ import eu.clarin.toolportal.ui.service.FacetsService;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +68,8 @@ public class SearchController {
             @RequestHeader Map<String, String> headers) {
         // Query record service 
         // TODO: use search service once available
-        final Map<String, List<String>> filterQueryMap
-                = filterQueryConverter.filterQueryToFacetMap(filterQuery);
+        final Map<String, Collection<String>> filterQueryMap
+                = filterQueryConverter.filterQueryToFacetMap(filterQuery).asMap();
         final VloRecordSearchResult result = recordsService.getRecords(query, Collections.emptyList(), from, size);
 
         // Set model attributes
@@ -88,23 +88,23 @@ public class SearchController {
                 return "search/search :: #search-results";
             } else {
                 //return search results and facets
-                addFacetsToModel(model, query);
+                addFacetsToModel(model, query, filterQueryMap);
                 return "search/search :: #search-results-and-facets";
             }
         } else {
             //return entire page
-            addFacetsToModel(model, query);
+            addFacetsToModel(model, query, filterQueryMap);
             
             return "search/search";
         }
     }
     
-    public Model addFacetsToModel(Model model, String query) {
-        return model.addAttribute("facets", getFilteredFacets(query));
+    public Model addFacetsToModel(Model model, String query, Map<String, Collection<String>> filterQueryMap) {
+        return model.addAttribute("facets", getFilteredFacets(query, filterQueryMap));
     }
     
-    public List<Facet> getFilteredFacets(String query) {
-        return facetsService.getFacets(query, Collections.emptyList(), facetsFilter);
+    public List<Facet> getFilteredFacets(String query, Map<String, Collection<String>> filterQueryMap) {
+        return facetsService.getFacets(query, filterQueryMap, facetsFilter);
     }
     
 }

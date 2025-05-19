@@ -16,10 +16,15 @@
  */
 package eu.clarin.toolportal.ui.service;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import eu.clarin.cmdi.vlo.openapi.client.api.FacetsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,6 +33,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FacetsService {
+
+    public static final Joiner FACET_VALUE_JOINER = Joiner.on(":");
 
     private final FacetsApi service;
 
@@ -40,11 +47,11 @@ public class FacetsService {
      * Retrieves facet information relative to query/filter
      *
      * @param query records query to apply
-     * @param filters records filter to apply
+     * @param filterMap records filter to apply
      * @return
      */
-    public List<Facet> getFacets(String query, List<String> filters) {
-        return service.getFacets(query, filters);
+    public List<Facet> getFacets(String query, Map<String, Collection<String>> filterMap) {
+        return service.getFacets(query, mapToFilters(filterMap));
     }
 
     /**
@@ -52,13 +59,13 @@ public class FacetsService {
      * Retrieves selective facet information relative to query/filter
      *
      * @param query records query to apply
-     * @param filters records filter to apply
+     * @param filterMap records filter to apply
      * @param includeFacets facets to include
      * @return
      */
-    public List<Facet> getFacets(String query, List<String> filters, List<String> includeFacets) {
+    public List<Facet> getFacets(String query, Map<String, Collection<String>> filterMap, List<String> includeFacets) {
         //get facets
-        final List<Facet> facets = getFacets(query, filters);
+        final List<Facet> facets = getFacets(query, filterMap);
         //apply include filter
         return applyIncludeFilter(facets, includeFacets);
     }
@@ -71,6 +78,15 @@ public class FacetsService {
                 .sorted(Comparator.comparingInt(facet -> includeFacets.indexOf(facet.getName())))
                 //collect
                 .toList();
+    }
+
+    private List<String> mapToFilters(Map<String, Collection<String>> filterMap) {
+        final ImmutableList.Builder<String> list = ImmutableList.builderWithExpectedSize(filterMap.size());
+        filterMap.forEach((facet, values) -> {
+            list.addAll(Iterables.transform(values,
+                    value -> FACET_VALUE_JOINER.join(facet, value)));
+        });
+        return list.build();
     }
 
 }
