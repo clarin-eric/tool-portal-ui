@@ -63,7 +63,7 @@ public class FilterQueryFacetSelectionConverterTest {
                 "facetB:value2",
                 "facetB:value3",
                 "facetC:value:4");
-        FilterQueryFacetSelectionConverter instance = new FilterQueryFacetSelectionConverter();
+        FilterQueryHelper instance = new FilterQueryHelper();
         Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
         assertThat(result).isNotNull();
         assertThat(result.asMap()).hasSize(3);
@@ -92,7 +92,7 @@ public class FilterQueryFacetSelectionConverterTest {
                 "facetD:value3",
                 "facetE:",
                 ":value4");
-        FilterQueryFacetSelectionConverter instance = new FilterQueryFacetSelectionConverter();
+        FilterQueryHelper instance = new FilterQueryHelper();
         Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
         assertThat(result).isNotNull();
         assertThat(result.asMap()).hasSize(2);

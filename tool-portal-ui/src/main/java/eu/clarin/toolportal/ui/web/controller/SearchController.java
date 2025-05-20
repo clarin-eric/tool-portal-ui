@@ -19,7 +19,7 @@ package eu.clarin.toolportal.ui.web.controller;
 import com.google.common.collect.ImmutableList;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
-import eu.clarin.toolportal.ui.helper.FilterQueryFacetSelectionConverter;
+import eu.clarin.toolportal.ui.helper.FilterQueryHelper;
 import eu.clarin.toolportal.ui.service.FacetsService;
 import static eu.clarin.toolportal.ui.service.FacetsService.FACET_VALUE_JOINER;
 import eu.clarin.toolportal.ui.service.RecordsService;
@@ -49,27 +49,30 @@ public class SearchController {
 
     private final RecordsService recordsService;
     private final FacetsService facetsService;
-    private final FilterQueryFacetSelectionConverter filterQueryConverter;
+    private final FilterQueryHelper filterQueryHelper;
 
     private List<String> facetsFilter = ImmutableList.of("resourceClass", "languageCode", "keyword");
 
-    public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryFacetSelectionConverter filterQueryConverter) {
+    public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryHelper filterQueryConverter) {
         this.recordsService = recordService;
         this.facetsService = facetsService;
-        this.filterQueryConverter = filterQueryConverter;
+        this.filterQueryHelper = filterQueryConverter;
     }
 
     @GetMapping
     public String index(Model model,
             @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
             @RequestParam(name = "fq", defaultValue = "") List<String> filterQuery,
+            @RequestParam(name = "addfq", defaultValue = "") List<String> addToFilterQuery,
+            @RequestParam(name = "removefq", defaultValue = "") List<String> removeFromFilterQuery,
             @RequestParam(name = "from", defaultValue = DEFAULT_FROM) Integer from,
             @RequestParam(name = "size", defaultValue = DEFAULT_SIZE) Integer size,
             @RequestHeader Map<String, String> headers) {
-        // Query record service 
-        // TODO: use search service once available
         final Map<String, Collection<String>> filterQueryMap
-                = filterQueryConverter.filterQueryToFacetMap(filterQuery).asMap();
+                = constructFilterQueryMap(filterQuery, addToFilterQuery, removeFromFilterQuery);
+
+        // Query record service
+        // TODO: use search service once available
         final List<String> searchFilters = flattenFilterMap(filterQueryMap);
         final VloRecordSearchResult result = recordsService.getRecords(query, searchFilters, from, size);
 
@@ -98,6 +101,18 @@ public class SearchController {
 
             return "search/search";
         }
+    }
+
+    private Map<String, Collection<String>> constructFilterQueryMap(List<String> filterQuery, List<String> addToFilterQuery, List<String> removeFromFilterQuery) {
+        Map<String, Collection<String>> filterQueryMap
+                = filterQueryHelper.filterQueryToFacetMap(filterQuery).asMap();
+        if (addToFilterQuery != null) {
+            filterQueryMap = filterQueryHelper.addToMap(filterQueryMap, addToFilterQuery);
+        }
+        if (removeFromFilterQuery != null) {
+            filterQueryMap = filterQueryHelper.removeFromMap(filterQueryMap, removeFromFilterQuery);
+        }
+        return filterQueryMap;
     }
 
     private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {

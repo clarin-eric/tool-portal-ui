@@ -22,13 +22,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div th:each="facet: ${facets}"
                  class="facet ms-0 mb-3" >
                 <h3 class="h4" th:text="${facet.name}">Facet name</h3>
-                <ul class="m-0 p-0" style="list-style: none;">
-                    <li th:each="facetValue : ${facet.values}"
-                        class="p-0 m-0">
-                        <a th:href="@{/search(q=${query})}">[[${facetValue.value}]]</a>
-                         ([[${facetValue.count}]])
-                    </li>
-                </ul>
+
+                <!-- Facet values -->
+                <div th:with="selection=${filterQueryMap[facet.name]}">
+                    <!-- Selected values -->
+                    <ul th:if="${selection}" class="m-0 p-0" style="list-style: none;">
+                        <li th:each="selected : ${filterQueryMap[facet.name]}">
+                            [[${selected}]]
+                            <a href="#"><i class="fa-solid fa-xmark"></i></a>
+                        </li>
+                    </ul>
+
+                    <!-- Unselected values with counts -->
+                    <ul class="m-0 p-0" style="list-style: none;">
+                        <th:block th:each="facetValue : ${facet.values}">
+                            <li th:unless="${selection} and ${#lists.contains(selection, facetValue.value)}"
+                                class="p-0 m-0">
+                                <a th:href="@{/search(q=${query})}">[[${facetValue.value}]]</a>
+                                ([[${facetValue.count}]])
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
             </div>
         </div>
     </body>

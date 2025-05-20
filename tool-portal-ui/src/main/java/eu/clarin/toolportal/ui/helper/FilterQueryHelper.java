@@ -21,6 +21,7 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimap;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Component;
  * @author twagoo
  */
 @Component
-public class FilterQueryFacetSelectionConverter {
+public class FilterQueryHelper {
 
     public static final Splitter SPLITTER = Splitter.on(':').trimResults();
     public static final Joiner JOINER = Joiner.on(":");
@@ -56,6 +57,32 @@ public class FilterQueryFacetSelectionConverter {
             }
         }
         return Optional.empty();
+    }
+
+    public Map<String, Collection<String>> addToMap(Map<String, Collection<String>> filterQueryMap, List<String> addToFilterQuery) {
+        if (addToFilterQuery.isEmpty()) {
+            return filterQueryMap;
+        } else {
+            if (filterQueryMap.isEmpty()) {
+                return filterQueryToFacetMap(addToFilterQuery).asMap();
+            } else {
+                final ImmutableListMultimap.Builder<String, String> builder
+                        = ImmutableListMultimap.builderWithExpectedKeys(filterQueryMap.keySet().size() + addToFilterQuery.size());
+                filterQueryMap.forEach((key, values) -> {
+                    builder.putAll(key, values);
+                });
+                addToFilterQuery.stream()
+                        .map(this::entryFor)
+                        .flatMap(Optional::stream)
+                        .forEach(builder::put);
+                return builder.build().asMap();
+            }
+        }
+    }
+
+    public Map<String, Collection<String>> removeFromMap(Map<String, Collection<String>> filterQueryMap, List<String> removeFromFilterQuery) {
+        //TODO: implement
+        return filterQueryMap;
     }
 
 }
