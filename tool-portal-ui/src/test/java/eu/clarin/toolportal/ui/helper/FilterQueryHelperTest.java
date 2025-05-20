@@ -102,7 +102,12 @@ public class FilterQueryHelperTest {
                         .build();
 
         final List<String> addToFilterQuery
-                = ImmutableList.of("facetB:value4", "facetB:value5", "facetC:value6");
+                = ImmutableList.of(
+                        "facetB:value4",
+                        "facetB:value5",
+                        "facetC:value6",
+                        //erroneous values that should not appear
+                        "facetD:", "facetE", ":value7");
         final Multimap<String, String> result = instance.addToMap(filterQueryMap, addToFilterQuery);
         assertThat(result).isNotNull();
         assertThat(result.keySet()).hasSize(3);
@@ -124,6 +129,45 @@ public class FilterQueryHelperTest {
                 .isInstanceOf(Collection.class)
                 .matches(c -> c.size() == 1)
                 .matches(c -> c.contains("value6"));
+        assertThat(result.asMap())
+                .doesNotContainKeys("facetD", "facetE");
+    }
+
+    @Test
+    public void testRemoveFromMap() {
+        final Multimap<String, String> filterQueryMap
+                = ImmutableListMultimap.<String, String>builder()
+                        .putAll("facetA", "value1", "value2")
+                        .putAll("facetB", "value3", "value4")
+                        .putAll("facetC", "value5", "value6")
+                        .build();
+
+        final List<String> removeFromFilterQuery
+                = ImmutableList.of(
+                        "facetB:value3",
+                        "facetB:value4",
+                        //missing value that should be ignored
+                        "facetC", "value7",
+                        //erroneous values that should be ignored
+                        "facetD", "facetE:", "facetF:value10", ":value10");
+        final Multimap<String, String> result = instance.removeFromMap(filterQueryMap, removeFromFilterQuery);
+        assertThat(result).isNotNull();
+        assertThat(result.keySet()).hasSize(2);
+        assertThat(result.asMap()
+        ).extractingByKey("facetA")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 2)
+                .matches(c -> c.contains("value1"))
+                .matches(c -> c.contains("value2"));
+        assertThat(result.asMap()
+        ).extractingByKey("facetC")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 2)
+                .matches(c -> c.contains("value5"))
+                .matches(c -> c.contains("value6"));
+
+        assertThat(result.asMap())
+                .doesNotContainKeys("facetB", "facetD", "facetE");
     }
 
 }

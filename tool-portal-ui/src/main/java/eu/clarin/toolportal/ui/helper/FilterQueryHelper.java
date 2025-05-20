@@ -20,7 +20,10 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +88,12 @@ public class FilterQueryHelper {
 
     public Multimap<String, String> removeFromMap(Multimap<String, String> filterQueryMap, List<String> removeFromFilterQuery) {
         //TODO: implement
-        return filterQueryMap;
+        List<Map.Entry<String, String>> entriesToRemove = removeFromFilterQuery.stream()
+                .map(this::entryFor)
+                .flatMap(Optional::stream)
+                .toList();
+        
+        return Multimaps.filterEntries(filterQueryMap, entry -> !entriesToRemove.contains(entry));
     }
 
 }
