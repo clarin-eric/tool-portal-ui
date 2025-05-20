@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 
     <body>
-        <div th:fragment="facets(facets, query, filterQueryMap)">
+        <div th:fragment="facets(facets, query, searchFilters, filterQueryMap)">
             <div th:each="facet: ${facets}"
                  class="facet ms-0 mb-3" >
                 <h3 class="h4" th:text="${facet.name}">Facet name</h3>
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <ul th:if="${selection}" class="m-0 p-0" style="list-style: none;">
                         <li th:each="selected : ${filterQueryMap[facet.name]}">
                             [[${selected}]]
-                            <a href="#"><i class="fa-solid fa-xmark"></i></a>
+                            <a th:href="@{/search(q=${query},fq=${searchFilters},removefq=|${facet.name}:${selected}|)}"><i class="fa-solid fa-xmark"></i></a>
                         </li>
                     </ul>
 
@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <th:block th:each="facetValue : ${facet.values}">
                             <li th:unless="${selection} and ${#lists.contains(selection, facetValue.value)}"
                                 class="p-0 m-0">
-                                <a th:href="@{/search(q=${query})}">[[${facetValue.value}]]</a>
+                                <a th:href="@{/search(q=${query},fq=${searchFilters},addfq=|${facet.name}:${facetValue.value}|)}">[[${facetValue.value}]]</a>
                                 ([[${facetValue.count}]])
                             </li>
                         </th:block>

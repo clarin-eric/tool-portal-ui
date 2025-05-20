@@ -80,6 +80,7 @@ public class SearchController {
         model.addAttribute("result", result);
         model.addAttribute("query", query);
         model.addAttribute("filterQueryMap", filterQueryMap);
+        model.addAttribute("searchFilters", searchFilters);
         model.addAttribute("resultsPerPage", size);
         model.addAttribute("pageCount", Math.ceilDiv(result.getNumFound(), size));
         model.addAttribute("currentPage", 1 + (from / size));

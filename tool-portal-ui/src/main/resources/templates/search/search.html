@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div th:unless="${facets}">
                             No facet information
                         </div>
-                        <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets},${query},${filterQueryMap})}">
+                        <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets},${query},${searchFilters},${filterQueryMap})}">
                             [Facets]
                         </div>
                     </section>
