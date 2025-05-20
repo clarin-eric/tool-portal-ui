@@ -21,11 +21,11 @@ import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.helper.FilterQueryFacetSelectionConverter;
 import eu.clarin.toolportal.ui.service.FacetsService;
+import static eu.clarin.toolportal.ui.service.FacetsService.FACET_VALUE_JOINER;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
@@ -42,23 +42,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/search")
 public class SearchController {
-    
+
     public static final String DEFAULT_QUERY = "";
     public static final String DEFAULT_FROM = "0";
     public static final String DEFAULT_SIZE = "10";
-    
+
     private final RecordsService recordsService;
     private final FacetsService facetsService;
     private final FilterQueryFacetSelectionConverter filterQueryConverter;
-    
+
     private List<String> facetsFilter = ImmutableList.of("resourceClass", "languageCode", "keyword");
-    
+
     public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryFacetSelectionConverter filterQueryConverter) {
         this.recordsService = recordService;
         this.facetsService = facetsService;
         this.filterQueryConverter = filterQueryConverter;
     }
-    
+
     @GetMapping
     public String index(Model model,
             @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
@@ -70,7 +70,8 @@ public class SearchController {
         // TODO: use search service once available
         final Map<String, Collection<String>> filterQueryMap
                 = filterQueryConverter.filterQueryToFacetMap(filterQuery).asMap();
-        final VloRecordSearchResult result = recordsService.getRecords(query, Collections.emptyList(), from, size);
+        final List<String> searchFilters = flattenFilterMap(filterQueryMap);
+        final VloRecordSearchResult result = recordsService.getRecords(query, searchFilters, from, size);
 
         // Set model attributes
         model.addAttribute("result", result);
@@ -88,23 +89,34 @@ public class SearchController {
                 return "search/search :: #search-results";
             } else {
                 //return search results and facets
-                addFacetsToModel(model, query, filterQueryMap);
+                addFacetsToModel(model, query, searchFilters);
                 return "search/search :: #search-results-and-facets";
             }
         } else {
             //return entire page
-            addFacetsToModel(model, query, filterQueryMap);
-            
+            addFacetsToModel(model, query, searchFilters);
+
             return "search/search";
         }
     }
-    
-    public Model addFacetsToModel(Model model, String query, Map<String, Collection<String>> filterQueryMap) {
-        return model.addAttribute("facets", getFilteredFacets(query, filterQueryMap));
+
+    private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {
+        //get facet
+        final List<Facet> facets = facetsService.getFacets(query, filterQueries, facetsFilter);
+        return model.addAttribute("facets", facets);
     }
-    
-    public List<Facet> getFilteredFacets(String query, Map<String, Collection<String>> filterQueryMap) {
-        return facetsService.getFacets(query, filterQueryMap, facetsFilter);
+
+    /**
+     * Flattens filter map to a list of 'facet:value' strings
+     *
+     * @param filterMap map to flatten
+     * @return list of 'facet:value' strings for each key - value item pair
+     */
+    private List<String> flattenFilterMap(Map<String, Collection<String>> filterMap) {
+        return filterMap.entrySet().stream()
+                .flatMap(e -> e.getValue().stream()
+                .map(value -> FACET_VALUE_JOINER.join(e.getKey(), value)))
+                .toList();
     }
-    
+
 }
