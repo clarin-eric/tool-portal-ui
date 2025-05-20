@@ -17,45 +17,32 @@
 package eu.clarin.toolportal.ui.helper;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Multimap;
 import java.util.Collection;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author twagoo
  */
-public class FilterQueryFacetSelectionConverterTest {
+public class FilterQueryHelperTest {
 
-    public FilterQueryFacetSelectionConverterTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
+    private FilterQueryHelper instance;
 
     @BeforeEach
     public void setUp() {
+        instance = new FilterQueryHelper();
     }
 
     @AfterEach
     public void tearDown() {
     }
 
-    /**
-     * Test of filterQueryToFacetMap method, of class
-     * FilterQueryFacetSelectionConverter.
-     */
     @Test
     public void testFilterQueryToFacetMap() {
         List<String> filterQuery = ImmutableList.of(
@@ -63,7 +50,6 @@ public class FilterQueryFacetSelectionConverterTest {
                 "facetB:value2",
                 "facetB:value3",
                 "facetC:value:4");
-        FilterQueryHelper instance = new FilterQueryHelper();
         Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
         assertThat(result).isNotNull();
         assertThat(result.asMap()).hasSize(3);
@@ -92,7 +78,6 @@ public class FilterQueryFacetSelectionConverterTest {
                 "facetD:value3",
                 "facetE:",
                 ":value4");
-        FilterQueryHelper instance = new FilterQueryHelper();
         Multimap<String, String> result = instance.filterQueryToFacetMap(filterQuery);
         assertThat(result).isNotNull();
         assertThat(result.asMap()).hasSize(2);
@@ -106,6 +91,39 @@ public class FilterQueryFacetSelectionConverterTest {
                 .isInstanceOf(Collection.class)
                 .matches(c -> c.size() == 1)
                 .matches(c -> c.contains("value3"));
+    }
+
+    @Test
+    public void testAddToMap() {
+        final Multimap<String, String> filterQueryMap
+                = ImmutableListMultimap.<String, String>builder()
+                        .putAll("facetA", "value1", "value2")
+                        .put("facetB", "value3")
+                        .build();
+
+        final List<String> addToFilterQuery
+                = ImmutableList.of("facetB:value4", "facetB:value5", "facetC:value6");
+        final Multimap<String, String> result = instance.addToMap(filterQueryMap, addToFilterQuery);
+        assertThat(result).isNotNull();
+        assertThat(result.keySet()).hasSize(3);
+        assertThat(result.asMap()
+        ).extractingByKey("facetA")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 2)
+                .matches(c -> c.contains("value1"))
+                .matches(c -> c.contains("value2"));
+        assertThat(result.asMap()
+        ).extractingByKey("facetB")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 3)
+                .matches(c -> c.contains("value3"))
+                .matches(c -> c.contains("value4"))
+                .matches(c -> c.contains("value5"));
+        assertThat(result.asMap()
+        ).extractingByKey("facetC")
+                .isInstanceOf(Collection.class)
+                .matches(c -> c.size() == 1)
+                .matches(c -> c.contains("value6"));
     }
 
 }

@@ -17,6 +17,7 @@
 package eu.clarin.toolportal.ui.web.controller;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import eu.clarin.toolportal.ui.helper.FilterQueryHelper;
@@ -105,15 +106,15 @@ public class SearchController {
     }
 
     private Map<String, Collection<String>> constructFilterQueryMap(List<String> filterQuery, List<String> addToFilterQuery, List<String> removeFromFilterQuery) {
-        Map<String, Collection<String>> filterQueryMap
-                = filterQueryHelper.filterQueryToFacetMap(filterQuery).asMap();
+        Multimap<String, String> filterQueryMap
+                = filterQueryHelper.filterQueryToFacetMap(filterQuery);
         if (addToFilterQuery != null) {
             filterQueryMap = filterQueryHelper.addToMap(filterQueryMap, addToFilterQuery);
         }
         if (removeFromFilterQuery != null) {
             filterQueryMap = filterQueryHelper.removeFromMap(filterQueryMap, removeFromFilterQuery);
         }
-        return filterQueryMap;
+        return filterQueryMap.asMap();
     }
 
     private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {

@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Component;
 
 /**
@@ -59,28 +60,30 @@ public class FilterQueryHelper {
         return Optional.empty();
     }
 
-    public Map<String, Collection<String>> addToMap(Map<String, Collection<String>> filterQueryMap, List<String> addToFilterQuery) {
+    public Multimap<String, String> addToMap(Multimap<String, String> filterQueryMap, List<String> addToFilterQuery) {
         if (addToFilterQuery.isEmpty()) {
+            //add nothing -> return the existing map
             return filterQueryMap;
         } else {
             if (filterQueryMap.isEmpty()) {
-                return filterQueryToFacetMap(addToFilterQuery).asMap();
+                //add to nothing -> just return the new entries as a map
+                return filterQueryToFacetMap(addToFilterQuery);
             } else {
-                final ImmutableListMultimap.Builder<String, String> builder
-                        = ImmutableListMultimap.builderWithExpectedKeys(filterQueryMap.keySet().size() + addToFilterQuery.size());
-                filterQueryMap.forEach((key, values) -> {
-                    builder.putAll(key, values);
-                });
-                addToFilterQuery.stream()
-                        .map(this::entryFor)
-                        .flatMap(Optional::stream)
-                        .forEach(builder::put);
-                return builder.build().asMap();
+                //build a fresh multimap that includes the new entires
+                return ImmutableListMultimap.<String, String>builderWithExpectedKeys(
+                        filterQueryMap.keySet().size() + addToFilterQuery.size())
+                        //add existing filter query map
+                        .putAll(filterQueryMap)
+                        //add all valid new filters
+                        .putAll(addToFilterQuery.stream()
+                                .map(this::entryFor)
+                                .flatMap(Optional::stream).toList())
+                        .build();
             }
         }
     }
 
-    public Map<String, Collection<String>> removeFromMap(Map<String, Collection<String>> filterQueryMap, List<String> removeFromFilterQuery) {
+    public Multimap<String, String> removeFromMap(Multimap<String, String> filterQueryMap, List<String> removeFromFilterQuery) {
         //TODO: implement
         return filterQueryMap;
     }
