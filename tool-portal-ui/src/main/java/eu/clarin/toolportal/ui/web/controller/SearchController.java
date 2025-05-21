@@ -26,15 +26,24 @@ import static eu.clarin.toolportal.ui.service.FacetsService.FACET_VALUE_JOINER;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxRequest;
 import static eu.clarin.toolportal.ui.web.HtmxUtils.isHtmxTarget;
+import static eu.clarin.toolportal.ui.web.HtmxUtils.pushUrl;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -68,7 +77,9 @@ public class SearchController {
             @RequestParam(name = "removefq", defaultValue = "") List<String> removeFromFilterQuery,
             @RequestParam(name = "from", defaultValue = DEFAULT_FROM) Integer from,
             @RequestParam(name = "size", defaultValue = DEFAULT_SIZE) Integer size,
-            @RequestHeader Map<String, String> headers) {
+            @RequestHeader Map<String, String> headers,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         final Map<String, Collection<String>> filterQueryMap
                 = constructFilterQueryMap(filterQuery, addToFilterQuery, removeFromFilterQuery);
 
@@ -89,6 +100,9 @@ public class SearchController {
         // Determine response content
         if (isHtmxRequest(headers)) {
             // HTMX: partial response
+            // send clean URL to client (apply fq updates)
+            sanitiseUrl(request, searchFilters)
+                    .ifPresent(url -> pushUrl(response, url));
             if (isHtmxTarget(headers, "search-results")) {
                 //request from pagination, return only search results
                 return "search/search :: #search-results";
@@ -134,6 +148,31 @@ public class SearchController {
                 .flatMap(e -> e.getValue().stream()
                 .map(value -> FACET_VALUE_JOINER.join(e.getKey(), value)))
                 .toList();
+    }
+
+    /**
+     * Creates a nicer URL that has all filter queries in the 'fq' parameter
+     * @param request
+     * @param searchFilters
+     * @return 
+     */
+    private Optional<String> sanitiseUrl(HttpServletRequest request, List<String> searchFilters) {
+        final String requestURL = request.getRequestURL().toString();
+        final String queryString = request.getQueryString();
+
+        try {
+            final URI url = new URI(requestURL + "?" + queryString);
+            url.toURL(); // this throws a MalformedURLException if the URL is not valid
+
+            final UriComponentsBuilder builder = UriComponentsBuilder.fromUri(url);
+            builder.replaceQueryParam("addfq", Collections.emptySet());
+            builder.replaceQueryParam("removefq", Collections.emptySet());
+            builder.replaceQueryParam("fq", searchFilters);
+
+            return Optional.of(builder.build().toUriString());
+        } catch (MalformedURLException | URISyntaxException ex) {
+            return Optional.empty();
+        }
     }
 
 }

@@ -16,6 +16,7 @@
  */
 package eu.clarin.toolportal.ui.web;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,8 +26,12 @@ import java.util.Objects;
  */
 public class HtmxUtils {
 
+    //request headers
     public static final String HX_REQUEST_HEADER = "hx-request";
-    public static final String HX_TARGET_HEADER = "hx-target";
+    public static final String HX_TARGET_REQUEST_HEADER = "hx-target";
+
+    //response headers
+    public static final String HX_PUSH_URL_RESPONSE_HEADER = "HX-Push-Url";
 
     /**
      * Determines whether the request headers indicate an request triggered via
@@ -40,7 +45,11 @@ public class HtmxUtils {
     }
 
     public static boolean isHtmxTarget(Map<String, String> headers, String target) {
-        return Objects.equals(target, headers.get(HX_TARGET_HEADER));
+        return Objects.equals(target, headers.get(HX_TARGET_REQUEST_HEADER));
+    }
+
+    public static void pushUrl(HttpServletResponse response, String url) {
+        response.addHeader(HX_PUSH_URL_RESPONSE_HEADER, url);
     }
 
 }
