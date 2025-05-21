@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 [Navigation]
             </nav>
 
-            <main hx-swap="outerHTML show:none">
+            <main hx-swap="outerHTML show:none" hx-indicator="#search-results-and-facets">
 
                 <!-- Search form -->
                 <div class="m-3">
@@ -53,6 +53,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Facets -->
                     <section id="facets" class="col-lg-3">
                         <h2 class="h3">Result filters</h2>
+
                         <div th:unless="${facets}">
                             No facet information
                         </div>
@@ -63,6 +64,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <!-- Search results -->
                     <section id="search-results" class="col-lg-9">
+
+                        <div class="spinner-border htmx-indicator float-end" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        
                         <div th:unless="${result}">
                             No search results
                         </div>
