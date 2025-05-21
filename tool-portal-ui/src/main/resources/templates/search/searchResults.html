@@ -48,9 +48,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </li>
                 </ul>
 
-                <nav th:replace="~{:: pagination(${query}, ${currentPage},${pageCount},${resultsPerPage})}">
-                    [Pagination]
-                </nav>
+                <div hx-swap="outerHTML show:top">
+                    <nav th:replace="~{:: pagination(${query}, ${currentPage},${pageCount},${resultsPerPage})}">
+                        [Pagination]
+                    </nav>
+                </div>
 
             </div> <!-- more than 0 results -->
         </div>
