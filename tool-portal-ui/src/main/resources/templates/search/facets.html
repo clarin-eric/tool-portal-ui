@@ -20,11 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div th:fragment="facets(facets, query, searchFilters, filterQueryMap)">
             <div th:each="facet: ${facets}"
-                 class="facet ms-0 mb-3" >
+                 class="facet ms-0 mb-3">
                 <h3 class="h4" th:text="${facet.name}">Facet name</h3>
 
                 <!-- Facet values -->
-                <div th:with="selection=${filterQueryMap[facet.name]}">
+                <div th:with="selection=${filterQueryMap[facet.name]}"
+                     hx-boost="true" 
+                     hx-target="#search-results-and-facets"
+                     hx-select="#search-results-and-facets">
                     <!-- Selected values -->
                     <ul th:if="${selection}" class="m-0 p-0" style="list-style: none;">
                         <li th:each="selected : ${filterQueryMap[facet.name]}">
