@@ -39,13 +39,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li th:replace="~{::top-navigation-item('search','Search','/search',${current})}">
+                        <li th:replace="~{::top-navigation-item('search','/search',${current})}">
                             [Search]
                         </li>
-                        <li th:replace="~{::top-navigation-item('contributors','Contributors','/contributors',${current})}">
+                        <li th:replace="~{::top-navigation-item('contributors','/contributors',${current})}">
                             [Contributors]
                         </li>
-                        <li th:replace="~{::top-navigation-item('help','Help','/help',${current})}">
+                        <li th:replace="~{::top-navigation-item('help','/help',${current})}">
                             [Help]
                         </li>
                     </ul>
@@ -54,12 +54,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </nav>
 
         <!-- menu item in the top navigation bar -->
-        <li th:fragment="top-navigation-item(id,label,link,current)"
+        <li th:fragment="top-navigation-item(id,link,current)"
             class="nav-item">
             <a class="nav-link" 
                th:classappend="${current == id} ? 'active'"
                th:aria-current="${current == id} ? 'page' : null" 
-               th:href="${link}" th:text="${label}">
+               th:href="${link}" th:text="#{|menu.item.${id}|}">
                 [link text]
             </a>
         </li>

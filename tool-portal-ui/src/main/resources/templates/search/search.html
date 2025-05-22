@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </div>
                             <div class="p-2">
                                 <input type="submit" class="btn btn-primary"
-                                       value="Search" />
+                                       th:value="#{search.form.buttonText}" />
                             </div>
                         </div>
                     </form>
@@ -52,10 +52,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <!-- Facets -->
                     <section id="facets" class="col-lg-3">
-                        <h2 class="h3">Result filters</h2>
+                        <h2 class="h3" th:text="#{search.facets.resultFilters}">[Result filters]</h2>
 
-                        <div th:unless="${facets}">
-                            No facet information
+                        <div th:unless="${facets}" th:text="#{search.facets.noInformation}">
+                            [No facet information]
                         </div>
                         <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets},${query},${searchFilters},${filterQueryMap})}">
                             [Facets]
@@ -66,11 +66,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <section id="search-results" class="col-lg-9">
 
                         <div class="spinner-border htmx-indicator float-end" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                            <span class="visually-hidden" th:text="#{spinner.loading}">Loading...</span>
                         </div>
                         
-                        <div th:unless="${result}">
-                            No search results
+                        <div th:unless="${result}" th:text="#{search.results.noResults}">
+                            [No search results]
                         </div>
                         <div th:if="${result}" th:replace="~{search/searchResults :: search-results(
                              query=${query},

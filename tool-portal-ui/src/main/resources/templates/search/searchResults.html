@@ -20,13 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div th:fragment="search-results(query, result, currentPage, pageCount, resultsPerPage)">
 
-            <div>[[${result.numFound}]] record(s) found</div>
+            <div th:text="#{search.results.recordsFound(${result.numFound})}">N record(s) found</div>
 
             <div th:if="${result.numFound > 0}" th:object="${result}">
-                <!--                 th:with="pageSize = ${resultsPerPage}?:10,
-                                 pageCount=${result.numFound / pageSize},
-                                 currentPage=${1 + (result.start / pageSize)}">-->
-                <h2>Search results</h2>
+                <h2 th:text="#{search.results.searchResults}">[Search results]</h2>
 
                 <nav th:replace="~{:: pagination(${query}, ${currentPage},${pageCount},${resultsPerPage})}">
                     [Pagination]
@@ -37,12 +34,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <article th:object="${record}">
                             <h3>
                                 <a th:href="|records/${record.id}|">
-                                    <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">Record title</span>
-                                    <span th:unless="*{fields['name']}">Untitled record</span>
+                                    <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
+                                    <span th:unless="*{fields['name']}" th:text="#{record.untitleRecord}">[Untitled record]</span>
                                 </a>
                             </h3>
                             <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
-                                <div th:text="${description}">description</div>
+                                <div th:text="${description}">[description]</div>
                             </div>
                         </article>
                     </li>
@@ -67,10 +64,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <!-- Previous page -->
                 <th:block th:if="${currentPage > 1}">
-                    <li th:replace="~{::paginationLink('Previous',${currentPage - 1},${query},${currentPage},${resultsPerPage})}"></li>
+                    <li th:replace="~{::paginationLink(#{search.pagination.previous},
+                        ${currentPage - 1},
+                        ${query},${currentPage},${resultsPerPage})}"></li>
                 </th:block>
                 <th:block th:if="${currentPage <= 1}">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" th:text="#{search.pagination.previous}">[previous]</a>
+                    </li>
                 </th:block>
 
                 <!-- First page -->
@@ -95,10 +96,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <!-- Next page -->
                 <th:block th:if="${currentPage < pageCount}">
-                    <li th:replace="~{::paginationLink('Next',${currentPage + 1},${query},${currentPage},${resultsPerPage})}">[next]</li>
+                    <li th:replace="~{::paginationLink(#{search.pagination.next},
+                        ${currentPage + 1},
+                        ${query},${currentPage},${resultsPerPage})}">[next]</li>
                 </th:block>
                 <th:block th:if="${currentPage >= pageCount}">
-                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" th:text="#{search.pagination.next}">[next]</a>
+                    </li>
                 </th:block>
             </ul>
         </nav>
