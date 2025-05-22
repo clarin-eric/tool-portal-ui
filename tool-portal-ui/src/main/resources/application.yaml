@@ -3,7 +3,14 @@ spring:
     name: CLARIN Tool Portal UI
 
 server:
-    port: 8091
+  port: 8091
+
+toolportal:
+  search:
+    primaryFacets:
+      - resourceClass
+      - languageCode
+      - subject
     
 #api:
 #    client:

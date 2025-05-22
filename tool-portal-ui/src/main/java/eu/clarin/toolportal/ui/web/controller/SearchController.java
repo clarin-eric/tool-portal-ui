@@ -16,10 +16,10 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
+import eu.clarin.toolportal.ui.configuration.SearchConfigurationProperties;
 import eu.clarin.toolportal.ui.helper.FilterQueryHelper;
 import eu.clarin.toolportal.ui.service.FacetsService;
 import static eu.clarin.toolportal.ui.service.FacetsService.FACET_VALUE_JOINER;
@@ -61,12 +61,13 @@ public class SearchController {
     private final FacetsService facetsService;
     private final FilterQueryHelper filterQueryHelper;
 
-    private List<String> facetsFilter = ImmutableList.of("resourceClass", "languageCode", "keyword");
+    private final SearchConfigurationProperties searchConfig;
 
-    public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryHelper filterQueryConverter) {
+    public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryHelper filterQueryConverter, SearchConfigurationProperties searchConfig) {
         this.recordsService = recordService;
         this.facetsService = facetsService;
         this.filterQueryHelper = filterQueryConverter;
+        this.searchConfig = searchConfig;
     }
 
     @GetMapping
@@ -133,7 +134,7 @@ public class SearchController {
 
     private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {
         //get facet
-        final List<Facet> facets = facetsService.getFacets(query, filterQueries, facetsFilter);
+        final List<Facet> facets = facetsService.getFacets(query, filterQueries, searchConfig.getPrimaryFacets());
         return model.addAttribute("facets", facets);
     }
 
@@ -152,9 +153,10 @@ public class SearchController {
 
     /**
      * Creates a nicer URL that has all filter queries in the 'fq' parameter
+     *
      * @param request
      * @param searchFilters
-     * @return 
+     * @return
      */
     private Optional<String> sanitiseUrl(HttpServletRequest request, List<String> searchFilters) {
         final String requestURL = request.getRequestURL().toString();
