@@ -47,7 +47,7 @@ public class FacetsService {
      * @return
      */
     public List<Facet> getFacets(String query, List<String> filterQueries) {
-        return service.getFacets(query, filterQueries);
+        return service.getFacets(query, filterQueries, null);
     }
 
     /**
@@ -61,11 +61,18 @@ public class FacetsService {
      */
     public List<Facet> getFacets(String query, List<String> filterQueries, List<String> includeFacets) {
         //get facets
-        final List<Facet> facets = getFacets(query, filterQueries);
-        //apply include filter
+        final List<Facet> facets = service.getFacets(query, filterQueries, includeFacets);
+        //apply include filter (also applies sorting of filter)
         return applyIncludeFilter(facets, includeFacets);
     }
 
+    /**
+     *
+     * @param facets all facets
+     * @param includeFacets names of facets to include
+     * @return the subset of the facets that appear in the include filter,
+     * sorted according to the latter
+     */
     private List<Facet> applyIncludeFilter(final List<Facet> facets, List<String> includeFacets) {
         return facets.stream()
                 //filter out values not in include list
