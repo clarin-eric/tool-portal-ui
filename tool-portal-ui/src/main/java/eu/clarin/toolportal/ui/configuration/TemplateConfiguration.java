@@ -36,8 +36,8 @@ public class TemplateConfiguration {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames(
                 "classpath:messages/common",
+                "classpath:messages/fields",
                 "classpath:messages/search",
-                "classpath:messages/facets",
                 "classpath:messages/records");
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
