@@ -1,6 +1,6 @@
 # FacetsApi
 
-All URIs are relative to *https://vlo.clarin-dev.eu/api*
+All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -28,7 +28,7 @@ import eu.clarin.cmdi.vlo.openapi.client.api.FacetsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         FacetsApi apiInstance = new FacetsApi(defaultClient);
         String facetName = "facetName_example"; // String | 
@@ -80,7 +80,7 @@ No authorization required
 
 ## getFacets
 
-> List&lt;Facet&gt; getFacets(q, fq)
+> List&lt;Facet&gt; getFacets(q, fq, fields)
 
 Get the facets and their (top) values and their counts
 
@@ -97,13 +97,14 @@ import eu.clarin.cmdi.vlo.openapi.client.api.FacetsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         FacetsApi apiInstance = new FacetsApi(defaultClient);
         String q = "*:*"; // String | 
         List<String> fq = Arrays.asList(); // List<String> | 
+        List<String> fields = Arrays.asList(); // List<String> | 
         try {
-            List<Facet> result = apiInstance.getFacets(q, fq);
+            List<Facet> result = apiInstance.getFacets(q, fq, fields);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FacetsApi#getFacets");
@@ -123,6 +124,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **q** | **String**|  | [optional] [default to *:*] |
 | **fq** | [**List&lt;String&gt;**](String.md)|  | [optional] |
+| **fields** | [**List&lt;String&gt;**](String.md)|  | [optional] |
 
 ### Return type
 

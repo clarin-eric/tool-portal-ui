@@ -4,7 +4,7 @@ info:
   version: v0
 servers:
 - description: Generated server url
-  url: https://vlo.clarin-dev.eu/api
+  url: http://localhost:8080
 tags:
 - description: "Searching, retrieving and submitting of VLO records"
   name: Records
@@ -191,6 +191,15 @@ paths:
       - explode: true
         in: query
         name: fq
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: fields
         required: false
         schema:
           items:

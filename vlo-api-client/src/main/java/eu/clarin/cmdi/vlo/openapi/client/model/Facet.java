@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Facet.JSON_PROPERTY_VALUE_COUNT,
   Facet.JSON_PROPERTY_VALUES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class Facet {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable

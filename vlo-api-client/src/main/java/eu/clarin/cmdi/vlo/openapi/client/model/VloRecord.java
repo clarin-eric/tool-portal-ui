@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VloRecord.JSON_PROPERTY_PATH_VALUES_MAP,
   VloRecord.JSON_PROPERTY_FIELDS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class VloRecord {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable

@@ -1,6 +1,6 @@
 # RecordsApi
 
-All URIs are relative to *https://vlo.clarin-dev.eu/api*
+All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -30,7 +30,7 @@ import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         RecordsApi apiInstance = new RecordsApi(defaultClient);
         String id = "id_example"; // String | 
@@ -96,7 +96,7 @@ import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         RecordsApi apiInstance = new RecordsApi(defaultClient);
         String q = "*:*"; // String | 
@@ -167,7 +167,7 @@ import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         RecordsApi apiInstance = new RecordsApi(defaultClient);
         String query = "*:*"; // String | 
@@ -234,7 +234,7 @@ import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
 
         RecordsApi apiInstance = new RecordsApi(defaultClient);
         VloRecord vloRecord = new VloRecord(); // VloRecord | 

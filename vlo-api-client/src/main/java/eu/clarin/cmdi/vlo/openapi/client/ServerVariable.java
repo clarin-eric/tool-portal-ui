@@ -18,7 +18,7 @@ import java.util.HashSet;
 /**
  * Representing a Server Variable for server URL template substitution.
  */
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class ServerVariable {
     public String description;
     public String defaultValue;

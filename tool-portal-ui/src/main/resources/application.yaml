@@ -8,9 +8,10 @@ server:
 toolportal:
   search:
     primaryFacets:
+      - availability
       - resourceClass
       - languageCode
-      - subject
+      - organisation
     
 #api:
 #    client:

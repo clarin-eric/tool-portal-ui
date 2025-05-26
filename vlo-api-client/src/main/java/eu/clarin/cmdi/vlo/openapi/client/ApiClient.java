@@ -57,7 +57,7 @@ import eu.clarin.cmdi.vlo.openapi.client.auth.HttpBasicAuth;
 import eu.clarin.cmdi.vlo.openapi.client.auth.HttpBearerAuth;
 import eu.clarin.cmdi.vlo.openapi.client.auth.ApiKeyAuth;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class ApiClient extends JavaTimeFormatter {
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
@@ -75,7 +75,7 @@ public class ApiClient extends JavaTimeFormatter {
     private final HttpHeaders defaultHeaders = new HttpHeaders();
     private final MultiValueMap<String, String> defaultCookies = new LinkedMultiValueMap<>();
 
-    private String basePath = "https://vlo.clarin-dev.eu/api";
+    private String basePath = "http://localhost:8080";
 
     private final RestClient restClient;
     private final DateFormat dateFormat;

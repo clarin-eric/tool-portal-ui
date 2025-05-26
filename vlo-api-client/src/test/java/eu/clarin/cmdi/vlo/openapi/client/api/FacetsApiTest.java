@@ -56,7 +56,8 @@ public class FacetsApiTest {
     public void getFacetsTest()  {
         String q = null;
         List<String> fq = null;
-        List<Facet> response = api.getFacets(q, fq);
+        List<String> fields = null;
+        List<Facet> response = api.getFacets(q, fq, fields);
 
         // TODO: test validations
     }

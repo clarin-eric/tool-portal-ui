@@ -26,7 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class RecordsApi {
     private ApiClient apiClient;
 

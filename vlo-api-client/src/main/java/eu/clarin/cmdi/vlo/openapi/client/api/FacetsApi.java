@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T16:28:21.377379+03:00[Europe/Riga]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class FacetsApi {
     private ApiClient apiClient;
 
@@ -142,10 +142,11 @@ public class FacetsApi {
      * <p><b>200</b> - OK
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param fields The fields parameter
      * @return List&lt;Facet&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getFacetsRequestCreation(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    private ResponseSpec getFacetsRequestCreation(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable List<String> fields) throws RestClientResponseException {
         Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
@@ -157,6 +158,7 @@ public class FacetsApi {
 
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "q", q));
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fields", fields));
         
         final String[] localVarAccepts = { 
             "*/*", "application/json"
@@ -178,12 +180,13 @@ public class FacetsApi {
      * <p><b>200</b> - OK
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param fields The fields parameter
      * @return List&lt;Facet&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<Facet> getFacets(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    public List<Facet> getFacets(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable List<String> fields) throws RestClientResponseException {
         ParameterizedTypeReference<List<Facet>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getFacetsRequestCreation(q, fq).body(localVarReturnType);
+        return getFacetsRequestCreation(q, fq, fields).body(localVarReturnType);
     }
 
     /**
@@ -193,12 +196,13 @@ public class FacetsApi {
      * <p><b>200</b> - OK
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param fields The fields parameter
      * @return ResponseEntity&lt;List&lt;Facet&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Facet>> getFacetsWithHttpInfo(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    public ResponseEntity<List<Facet>> getFacetsWithHttpInfo(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable List<String> fields) throws RestClientResponseException {
         ParameterizedTypeReference<List<Facet>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getFacetsRequestCreation(q, fq).toEntity(localVarReturnType);
+        return getFacetsRequestCreation(q, fq, fields).toEntity(localVarReturnType);
     }
 
     /**
@@ -208,10 +212,11 @@ public class FacetsApi {
      * <p><b>200</b> - OK
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param fields The fields parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getFacetsWithResponseSpec(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
-        return getFacetsRequestCreation(q, fq);
+    public ResponseSpec getFacetsWithResponseSpec(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable List<String> fields) throws RestClientResponseException {
+        return getFacetsRequestCreation(q, fq, fields);
     }
 }

@@ -4,7 +4,7 @@ OpenAPI definition
 
 - API version: v0
 
-- Build date: 2025-05-09T16:28:21.377379+03:00[Europe/Riga]
+- Build date: 2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]
 
 - Generator version: 7.13.0
 
@@ -92,7 +92,7 @@ public class FacetsApiExample {
 
     public static void main(String[] args) {
         ApiClient defaultClient = new ApiClient();
-        defaultClient.setBasePath("https://vlo.clarin-dev.eu/api");
+        defaultClient.setBasePath("http://localhost:8080");
         
         FacetsApi apiInstance = new FacetsApi(defaultClient);
         String facetName = "facetName_example"; // String | 
@@ -115,7 +115,7 @@ public class FacetsApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://vlo.clarin-dev.eu/api*
+All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
