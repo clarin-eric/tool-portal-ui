@@ -29,9 +29,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonPropertyOrder({
   Facet.JSON_PROPERTY_NAME,
   Facet.JSON_PROPERTY_VALUE_COUNT,
-  Facet.JSON_PROPERTY_VALUES
+  Facet.JSON_PROPERTY_VALUES,
+  Facet.JSON_PROPERTY_HAS_MORE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-28T16:40:36.564397+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class Facet {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable
@@ -39,11 +40,15 @@ public class Facet {
 
   public static final String JSON_PROPERTY_VALUE_COUNT = "valueCount";
   @jakarta.annotation.Nullable
-  private Long valueCount;
+  private Integer valueCount;
 
   public static final String JSON_PROPERTY_VALUES = "values";
   @jakarta.annotation.Nullable
   private Object values;
+
+  public static final String JSON_PROPERTY_HAS_MORE = "hasMore";
+  @jakarta.annotation.Nullable
+  private Boolean hasMore;
 
   public Facet() {
   }
@@ -73,7 +78,7 @@ public class Facet {
     this.name = name;
   }
 
-  public Facet valueCount(@jakarta.annotation.Nullable Long valueCount) {
+  public Facet valueCount(@jakarta.annotation.Nullable Integer valueCount) {
     
     this.valueCount = valueCount;
     return this;
@@ -87,14 +92,14 @@ public class Facet {
   @JsonProperty(JSON_PROPERTY_VALUE_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Long getValueCount() {
+  public Integer getValueCount() {
     return valueCount;
   }
 
 
   @JsonProperty(JSON_PROPERTY_VALUE_COUNT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setValueCount(@jakarta.annotation.Nullable Long valueCount) {
+  public void setValueCount(@jakarta.annotation.Nullable Integer valueCount) {
     this.valueCount = valueCount;
   }
 
@@ -123,6 +128,31 @@ public class Facet {
     this.values = values;
   }
 
+  public Facet hasMore(@jakarta.annotation.Nullable Boolean hasMore) {
+    
+    this.hasMore = hasMore;
+    return this;
+  }
+
+  /**
+   * Get hasMore
+   * @return hasMore
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_HAS_MORE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Boolean getHasMore() {
+    return hasMore;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_HAS_MORE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setHasMore(@jakarta.annotation.Nullable Boolean hasMore) {
+    this.hasMore = hasMore;
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -135,12 +165,13 @@ public class Facet {
     Facet facet = (Facet) o;
     return Objects.equals(this.name, facet.name) &&
         Objects.equals(this.valueCount, facet.valueCount) &&
-        Objects.equals(this.values, facet.values);
+        Objects.equals(this.values, facet.values) &&
+        Objects.equals(this.hasMore, facet.hasMore);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, valueCount, values);
+    return Objects.hash(name, valueCount, values, hasMore);
   }
 
   @Override
@@ -150,6 +181,7 @@ public class Facet {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    valueCount: ").append(toIndentedString(valueCount)).append("\n");
     sb.append("    values: ").append(toIndentedString(values)).append("\n");
+    sb.append("    hasMore: ").append(toIndentedString(hasMore)).append("\n");
     sb.append("}");
     return sb.toString();
   }

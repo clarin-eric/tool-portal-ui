@@ -8,8 +8,9 @@
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**name** | **String** |  |  [optional] |
-|**valueCount** | **Long** |  |  [optional] |
+|**valueCount** | **Integer** |  |  [optional] |
 |**values** | **Object** |  |  [optional] |
+|**hasMore** | **Boolean** |  |  [optional] |
 
 
 

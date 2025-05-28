@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Resource.JSON_PROPERTY_TYPE,
   Resource.JSON_PROPERTY_MEDIA_TYPE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-26T14:45:06.678635+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-28T16:40:36.564397+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class Resource {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable

@@ -60,4 +60,12 @@ class FacetTest {
         // TODO: test values
     }
 
+    /**
+     * Test the property 'hasMore'
+     */
+    @Test
+    void hasMoreTest() {
+        // TODO: test hasMore
+    }
+
 }

@@ -206,6 +206,14 @@ paths:
             type: string
           type: array
         style: form
+      - explode: true
+        in: query
+        name: valueCountLimit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
       responses:
         "500":
           content:
@@ -403,12 +411,15 @@ components:
         valueCount: 0
         values: "{}"
         name: name
+        hasMore: true
       properties:
         name:
           type: string
         valueCount:
-          format: int64
+          format: int32
           type: integer
         values:
           type: object
+        hasMore:
+          type: boolean
 

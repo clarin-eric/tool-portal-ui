@@ -57,7 +57,8 @@ public class FacetsApiTest {
         String q = null;
         List<String> fq = null;
         List<String> fields = null;
-        List<Facet> response = api.getFacets(q, fq, fields);
+        Integer valueCountLimit = null;
+        List<Facet> response = api.getFacets(q, fq, fields, valueCountLimit);
 
         // TODO: test validations
     }

@@ -80,7 +80,7 @@ No authorization required
 
 ## getFacets
 
-> List&lt;Facet&gt; getFacets(q, fq, fields)
+> List&lt;Facet&gt; getFacets(q, fq, fields, valueCountLimit)
 
 Get the facets and their (top) values and their counts
 
@@ -103,8 +103,9 @@ public class Example {
         String q = "*:*"; // String | 
         List<String> fq = Arrays.asList(); // List<String> | 
         List<String> fields = Arrays.asList(); // List<String> | 
+        Integer valueCountLimit = 56; // Integer | 
         try {
-            List<Facet> result = apiInstance.getFacets(q, fq, fields);
+            List<Facet> result = apiInstance.getFacets(q, fq, fields, valueCountLimit);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FacetsApi#getFacets");
@@ -125,6 +126,7 @@ public class Example {
 | **q** | **String**|  | [optional] [default to *:*] |
 | **fq** | [**List&lt;String&gt;**](String.md)|  | [optional] |
 | **fields** | [**List&lt;String&gt;**](String.md)|  | [optional] |
+| **valueCountLimit** | **Integer**|  | [optional] |
 
 ### Return type
 
