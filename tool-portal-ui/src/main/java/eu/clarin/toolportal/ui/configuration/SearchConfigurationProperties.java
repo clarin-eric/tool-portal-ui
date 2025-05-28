@@ -29,7 +29,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "toolportal.search")
 @Data
 public class SearchConfigurationProperties {
-    
+
     private List<String> primaryFacets;
-    
+    private int facetValuesShown;
+
 }

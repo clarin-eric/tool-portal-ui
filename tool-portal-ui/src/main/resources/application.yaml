@@ -7,6 +7,7 @@ server:
 
 toolportal:
   search:
+    facetValuesShown: 8
     primaryFacets:
 #      - Tool type
 #      - Research domain

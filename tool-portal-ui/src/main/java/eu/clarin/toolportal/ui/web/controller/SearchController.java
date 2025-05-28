@@ -134,7 +134,7 @@ public class SearchController {
 
     private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {
         //get facet
-        final List<Facet> facets = facetsService.getFacets(query, filterQueries, searchConfig.getPrimaryFacets());
+        final List<Facet> facets = facetsService.getFacets(query, filterQueries, searchConfig.getPrimaryFacets(), searchConfig.getFacetValuesShown());
         return model.addAttribute("facets", facets);
     }
 
