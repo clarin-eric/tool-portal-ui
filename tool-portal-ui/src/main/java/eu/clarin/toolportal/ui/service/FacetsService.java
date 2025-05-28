@@ -32,6 +32,9 @@ public class FacetsService {
 
     public static final Joiner FACET_VALUE_JOINER = Joiner.on(":");
 
+    //TODO: make configurable
+    public static final int FACET_VALUE_COUNT_LIMIT = 10;
+
     private final FacetsApi service;
 
     public FacetsService(FacetsApi facets) {
@@ -47,7 +50,7 @@ public class FacetsService {
      * @return
      */
     public List<Facet> getFacets(String query, List<String> filterQueries) {
-        return service.getFacets(query, filterQueries, null);
+        return service.getFacets(query, filterQueries, null, FACET_VALUE_COUNT_LIMIT);
     }
 
     /**
@@ -61,7 +64,7 @@ public class FacetsService {
      */
     public List<Facet> getFacets(String query, List<String> filterQueries, List<String> includeFacets) {
         //get facets
-        final List<Facet> facets = service.getFacets(query, filterQueries, includeFacets);
+        final List<Facet> facets = service.getFacets(query, filterQueries, includeFacets, FACET_VALUE_COUNT_LIMIT);
         //apply include filter (also applies sorting of filter)
         return applyIncludeFilter(facets, includeFacets);
     }
