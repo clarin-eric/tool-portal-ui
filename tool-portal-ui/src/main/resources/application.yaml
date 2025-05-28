@@ -8,10 +8,22 @@ server:
 toolportal:
   search:
     primaryFacets:
-      - availability
+#      - Tool type
+#      - Research domain
       - resourceClass
+      - availability
+      - distributionType
       - languageCode
       - organisation
+      - projectName
+      - keywords
+    secondaryFacets:
+      - country
+#      - Platform
+#      - Input language
+#      - Output language
+#      - Annotation type
+
     
 #api:
 #    client:
