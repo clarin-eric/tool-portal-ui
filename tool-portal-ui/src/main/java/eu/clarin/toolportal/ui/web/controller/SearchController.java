@@ -16,6 +16,8 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
@@ -37,12 +39,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -52,24 +57,29 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping(value = "/search")
 public class SearchController {
-
+    
     public static final String DEFAULT_QUERY = "";
     public static final String DEFAULT_FROM = "0";
     public static final String DEFAULT_SIZE = "10";
-
+    
     private final RecordsService recordsService;
     private final FacetsService facetsService;
     private final FilterQueryHelper filterQueryHelper;
-
+    
     private final SearchConfigurationProperties searchConfig;
-
+    private final List<String> allFacets;
+    
     public SearchController(RecordsService recordService, FacetsService facetsService, FilterQueryHelper filterQueryConverter, SearchConfigurationProperties searchConfig) {
         this.recordsService = recordService;
         this.facetsService = facetsService;
         this.filterQueryHelper = filterQueryConverter;
         this.searchConfig = searchConfig;
+        this.allFacets = ImmutableList.copyOf(Iterables.concat(
+                searchConfig.getPrimaryFacets()
+        //TODO: add other (non-primary) facets
+        ));
     }
-
+    
     @GetMapping
     public String index(Model model,
             @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
@@ -115,11 +125,39 @@ public class SearchController {
         } else {
             //return entire page
             addFacetsToModel(model, query, searchFilters);
-
+            
             return "search/search";
         }
     }
-
+    
+    @GetMapping("/values/{facetName}")
+    public ModelAndView facetValues(
+            @PathVariable("facetName") String facetName,
+            @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
+            @RequestParam(name = "fq", defaultValue = "") List<String> filterQuery,
+            @RequestParam(name = "from", defaultValue = DEFAULT_FROM) Integer from,
+            @RequestParam(name = "size", defaultValue = DEFAULT_SIZE) Integer size,
+            @RequestHeader Map<String, String> headers,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        
+        final ModelAndView modelAndView = new ModelAndView("search/facetValues");
+        
+        if (facetExists(facetName)) {
+            final Facet facet = facetsService.getFacet(facetName, query, filterQuery, from, size);
+            modelAndView.addObject("facet", facet);
+        } else {
+            modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        }
+        return modelAndView;
+        
+    }
+    
+    public boolean facetExists(String facetName) {
+        return allFacets.stream().anyMatch(s
+                -> s.equalsIgnoreCase(facetName));
+    }
+    
     private Map<String, Collection<String>> constructFilterQueryMap(List<String> filterQuery, List<String> addToFilterQuery, List<String> removeFromFilterQuery) {
         Multimap<String, String> filterQueryMap
                 = filterQueryHelper.filterQueryToFacetMap(filterQuery);
@@ -131,7 +169,7 @@ public class SearchController {
         }
         return filterQueryMap.asMap();
     }
-
+    
     private Model addFacetsToModel(Model model, String query, List<String> filterQueries) {
         //get facet
         final List<Facet> facets = facetsService.getFacets(query, filterQueries, searchConfig.getPrimaryFacets(), searchConfig.getFacetValuesShown());
@@ -161,7 +199,7 @@ public class SearchController {
     private Optional<String> sanitiseUrl(HttpServletRequest request, List<String> searchFilters) {
         final String requestURL = request.getRequestURL().toString();
         final String queryString = request.getQueryString();
-
+        
         try {
             final URI url = new URI(requestURL + "?" + queryString);
             url.toURL(); // this throws a MalformedURLException if the URL is not valid
@@ -170,11 +208,11 @@ public class SearchController {
             builder.replaceQueryParam("addfq", Collections.emptySet());
             builder.replaceQueryParam("removefq", Collections.emptySet());
             builder.replaceQueryParam("fq", searchFilters);
-
+            
             return Optional.of(builder.build().toUriString());
         } catch (MalformedURLException | URISyntaxException ex) {
             return Optional.empty();
         }
     }
-
+    
 }

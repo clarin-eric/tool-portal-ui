@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VloRecordSearchResult.JSON_PROPERTY_NUM_FOUND,
   VloRecordSearchResult.JSON_PROPERTY_START
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-28T16:40:36.564397+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-29T14:32:51.397037+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class VloRecordSearchResult {
   public static final String JSON_PROPERTY_RECORDS = "records";
   @jakarta.annotation.Nullable

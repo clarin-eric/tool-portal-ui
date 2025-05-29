@@ -9,7 +9,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**name** | **String** |  |  [optional] |
 |**valueCount** | **Integer** |  |  [optional] |
-|**values** | **Object** |  |  [optional] |
+|**values** | [**List&lt;ValueCount&gt;**](ValueCount.md) |  |  [optional] |
 |**hasMore** | **Boolean** |  |  [optional] |
 
 

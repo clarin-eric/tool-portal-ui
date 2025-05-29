@@ -18,58 +18,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import eu.clarin.cmdi.vlo.openapi.client.model.ValueCount;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
- * Model tests for Facet
+ * Model tests for ValueCount
  */
-class FacetTest {
-    private final Facet model = new Facet();
+class ValueCountTest {
+    private final ValueCount model = new ValueCount();
 
     /**
-     * Model tests for Facet
+     * Model tests for ValueCount
      */
     @Test
-    void testFacet() {
-        // TODO: test Facet
+    void testValueCount() {
+        // TODO: test ValueCount
     }
 
     /**
-     * Test the property 'name'
+     * Test the property 'value'
      */
     @Test
-    void nameTest() {
-        // TODO: test name
+    void valueTest() {
+        // TODO: test value
     }
 
     /**
-     * Test the property 'valueCount'
+     * Test the property 'label'
      */
     @Test
-    void valueCountTest() {
-        // TODO: test valueCount
+    void labelTest() {
+        // TODO: test label
     }
 
     /**
-     * Test the property 'values'
+     * Test the property 'count'
      */
     @Test
-    void valuesTest() {
-        // TODO: test values
-    }
-
-    /**
-     * Test the property 'hasMore'
-     */
-    @Test
-    void hasMoreTest() {
-        // TODO: test hasMore
+    void countTest() {
+        // TODO: test count
     }
 
 }

@@ -4,7 +4,7 @@ OpenAPI definition
 
 - API version: v0
 
-- Build date: 2025-05-28T16:40:36.564397+02:00[Europe/Amsterdam]
+- Build date: 2025-05-29T14:32:51.397037+02:00[Europe/Amsterdam]
 
 - Generator version: 7.13.0
 
@@ -131,6 +131,7 @@ Class | Method | HTTP request | Description
 
  - [Facet](docs/Facet.md)
  - [Resource](docs/Resource.md)
+ - [ValueCount](docs/ValueCount.md)
  - [VloRecord](docs/VloRecord.md)
  - [VloRecordSearchResult](docs/VloRecordSearchResult.md)
 

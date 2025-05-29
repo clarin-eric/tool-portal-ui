@@ -20,6 +20,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import eu.clarin.cmdi.vlo.openapi.client.model.ValueCount;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -32,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Facet.JSON_PROPERTY_VALUES,
   Facet.JSON_PROPERTY_HAS_MORE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-28T16:40:36.564397+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-29T14:32:51.397037+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
 public class Facet {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable
@@ -44,7 +48,7 @@ public class Facet {
 
   public static final String JSON_PROPERTY_VALUES = "values";
   @jakarta.annotation.Nullable
-  private Object values;
+  private List<ValueCount> values = new ArrayList<>();
 
   public static final String JSON_PROPERTY_HAS_MORE = "hasMore";
   @jakarta.annotation.Nullable
@@ -103,9 +107,17 @@ public class Facet {
     this.valueCount = valueCount;
   }
 
-  public Facet values(@jakarta.annotation.Nullable Object values) {
+  public Facet values(@jakarta.annotation.Nullable List<ValueCount> values) {
     
     this.values = values;
+    return this;
+  }
+
+  public Facet addValuesItem(ValueCount valuesItem) {
+    if (this.values == null) {
+      this.values = new ArrayList<>();
+    }
+    this.values.add(valuesItem);
     return this;
   }
 
@@ -117,14 +129,14 @@ public class Facet {
   @JsonProperty(JSON_PROPERTY_VALUES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Object getValues() {
+  public List<ValueCount> getValues() {
     return values;
   }
 
 
   @JsonProperty(JSON_PROPERTY_VALUES)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setValues(@jakarta.annotation.Nullable Object values) {
+  public void setValues(@jakarta.annotation.Nullable List<ValueCount> values) {
     this.values = values;
   }
 

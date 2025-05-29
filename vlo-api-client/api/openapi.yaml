@@ -409,7 +409,13 @@ components:
     Facet:
       example:
         valueCount: 0
-        values: "{}"
+        values:
+        - count: 6
+          label: label
+          value: value
+        - count: 6
+          label: label
+          value: value
         name: name
         hasMore: true
       properties:
@@ -419,7 +425,22 @@ components:
           format: int32
           type: integer
         values:
-          type: object
+          items:
+            $ref: '#/components/schemas/ValueCount'
+          type: array
         hasMore:
           type: boolean
+    ValueCount:
+      example:
+        count: 6
+        label: label
+        value: value
+      properties:
+        value:
+          type: string
+        label:
+          type: string
+        count:
+          format: int64
+          type: integer
 

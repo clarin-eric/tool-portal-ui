@@ -17,10 +17,14 @@
 package eu.clarin.toolportal.ui.service;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import eu.clarin.cmdi.vlo.openapi.client.api.FacetsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
+import eu.clarin.cmdi.vlo.openapi.client.model.ValueCount;
 import java.util.Comparator;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -66,6 +70,47 @@ public class FacetsService {
         final List<Facet> facets = service.getFacets(query, filterQueries, includeFacets, valueCountLimit);
         //apply include filter (also applies sorting of filter)
         return applyIncludeFilter(facets, includeFacets);
+    }
+
+    /**
+     * *
+     * Retrieves facet values for a facet taking into account the active
+     * query/filter
+     *
+     * @param facetName name of facet to get values for
+     * @param query records query to apply
+     * @param filterQueries records filter to apply
+     * @param from pagination: start
+     * @param size pagination: size
+     * @return
+     */
+    public Facet getFacet(String facetName, String query, List<String> filterQueries, int from, int size) {
+
+        final ResponseEntity<Facet> apiResponse = service.getFacetWithHttpInfo(facetName, query, filterQueries);
+        if (apiResponse.getStatusCode().isError()) {
+            if (apiResponse.getStatusCode().isSameCodeAs(HttpStatus.NOT_FOUND)) {
+                //facet not found
+                return null;
+            } else {
+                throw new RuntimeException("Error response from API while getting facet values for "
+                        + facetName
+                        + ": "
+                        + apiResponse.getStatusCode());
+            }
+        } else {
+
+            final Facet facet = apiResponse.getBody();
+            if (facet != null) {
+                FluentIterable<ValueCount> paginated = FluentIterable.from(facet.getValues());
+                if (from > 0) {
+                    paginated = paginated.skip(from);
+                }
+                facet.setValues(paginated.limit(size).toList());
+            }
+
+            return facet;
+        }
+
     }
 
     /**
