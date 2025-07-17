@@ -39,10 +39,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VloRecord.JSON_PROPERTY_SELFLINK,
   VloRecord.JSON_PROPERTY_PROFILE_ID,
   VloRecord.JSON_PROPERTY_RESOURCES,
+  VloRecord.JSON_PROPERTY_LANDING_PAGES,
   VloRecord.JSON_PROPERTY_PATH_VALUES_MAP,
   VloRecord.JSON_PROPERTY_FIELDS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-29T14:32:51.397037+02:00[Europe/Amsterdam]", comments = "Generator version: 7.13.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-07-17T17:34:13.589077+03:00[Europe/Riga]", comments = "Generator version: 7.14.0")
 public class VloRecord {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable
@@ -67,6 +68,10 @@ public class VloRecord {
   public static final String JSON_PROPERTY_RESOURCES = "resources";
   @jakarta.annotation.Nullable
   private List<Resource> resources = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_LANDING_PAGES = "landingPages";
+  @jakarta.annotation.Nullable
+  private List<Resource> landingPages = new ArrayList<>();
 
   public static final String JSON_PROPERTY_PATH_VALUES_MAP = "pathValuesMap";
   @jakarta.annotation.Nullable
@@ -237,6 +242,39 @@ public class VloRecord {
     this.resources = resources;
   }
 
+  public VloRecord landingPages(@jakarta.annotation.Nullable List<Resource> landingPages) {
+    
+    this.landingPages = landingPages;
+    return this;
+  }
+
+  public VloRecord addLandingPagesItem(Resource landingPagesItem) {
+    if (this.landingPages == null) {
+      this.landingPages = new ArrayList<>();
+    }
+    this.landingPages.add(landingPagesItem);
+    return this;
+  }
+
+  /**
+   * Get landingPages
+   * @return landingPages
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_LANDING_PAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public List<Resource> getLandingPages() {
+    return landingPages;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_LANDING_PAGES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLandingPages(@jakarta.annotation.Nullable List<Resource> landingPages) {
+    this.landingPages = landingPages;
+  }
+
   public VloRecord pathValuesMap(@jakarta.annotation.Nullable Map<String, List<String>> pathValuesMap) {
     
     this.pathValuesMap = pathValuesMap;
@@ -319,13 +357,14 @@ public class VloRecord {
         Objects.equals(this.selflink, vloRecord.selflink) &&
         Objects.equals(this.profileId, vloRecord.profileId) &&
         Objects.equals(this.resources, vloRecord.resources) &&
+        Objects.equals(this.landingPages, vloRecord.landingPages) &&
         Objects.equals(this.pathValuesMap, vloRecord.pathValuesMap) &&
         Objects.equals(this.fields, vloRecord.fields);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, dataRoot, sourcePath, selflink, profileId, resources, pathValuesMap, fields);
+    return Objects.hash(id, dataRoot, sourcePath, selflink, profileId, resources, landingPages, pathValuesMap, fields);
   }
 
   @Override
@@ -338,6 +377,7 @@ public class VloRecord {
     sb.append("    selflink: ").append(toIndentedString(selflink)).append("\n");
     sb.append("    profileId: ").append(toIndentedString(profileId)).append("\n");
     sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
+    sb.append("    landingPages: ").append(toIndentedString(landingPages)).append("\n");
     sb.append("    pathValuesMap: ").append(toIndentedString(pathValuesMap)).append("\n");
     sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
     sb.append("}");

@@ -46,20 +46,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
         <!-- Single search result item (representing a record or record group) -->
-        <article th:fragment="resultItem(record)" th:object="${record}">
+        <article th:fragment="resultItem(record)" th:object="${record}"
+                 th:with="landingPageRef=*{fields['_landingPageRef']}">
             <h3>
                 <a th:href="|records/${record.id}|">
                     <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
                     <span th:unless="*{fields['name']}" th:text="#{record.untitleRecord}">[Untitled record]</span>
                 </a>
             </h3>
+            <div class="badge bg-info" th:text="#{search.result.resourceCount(*{fields['_resourceRefCount'][0]})}">
+                [N resources]
+            </div>
             <div class="mb-2" th:if="*{fields['description']}" th:each="description:*{fields['description']}">
                 <div th:text="${description}">[description]</div>
             </div>
             <div class="mb-2">
-                <span class="badge bg-info" th:text="#{search.result.resourceCount(*{fields['_resourceRefCount'][0]})}">
-                    [N resources]
-                </span>
+                <div class="mb-1" th:if="${landingPageRef}">
+                    <a th:href="${landingPageRef}" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-bolt"></i>
+                        [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
+                    </a>
+                </div>
             </div>
         </article>
 

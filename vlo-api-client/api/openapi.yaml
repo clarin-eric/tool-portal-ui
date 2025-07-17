@@ -61,7 +61,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VloRecordSearchResult'
+                $ref: "#/components/schemas/VloRecordSearchResult"
           description: OK
       summary: Retrieve one or more records by query and/or filtered
       tags:
@@ -75,7 +75,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VloRecord'
+              $ref: "#/components/schemas/VloRecord"
         required: true
       responses:
         "500":
@@ -88,7 +88,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VloRecord'
+                $ref: "#/components/schemas/VloRecord"
           description: OK
       summary: Submit a new record
       tags:
@@ -119,14 +119,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VloRecord'
+                $ref: "#/components/schemas/VloRecord"
           description: A record with the specified identifier that is present in the
             catalogue
         "404":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VloRecord'
+                $ref: "#/components/schemas/VloRecord"
           description: No record with the specified identifier is present in the catalogue
       summary: Retrieve an individual record by its identifier
       tags:
@@ -166,8 +166,7 @@ paths:
           content:
             application/json:
               schema:
-                additionalProperties:
-                  type: object
+                additionalProperties: {}
           description: OK
       summary: Retrieve the exact number of records that can be retrieved by query
         and/or filtered as JSON object with a single property 'numFound'
@@ -226,7 +225,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Facet'
+                  $ref: "#/components/schemas/Facet"
                 type: array
           description: OK
       summary: Get the facets and their (top) values and their counts
@@ -274,7 +273,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Facet'
+                $ref: "#/components/schemas/Facet"
           description: OK
       summary: Get the facets and their (top) values and their counts
       tags:
@@ -316,11 +315,20 @@ components:
           mediaType: mediaType
           id: id
           type: type
+        landingPages:
+        - ref: ref
+          mediaType: mediaType
+          id: id
+          type: type
+        - ref: ref
+          mediaType: mediaType
+          id: id
+          type: type
         id: id
         fields:
           key:
-          - "{}"
-          - "{}"
+          - ""
+          - ""
         dataRoot: dataRoot
         sourcePath: sourcePath
       properties:
@@ -336,7 +344,11 @@ components:
           type: string
         resources:
           items:
-            $ref: '#/components/schemas/Resource'
+            $ref: "#/components/schemas/Resource"
+          type: array
+        landingPages:
+          items:
+            $ref: "#/components/schemas/Resource"
           type: array
         pathValuesMap:
           additionalProperties:
@@ -344,8 +356,7 @@ components:
               type: string
         fields:
           additionalProperties:
-            items:
-              type: object
+            items: {}
     VloRecordSearchResult:
       example:
         records:
@@ -364,11 +375,20 @@ components:
             mediaType: mediaType
             id: id
             type: type
+          landingPages:
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
           id: id
           fields:
             key:
-            - "{}"
-            - "{}"
+            - ""
+            - ""
           dataRoot: dataRoot
           sourcePath: sourcePath
         - pathValuesMap:
@@ -386,11 +406,20 @@ components:
             mediaType: mediaType
             id: id
             type: type
+          landingPages:
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
+          - ref: ref
+            mediaType: mediaType
+            id: id
+            type: type
           id: id
           fields:
             key:
-            - "{}"
-            - "{}"
+            - ""
+            - ""
           dataRoot: dataRoot
           sourcePath: sourcePath
         numFound: 0
@@ -398,7 +427,7 @@ components:
       properties:
         records:
           items:
-            $ref: '#/components/schemas/VloRecord'
+            $ref: "#/components/schemas/VloRecord"
           type: array
         numFound:
           format: int64
@@ -426,7 +455,7 @@ components:
           type: integer
         values:
           items:
-            $ref: '#/components/schemas/ValueCount'
+            $ref: "#/components/schemas/ValueCount"
           type: array
         hasMore:
           type: boolean

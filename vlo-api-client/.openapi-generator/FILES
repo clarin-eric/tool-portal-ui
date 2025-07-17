@@ -40,10 +40,3 @@ src/main/java/eu/clarin/cmdi/vlo/openapi/client/model/Resource.java
 src/main/java/eu/clarin/cmdi/vlo/openapi/client/model/ValueCount.java
 src/main/java/eu/clarin/cmdi/vlo/openapi/client/model/VloRecord.java
 src/main/java/eu/clarin/cmdi/vlo/openapi/client/model/VloRecordSearchResult.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/api/FacetsApiTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/api/RecordsApiTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/model/FacetTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/model/ResourceTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/model/ValueCountTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/model/VloRecordSearchResultTest.java
-src/test/java/eu/clarin/cmdi/vlo/openapi/client/model/VloRecordTest.java

@@ -35,7 +35,7 @@
                 <!-- See https://github.com/OpenAPITools/openapi-generator -->
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.13.0</version>
+                <version>7.14.0</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
