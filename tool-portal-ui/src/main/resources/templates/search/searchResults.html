@@ -46,8 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
         <!-- Single search result item (representing a record or record group) -->
-        <article th:fragment="resultItem(record)" th:object="${record}"
-                 th:with="landingPageRef=*{fields['_landingPageRef']}">
+        <article th:fragment="resultItem(record)" th:object="${record}">
             <h3>
                 <a th:href="|records/${record.id}|">
                     <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
@@ -61,11 +60,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div th:text="${description}">[description]</div>
             </div>
             <div class="mb-2">
-                <div class="mb-1" th:if="${landingPageRef}">
-                    <a th:href="${landingPageRef}" class="btn btn-outline-primary">
-                        <i class="fa-solid fa-bolt"></i>
-                        [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
-                    </a>
+                <div class="mb-1" th:if="*{landingPages}">
+                    <div  th:each="landingPage: *{landingPages}">
+                        <a th:href="${landingPage.ref}" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-bolt"></i>
+                            [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
+                        </a>
+                    </div>
                 </div>
             </div>
         </article>
