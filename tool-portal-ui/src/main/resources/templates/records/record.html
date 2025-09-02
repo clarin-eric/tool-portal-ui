@@ -23,19 +23,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <div class="container-xl">
-            
+
             <nav th:replace="~{fragments/base :: top-navigation('record')}">
                 [Navigation]
             </nav>
 
             <main th:object="${record}">
+                <div th:if="${includeBackLink}">
+                    <a href="/search" hx-on:click="event.preventDefault(); history.back();">Back to search results</a>
+                </div>
+                
                 <h1 th:text="*{fields?.name[0]}">Title</h1>
 
-                <div th:if="*{fields['description']}" th:each="description:*{fields['description']}">
+                <div th:if="*{fields['description']}" 
+                     th:each="description:*{fields['description']}"
+                     class="mb-2" >
                     <p th:text="${description}">description</p>
                 </div>
+
+                <div th:if="*{landingPages}" class="mb-2">
+                    <div  th:each="landingPage: *{landingPages}">
+                        <a th:href="${landingPage.ref}" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-bolt"></i>
+                            [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
+                        </a>
+                    </div>
+                </div>
             </main>
-            
+
         </div>
     </body>
 </html>

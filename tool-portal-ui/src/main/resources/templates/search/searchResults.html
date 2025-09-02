@@ -48,7 +48,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <!-- Single search result item (representing a record or record group) -->
         <article th:fragment="resultItem(record)" th:object="${record}">
             <h3>
-                <a th:href="|records/${record.id}|">
+                <a th:href="|records/${record.id}|"
+                   th:hx-get="|records/${record.id}?backLink=true|"
+                   th:hx-push-url="|records/${record.id}|"
+                   hx-target="main" hx-select="main" hx-swap="outerHTML">
                     <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
                     <span th:unless="*{fields['name']}" th:text="#{record.untitleRecord}">[Untitled record]</span>
                 </a>
