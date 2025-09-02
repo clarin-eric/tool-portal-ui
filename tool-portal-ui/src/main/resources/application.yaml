@@ -2,28 +2,28 @@ spring:
   application:
     name: CLARIN Tool Portal UI
 
-server:
-  port: 8091
-
-toolportal:
-  search:
-    facetValuesShown: 8
-    primaryFacets:
-#      - Tool type
-#      - Research domain
-      - resourceClass
-      - availability
-      - distributionType
-      - languageCode
-      - organisation
-      - projectName
-      - keywords
-    secondaryFacets:
-      - country
-#      - Platform
-#      - Input language
-#      - Output language
-#      - Annotation type
+#server:
+#  port: 8091
+#
+#toolportal:
+#  search:
+#    facetValuesShown: 8
+#    primaryFacets:
+##      - Tool type
+##      - Research domain
+#      - resourceClass
+#      - availability
+#      - distributionType
+#      - languageCode
+#      - organisation
+#      - projectName
+#      - keywords
+#    secondaryFacets:
+#      - country
+##      - Platform
+##      - Input language
+##      - Output language
+##      - Annotation type
 
     
 #api:
