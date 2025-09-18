@@ -49,7 +49,7 @@ public class RecordsController {
         
         //TODO: if set, add header value for HTMX origin URL to model for back link
 
-        return "/records/record";
+        return "records/record";
     }
 
 }
