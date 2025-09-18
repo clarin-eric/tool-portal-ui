@@ -29,24 +29,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </nav>
 
             <main th:object="${record}">
-                <div th:if="${includeBackLink}">
-                    <a href="/search" hx-on:click="event.preventDefault(); history.back();">Back to search results</a>
-                </div>
-                
-                <h1 th:text="*{fields?.name[0]}">Title</h1>
-
-                <div th:if="*{fields['description']}" 
-                     th:each="description:*{fields['description']}"
-                     class="mb-2" >
-                    <p th:text="${description}">description</p>
+                <div th:if="${includeBackLink}" class="mt-2 mb-2">
+                    <a class="btn btn-outline-primary btn-sm" href="/search" hx-on:click="event.preventDefault(); history.back();">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to search results
+                    </a>
                 </div>
 
-                <div th:if="*{landingPages}" class="mb-2">
-                    <div  th:each="landingPage: *{landingPages}">
-                        <a th:href="${landingPage.ref}" class="btn btn-outline-primary">
-                            <i class="fa-solid fa-bolt"></i>
-                            [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
-                        </a>
+                <div class="container-md">
+
+                    <div class="row mt-md-2">
+                        <div class="col-md-8">
+                            <h1 th:text="*{fields?.name[0]}">Title</h1>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div th:if="*{landingPages}" class="mt-2 mb-2">
+                                <div  th:each="landingPage: *{landingPages}">
+                                    <a th:href="${landingPage.ref}" class="btn btn-primary p-3">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        [[*{fields['name']}?#{record.useToolLink(*{fields['name'][0]})}:#{record.useToolLinkUntitled}]]
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+
+                            <div th:if="*{fields['description']}" 
+                                 th:each="description:*{fields['description']}"
+                                 class="mb-2" >
+                                <p th:text="${description}">description</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div th:if="*{resources}" class="mt-2 mb-2">
+                                <h2 class="visually-hidden h5">Resources</h2>
+                                <div class="card mb-2" th:each="resource: *{resources}">
+                                    <div class="card-body">
+                                        <h3 class="h5 card-title">Resource</h3>
+                                        <div th:if="${resource.mediaType}" class="h6 card-subtitle mb-2 text-body-secondary">[[${resource.mediaType}]]</div>
+                                        <div th:unless="${resource.mediaType}" class="h6 card-subtitle mb-2 text-body-secondary">Unknown type</div>
+                                        <div>
+                                            <a class="btn btn-outline-secondary btn-sm" th:href="${resource.ref}">
+                                                <i class="fa-solid fa-cloud-arrow-down"></i>
+                                                Access
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

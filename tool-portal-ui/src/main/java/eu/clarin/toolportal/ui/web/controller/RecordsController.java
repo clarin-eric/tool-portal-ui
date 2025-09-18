@@ -46,8 +46,6 @@ public class RecordsController {
         final VloRecord record = service.getRecordById(recordId);
         model.addAttribute("record", record);
         model.addAttribute("includeBackLink", includeBackLink);
-        
-        //TODO: if set, add header value for HTMX origin URL to model for back link
 
         return "records/record";
     }
