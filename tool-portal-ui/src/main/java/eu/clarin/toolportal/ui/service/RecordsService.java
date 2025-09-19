@@ -51,4 +51,16 @@ public class RecordsService {
             return filter.apply(record);
         }
     }
+
+    public static List<VloRecord> applyFilter(List<VloRecord> records, RecordFilter filter) {
+        return records.stream()
+                .map(record -> applyFilter(record, filter))
+                .toList();
+
+    }
+
+    public static VloRecordSearchResult applyFilter(VloRecordSearchResult result, RecordFilter filter) {
+        return result.records(applyFilter(result.getRecords(), filter));
+    }
+
 }

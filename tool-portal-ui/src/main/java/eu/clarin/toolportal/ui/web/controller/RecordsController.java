@@ -37,7 +37,6 @@ public class RecordsController {
 
     private final RecordsService service;
 
-    @Nullable
     private final RecordFilter recordFilter;
 
     public RecordsController(RecordsService service, RecordFilter recordFilter) {
