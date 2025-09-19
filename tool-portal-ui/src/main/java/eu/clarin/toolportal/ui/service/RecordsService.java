@@ -16,6 +16,7 @@
  */
 package eu.clarin.toolportal.ui.service;
 
+import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
@@ -41,5 +42,13 @@ public class RecordsService {
 
     public VloRecordSearchResult getRecords(String query, List<String> filters, Integer from, Integer size) {
         return records.getRecords(query, filters, from, size);
+    }
+
+    public static VloRecord applyFilter(VloRecord record, RecordFilter filter) {
+        if (filter == null) {
+            return record;
+        } else {
+            return filter.apply(record);
+        }
     }
 }

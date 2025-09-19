@@ -17,7 +17,9 @@
 package eu.clarin.toolportal.ui.web.controller;
 
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
+import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,15 +37,21 @@ public class RecordsController {
 
     private final RecordsService service;
 
-    public RecordsController(RecordsService service) {
+    @Nullable
+    private final RecordFilter recordFilter;
+
+    public RecordsController(RecordsService service, RecordFilter recordFilter) {
         this.service = service;
+        this.recordFilter = recordFilter;
     }
 
     @GetMapping("/{recordId}")
     public String record(Model model,
             @PathVariable String recordId,
             @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
-        final VloRecord record = service.getRecordById(recordId);
+        final VloRecord record = RecordsService.applyFilter(
+                service.getRecordById(recordId),
+                recordFilter);
         model.addAttribute("record", record);
         model.addAttribute("includeBackLink", includeBackLink);
 
