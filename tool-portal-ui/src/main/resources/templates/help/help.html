@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2025 twagoo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head th:replace="~{fragments/base :: head}">
+        <title>CLARIN Tool Portal</title> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <div class="container-xl">
+
+            <nav th:replace="~{fragments/base :: top-navigation('help')}">
+                [Navigation]
+            </nav>
+
+            <main>
+
+                <div class="container-md mt-md-2 p-lg-5">
+
+                    <div class="row">
+
+                        <div class="col-xl-10">
+
+                            <h2>Using the CLARIN Tool Portal prototype</h2>
+
+                            <p>
+                                Thank you for visiting the CLARIN Tool Portal prototype.
+                                Given the prototype status of this service, it is
+                                currently limited in terms of its functionality, content
+                                and documentation.
+                            </p>
+
+                            <p>
+                                The aim of the CLARIN Tool Portal is to offer a uniform
+                                interface for searching and discovering tools and 
+                                services that work with language resources, or can help
+                                in producing, or managing such resources, and that are
+                                relevant to the CLARIN community.
+                            </p>
+
+                            <p>
+                                If you are looking for tools or resources and would
+                                like to explore beyond what is currently available
+                                from this prototype, we suggest visiting the existing
+                                catalogues and other resources for discovering language
+                                tools and services that are listed below on this page.
+                            </p>
+
+                            <p>
+                                We appreciate any feedback or suggestions related to
+                                the CLARIN Tool Portal!
+                                You may contact us via the following e-mail address:
+                                <a href="mailto:toolportal@clarin.eu">toolportal@clarin.eu</a>.
+                            </p>
+
+                            <h3>Existing resources for discovering language tools
+                                and services</h3>
+                            
+                            <ul>
+                                <li>
+                                    <a href="https://switchboard.clarin.eu">https://switchboard.clarin.eu</a>
+                                </li>
+                                <li>
+                                    <a href="https://vlo.clarin.eu">https://vlo.clarin.eu</a>
+                                </li>
+                                <li>
+                                    <a href="https://tools.clariah.nl">https://tools.clariah.nl</a>
+                                </li>
+                                <!--
+                                    * LRT inventory
+                                    * SSHOMP
+                                -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </body>
+</html>
