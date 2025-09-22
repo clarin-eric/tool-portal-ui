@@ -68,7 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="spinner-border htmx-indicator float-end" role="status">
                             <span class="visually-hidden" th:text="#{spinner.loading}">Loading...</span>
                         </div>
-                        
+
                         <div th:unless="${result}" th:text="#{search.results.noResults}">
                             [No search results]
                         </div>
@@ -84,6 +84,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </div>
             </main>
+
+            <footer th:replace="~{fragments/base :: footer}"></footer>
+
         </div>
     </body>
 </html>
