@@ -58,6 +58,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="row">
                         <div class="col-md-8">
 
+                            <div class="card mb-2 p-2">
+                                <div class="mb-2" th:each="field: ${ {
+                                     'collection',
+                                     'languageCode',
+                                     'organisation'} }">
+                                    <th:block th:if="${#maps.containsKey(record.fields, field)}">
+                                        <strong>[[ #{|fields.labels.${field}|} ]]:</strong>
+                                        [[ ${record.fields[__${field}__]} ]]
+                                    </th:block>
+                                </div>
+                            </div>
+
                             <div th:if="*{fields['description']}" 
                                  th:each="description:*{fields['description']}"
                                  class="mb-2" >
