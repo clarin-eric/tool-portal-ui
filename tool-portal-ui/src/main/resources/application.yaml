@@ -9,9 +9,10 @@ spring:
 #  search:
 #    facetValuesShown: 8
 #    primaryFacets:
-##      - Tool type
-##      - Research domain
 #      - resourceClass
+#      - toolType
+#      - task
+##      - Field of science/technology
 #      - availability
 #      - distributionType
 #      - languageCode
