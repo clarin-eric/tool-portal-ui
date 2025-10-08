@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ul id="results-list" class="d-block ps-0">
                     <li class="card mb-2 p-2" th:each="record: *{records}">
-                        <article th:replace=":: resultItem(${record})">
+                        <article th:replace="~{:: resultItem(${record})}">
                             [result item]
                         </article>
                     </li>
