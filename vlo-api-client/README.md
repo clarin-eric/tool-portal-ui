@@ -4,7 +4,7 @@ OpenAPI definition
 
 - API version: v0
 
-- Build date: 2025-07-17T17:34:13.589077+03:00[Europe/Riga]
+- Build date: 2025-10-09T17:54:17.658131+02:00[Europe/Amsterdam]
 
 - Generator version: 7.14.0
 
@@ -98,8 +98,9 @@ public class FacetsApiExample {
         String facetName = "facetName_example"; // String | 
         String q = "*:*"; // String | 
         List<String> fq = Arrays.asList(); // List<String> | 
+        Integer valueCountLimit = 56; // Integer | 
         try {
-            Facet result = apiInstance.getFacet(facetName, q, fq);
+            Facet result = apiInstance.getFacet(facetName, q, fq, valueCountLimit);
             System.out.println(result);
         } catch (HttpStatusCodeException e) {
             System.err.println("Exception when calling FacetsApi#getFacet");

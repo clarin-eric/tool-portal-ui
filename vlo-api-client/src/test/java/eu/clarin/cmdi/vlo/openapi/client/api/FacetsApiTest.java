@@ -42,7 +42,8 @@ public class FacetsApiTest {
         String facetName = null;
         String q = null;
         List<String> fq = null;
-        Facet response = api.getFacet(facetName, q, fq);
+        Integer valueCountLimit = null;
+        Facet response = api.getFacet(facetName, q, fq, valueCountLimit);
 
         // TODO: test validations
     }

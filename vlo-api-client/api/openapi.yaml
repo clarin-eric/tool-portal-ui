@@ -262,6 +262,14 @@ paths:
             type: string
           type: array
         style: form
+      - explode: true
+        in: query
+        name: valueCountLimit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
       responses:
         "500":
           content:

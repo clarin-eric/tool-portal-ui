@@ -24,7 +24,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-07-17T17:34:13.589077+03:00[Europe/Riga]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-09T17:54:17.658131+02:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
 public class FacetsApi {
     private ApiClient apiClient;
 
@@ -52,10 +52,11 @@ public class FacetsApi {
      * @param facetName The facetName parameter
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param valueCountLimit The valueCountLimit parameter
      * @return Facet
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getFacetRequestCreation(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    private ResponseSpec getFacetRequestCreation(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer valueCountLimit) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'facetName' is set
         if (facetName == null) {
@@ -73,6 +74,7 @@ public class FacetsApi {
 
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "q", q));
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "valueCountLimit", valueCountLimit));
         
         final String[] localVarAccepts = { 
             "*/*", "application/json"
@@ -95,12 +97,13 @@ public class FacetsApi {
      * @param facetName The facetName parameter
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param valueCountLimit The valueCountLimit parameter
      * @return Facet
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Facet getFacet(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    public Facet getFacet(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer valueCountLimit) throws RestClientResponseException {
         ParameterizedTypeReference<Facet> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getFacetRequestCreation(facetName, q, fq).body(localVarReturnType);
+        return getFacetRequestCreation(facetName, q, fq, valueCountLimit).body(localVarReturnType);
     }
 
     /**
@@ -111,12 +114,13 @@ public class FacetsApi {
      * @param facetName The facetName parameter
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param valueCountLimit The valueCountLimit parameter
      * @return ResponseEntity&lt;Facet&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Facet> getFacetWithHttpInfo(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
+    public ResponseEntity<Facet> getFacetWithHttpInfo(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer valueCountLimit) throws RestClientResponseException {
         ParameterizedTypeReference<Facet> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getFacetRequestCreation(facetName, q, fq).toEntity(localVarReturnType);
+        return getFacetRequestCreation(facetName, q, fq, valueCountLimit).toEntity(localVarReturnType);
     }
 
     /**
@@ -127,11 +131,12 @@ public class FacetsApi {
      * @param facetName The facetName parameter
      * @param q The q parameter
      * @param fq The fq parameter
+     * @param valueCountLimit The valueCountLimit parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getFacetWithResponseSpec(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
-        return getFacetRequestCreation(facetName, q, fq);
+    public ResponseSpec getFacetWithResponseSpec(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer valueCountLimit) throws RestClientResponseException {
+        return getFacetRequestCreation(facetName, q, fq, valueCountLimit);
     }
     /**
      * Get the facets and their (top) values and their counts

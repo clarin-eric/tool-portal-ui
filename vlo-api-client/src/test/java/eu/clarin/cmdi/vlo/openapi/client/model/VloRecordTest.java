@@ -91,6 +91,14 @@ class VloRecordTest {
     }
 
     /**
+     * Test the property 'landingPages'
+     */
+    @Test
+    void landingPagesTest() {
+        // TODO: test landingPages
+    }
+
+    /**
      * Test the property 'pathValuesMap'
      */
     @Test

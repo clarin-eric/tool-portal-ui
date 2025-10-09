@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost:8080*
 
 ## getFacet
 
-> Facet getFacet(facetName, q, fq)
+> Facet getFacet(facetName, q, fq, valueCountLimit)
 
 Get the facets and their (top) values and their counts
 
@@ -34,8 +34,9 @@ public class Example {
         String facetName = "facetName_example"; // String | 
         String q = "*:*"; // String | 
         List<String> fq = Arrays.asList(); // List<String> | 
+        Integer valueCountLimit = 56; // Integer | 
         try {
-            Facet result = apiInstance.getFacet(facetName, q, fq);
+            Facet result = apiInstance.getFacet(facetName, q, fq, valueCountLimit);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FacetsApi#getFacet");
@@ -56,6 +57,7 @@ public class Example {
 | **facetName** | **String**|  | |
 | **q** | **String**|  | [optional] [default to *:*] |
 | **fq** | [**List&lt;String&gt;**](String.md)|  | [optional] |
+| **valueCountLimit** | **Integer**|  | [optional] |
 
 ### Return type
 
