@@ -149,7 +149,16 @@ public class SearchController {
 
         if (facetExists(facetName)) {
             final Facet facet = facetsService.getFacet(facetName, query, filterQuery, from, size);
+            final Map<String, Collection<String>> filterQueryMap
+                    = constructFilterQueryMap(filterQuery, null, null);
+            final List<String> searchFilters = flattenFilterMap(filterQueryMap);
+
             modelAndView.addObject("facet", facet);
+
+            modelAndView.addObject("query", query);
+            modelAndView.addObject("filterQueryMap", filterQueryMap);
+            modelAndView.addObject("searchFilters", searchFilters);
+
         } else {
             modelAndView.setStatus(HttpStatus.NOT_FOUND);
         }

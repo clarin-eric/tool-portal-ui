@@ -20,15 +20,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
     <th:block th:if="${facet}">
         <h1 th:text="${facet.name}">[facet]</h1>
-        <ul>
-            <li th:each="value : ${facet.values}">
-                <span th:text="${value.value}">value</span>
-                <span th:text="|(${value.count})|">(count)</span>
-            </li>
-        </ul>
+        <div th:replace="~{:: facetValues(
+             facet=${facet}, 
+             selection=${filterQueryMap[facet.name]},
+             query=${query}, 
+             searchFilters=${searchFilters})}">[Facet values]</div>
     </th:block>
     <th:block th:unless="${facet}">
         Facet not found
     </th:block>
+
+    <th:block th:remove="all">
+
+        <div th:fragment="facetValues(facet,selection,query,searchFilters)">
+            <!-- Selected values -->
+            <ul th:if="${selection}" class="m-0 p-0" style="list-style: none;">
+                <li th:each="selected : ${selection}">
+                    [[${selected}]]
+                    <a th:href="@{/search(q=${query},fq=${searchFilters},removefq=|${facet.name}:${selected}|)}"><i class="fa-solid fa-xmark"></i></a>
+                </li>
+            </ul>
+
+            <!-- Unselected values with counts -->
+            <ul class="m-0 p-0" style="list-style: none;">
+                <th:block th:each="facetValue : ${facet.values}">
+                    <li th:unless="${selection} and ${#lists.contains(selection, facetValue.value)}"
+                        class="p-0 m-0">
+                        <a th:href="@{/search(q=${query},fq=${searchFilters},addfq=|${facet.name}:${facetValue.value}|)}">[[${facetValue.value}]]</a>
+                        ([[${facetValue.count}]])
+                    </li>
+                </th:block>
+            </ul>
+
+            <div th:if="${facet.hasMore ?: true}" class="mt-3 pt-1 border-top">
+                <a href="#">...more</a>
+            </div>
+        </div>
+    </th:block>
+
 </body>
 </html>
