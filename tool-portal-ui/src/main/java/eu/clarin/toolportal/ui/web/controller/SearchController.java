@@ -158,6 +158,7 @@ public class SearchController {
             modelAndView.addObject("query", query);
             modelAndView.addObject("filterQueryMap", filterQueryMap);
             modelAndView.addObject("searchFilters", searchFilters);
+            modelAndView.addObject("size", size);
 
         } else {
             modelAndView.setStatus(HttpStatus.NOT_FOUND);
