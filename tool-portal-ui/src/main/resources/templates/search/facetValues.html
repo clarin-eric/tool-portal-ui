@@ -63,8 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                    th:hx-get="@{/search/values/{facet}(
                    facet=${facet.name},q=${query},fq=${searchFilters},
                    size=${valueCount+5})}"
-                   hx-swap="innerHTML"
-                   hx-target="closest .facet-values"
+                   hx-swap="outerHTML show:bottom"
+                   th:hx-target="|#facet-values-${facet.name}|"
                    th:hx-select="|#facet-values-${facet.name}|"
                    >...more</a>
             </div>
