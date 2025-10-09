@@ -58,10 +58,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <div th:if="${facet.hasMore ?: true}" class="mt-3 pt-1 border-top">
                 <a th:href="@{/search/values/{facet}(
-                   facet=${facet.name},
+                   facet=${facet.name},q=${query},fq=${searchFilters},
                    size=${valueCount+5})}"
                    th:hx-get="@{/search/values/{facet}(
-                   facet=${facet.name},
+                   facet=${facet.name},q=${query},fq=${searchFilters},
                    size=${valueCount+5})}"
                    hx-swap="innerHTML"
                    hx-target="closest .facet-values"
