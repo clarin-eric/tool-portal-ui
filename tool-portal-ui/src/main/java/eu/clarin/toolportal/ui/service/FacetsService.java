@@ -81,12 +81,12 @@ public class FacetsService {
      * @param query records query to apply
      * @param filterQueries records filter to apply
      * @param from pagination: start
-     * @param size pagination: size
+     * @param valueCountLimit pagination: size
      * @return
      */
-    public Facet getFacet(String facetName, String query, List<String> filterQueries, int from, int size) {
+    public Facet getFacet(String facetName, String query, List<String> filterQueries, int from, int valueCountLimit) {
 
-        final ResponseEntity<Facet> apiResponse = service.getFacetWithHttpInfo(facetName, query, filterQueries);
+        final ResponseEntity<Facet> apiResponse = service.getFacetWithHttpInfo(facetName, query, filterQueries, valueCountLimit);
         if (apiResponse.getStatusCode().isError()) {
             if (apiResponse.getStatusCode().isSameCodeAs(HttpStatus.NOT_FOUND)) {
                 //facet not found
@@ -105,7 +105,7 @@ public class FacetsService {
                 if (from > 0) {
                     paginated = paginated.skip(from);
                 }
-                facet.setValues(paginated.limit(size).toList());
+                facet.setValues(paginated.limit(valueCountLimit).toList());
             }
 
             return facet;
