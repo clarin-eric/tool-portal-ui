@@ -9,6 +9,7 @@ spring:
 #  search:
 #    facetValuesShown: 8
 #    primaryFacets:
+#      - dataProvider
 #      - resourceClass
 #      - toolType
 #      - task
