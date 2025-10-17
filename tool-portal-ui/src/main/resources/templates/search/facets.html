@@ -18,7 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 
     <body>
-        <div th:fragment="facets(facets, query, searchFilters, filterQueryMap)">
+        <div th:fragment="facets(facets, query, searchFilters, filterQueryMap)"
+             hx-boost="true"
+             hx-target="#search-results-and-facets"
+             hx-select="#search-results-and-facets">
             <div th:each="facet: ${facets}" class="facet ms-0 mb-3 p-1 border">
                 <h3 class="h4" th:text="#{|fields.labels.${facet.name}|}">[Facet name]</h3>
 
