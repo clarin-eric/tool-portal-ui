@@ -96,7 +96,7 @@ public class SearchController {
             HttpServletResponse response) {
         final Map<String, Collection<String>> filterQueryMap
                 = constructFilterQueryMap(filterQuery, addToFilterQuery, removeFromFilterQuery);
-
+        
         // Query record service
         // TODO: use search service once available
         final List<String> searchFilters = flattenFilterMap(filterQueryMap);
