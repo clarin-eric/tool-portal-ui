@@ -102,7 +102,7 @@ public class SearchController {
         final List<String> searchFilters = flattenFilterMap(filterQueryMap);
         final VloRecordSearchResult result
                 = RecordsService.applyFilter(recordsService.getRecords(query, searchFilters, from, size), recordFilter);
-
+        
         // Set model attributes
         model.addAttribute("result", result);
         model.addAttribute("query", query);

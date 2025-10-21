@@ -22,16 +22,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
              hx-boost="true"
              hx-target="#search-results-and-facets"
              hx-select="#search-results-and-facets">
-            <div th:each="facet: ${facets}" class="facet ms-0 mb-3 p-1 border">
-                <h3 class="h4" th:text="#{|fields.labels.${facet.name}|}">[Facet name]</h3>
+            <th:block th:each="facet: ${facets}">
+                <div class="facet ms-0 mb-3 p-1 border"
+                     th:if="${facet.getValueCount()} > 0">
+                    <h3 class="h4" th:text="#{|fields.labels.${facet.name}|}">[Facet name]</h3>
 
-                <div th:replace="~{search/facetValues :: facetValues(
-                     facet=${facet}, 
-                     selection=${filterQueryMap[facet.name]},
-                     query=${query}, 
-                     searchFilters=${searchFilters},
-                     valueCount=10)}">[Facet values]</div>
-            </div>
+                    <div th:replace="~{search/facetValues :: facetValues(
+                         facet=${facet}, 
+                         selection=${filterQueryMap[facet.name]},
+                         query=${query}, 
+                         searchFilters=${searchFilters},
+                         valueCount=10)}">[Facet values]</div>
+                </div>
+            </th:block>
         </div>
 
     </body>
