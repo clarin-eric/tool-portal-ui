@@ -50,7 +50,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <th:block th:each="facetValue : ${facet.values}">
                     <li th:unless="${selection} and ${#lists.contains(selection, facetValue.value)}"
                         class="p-0 m-0">
-                        <a th:href="@{/search(q=${query},fq=${searchFilters},addfq=|${facet.name}:${facetValue.value}|)}">[[${facetValue.value}]]</a>
+                        <a th:href="@{/search(q=${query},fq=${searchFilters},addfq=|${facet.name}:${facetValue.value}|)}"
+                           th:text="${@facetValueService.getLabel(facet.name, facetValue.value, #locale)}">
+                            {value}
+                        </a>
                         ([[${facetValue.count}]])
                     </li>
                 </th:block>
