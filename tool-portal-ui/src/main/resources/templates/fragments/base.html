@@ -69,9 +69,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <footer th:fragment="footer" class="row row-cols-1 row-cols-md-3 py-4 my-5 text-bg-light">
             <div class="col mb-3">
                 <p class="text-body-secondary"><a href="/help">About</a></p>
-                <p class="text-body-secondary">v.0.0.1-alpha</p>
+                <p class="text-body-secondary">[[|v#{git.build.version}|]]</p>
             </div>
-            <div class="col mb-3 text-md-center">Service provided by <a href="https://www.clarin.eu">CLARIN</a></div>
+            <div class="col mb-3 text-md-center">
+                <p>Service provided by <a href="https://www.clarin.eu">CLARIN</a></p>
+                <p class="text-body-secondary">
+                    <span class="text-light">
+                        built: [[#{git.build.time}]]; revision: [[#{git.commit.id.abbrev}]]
+                    </span>
+                </p>
+            </div>
             <div class="col mb-3 text-md-end">
                 <p><a href="mailto:toolportal@clarin.eu">Contact</a></p>
             </div>

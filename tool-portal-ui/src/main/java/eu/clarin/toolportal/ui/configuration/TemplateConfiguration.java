@@ -39,7 +39,10 @@ public class TemplateConfiguration {
                 "classpath:messages/common",
                 "classpath:messages/fields",
                 "classpath:messages/search",
-                "classpath:messages/records");
+                "classpath:messages/records",
+                // git.properties is generated at build time
+                // by git-commit-id-maven-plugin
+                "classpath:/git");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(60);
         return messageSource;

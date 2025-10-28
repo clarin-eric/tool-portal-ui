@@ -123,7 +123,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         
-<!--            <plugin>
+            <!--            <plugin>
                 <groupId>io.github.cleydyr</groupId>
                 <artifactId>dart-sass-maven-plugin</artifactId>
                 <version>1.5.0</version>
@@ -142,6 +142,25 @@
                     </execution>
                 </executions>
             </plugin>-->
+            
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                </configuration>
+            </plugin>
         </plugins>
         
         <pluginManagement>
