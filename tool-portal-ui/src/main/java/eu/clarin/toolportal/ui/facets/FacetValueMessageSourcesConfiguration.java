@@ -18,9 +18,7 @@ package eu.clarin.toolportal.ui.facets;
 
 import com.google.common.collect.Streams;
 import eu.clarin.toolportal.ui.service.FacetValueService;
-import java.text.MessageFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
@@ -40,7 +37,6 @@ public class FacetValueMessageSourcesConfiguration {
 
     @Autowired
     private FacetValueProperties facetValuePropertiesConfiguration;
-
 
     @Autowired
     private ApplicationContext ctx;
@@ -55,6 +51,8 @@ public class FacetValueMessageSourcesConfiguration {
                 .flatMap(List::stream)
                 .toArray(String[]::new);
         resourceBundlesMessageSource.addBasenames(basenames);
+        resourceBundlesMessageSource.setDefaultEncoding("UTF-8");
+        resourceBundlesMessageSource.setCacheSeconds(60);
 
         final Stream<MessageSource> programmaticMessageSources = Stream.of(
                 Optional.ofNullable(facetValuePropertiesConfiguration.getInternalMessageSourceBeanNames()),
@@ -70,6 +68,11 @@ public class FacetValueMessageSourcesConfiguration {
                         .toList();
 
         return new FacetValueService(messageSources, facetValuePropertiesConfiguration.getFacetValuePropertyFormat());
+    }
+
+    @Bean
+    public MessageSource languageCodeMessageSource() {
+        return new LanguageNameMessageSource("facetValues.languageCode");
     }
 
 }

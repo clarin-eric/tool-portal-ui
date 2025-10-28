@@ -16,19 +16,10 @@
  */
 package eu.clarin.toolportal.ui.configuration;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Streams;
-import eu.clarin.toolportal.ui.service.FacetValueService;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.ResolvableType;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
@@ -49,7 +40,6 @@ public class TemplateConfiguration {
                 "classpath:messages/fields",
                 "classpath:messages/search",
                 "classpath:messages/records");
-        //messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(60);
         return messageSource;

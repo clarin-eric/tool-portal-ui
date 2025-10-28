@@ -7,6 +7,8 @@ toolportal:
     labels:
       internalResourceBundleBasenames:
         - "classpath:/messages/facetValues"
+      internalMessageSourceBeanNames:
+        - "languageCodeMessageSource"
 
 #server:
 #  port: 8091
