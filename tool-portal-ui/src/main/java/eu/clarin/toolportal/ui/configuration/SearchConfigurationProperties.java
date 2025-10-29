@@ -16,6 +16,7 @@
  */
 package eu.clarin.toolportal.ui.configuration;
 
+import java.util.Collections;
 import java.util.List;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -30,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class SearchConfigurationProperties {
 
-    private List<String> primaryFacets;
-    private int facetValuesShown;
+    private List<String> primaryFacets = Collections.emptyList();
+    private int facetValuesShown = 5;
 
 }
