@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <version>3.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>eu.clarin.toolportal</groupId>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.4.5-jre</version>
+            <version>33.5.0-jre</version>
         </dependency>
         
         <dependency>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.14.0</version>
+            <version>1.14.1</version>
         </dependency>
         
         <!-- Web -->
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.3.5</version>
+            <version>5.3.8</version>
         </dependency>
         
         <dependency>
@@ -106,13 +106,13 @@
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>htmx.org</artifactId>
-            <version>2.0.4</version>
+            <version>2.0.7</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>alpinejs</artifactId>
-            <version>3.14.9</version>
+            <version>3.15.0</version>
         </dependency>
     </dependencies>
 
@@ -143,6 +143,10 @@
                 </executions>
             </plugin>-->
             
+            <!-- 
+                Generate some properties that we can display in the about page
+                and/or footer of the application.
+            -->
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
