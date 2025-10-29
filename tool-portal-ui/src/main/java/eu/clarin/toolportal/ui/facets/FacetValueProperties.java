@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author twagoo
  */
 @Configuration
-@ConfigurationProperties(prefix = "toolportal.facets.labels")
+@ConfigurationProperties(prefix = "ui.search.facet-labels")
 @Data
 public class FacetValueProperties {
 

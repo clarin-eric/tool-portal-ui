@@ -2,9 +2,9 @@ spring:
   application:
     name: CLARIN Tool Portal UI
 
-toolportal:
-  facets:
-    labels:
+ui:
+  search:
+    facet-labels:
       internalResourceBundleBasenames:
         - "classpath:/messages/facetValues"
       internalMessageSourceBeanNames:
@@ -13,7 +13,7 @@ toolportal:
 #server:
 #  port: 8091
 #
-#toolportal:
+#ui:
 #  search:
 #    facetValuesShown: 8
 #    primaryFacets:
@@ -34,10 +34,9 @@ toolportal:
 ##      - Input language
 ##      - Output language
 ##      - Annotation type
-#  facets:
-#    labels:
-#      resourceBundleBasenames:
-#        - "file:/my/custom/resourceBundle"
+#  facet-labels:
+#    resourceBundleBasenames:
+#      - "file:/my/custom/resourceBundle"
     
 #api:
 #    client:

@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author twagoo
  */
 @Configuration
-@ConfigurationProperties(prefix = "toolportal.search")
+@ConfigurationProperties(prefix = "ui.search")
 @Data
 public class SearchConfigurationProperties {
 
