@@ -4,7 +4,7 @@ OpenAPI definition
 
 - API version: v0
 
-- Build date: 2025-10-09T17:54:17.658131+02:00[Europe/Amsterdam]
+- Build date: 2025-10-30T18:42:32.083747+01:00[Europe/Amsterdam]
 
 - Generator version: 7.14.0
 
@@ -122,6 +122,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *FacetsApi* | [**getFacet**](docs/FacetsApi.md#getFacet) | **GET** /facets/{facetName} | Get the facets and their (top) values and their counts
 *FacetsApi* | [**getFacets**](docs/FacetsApi.md#getFacets) | **GET** /facets | Get the facets and their (top) values and their counts
+*RecordsApi* | [**getMetadataFile**](docs/RecordsApi.md#getMetadataFile) | **GET** /records/{id}/cmdi | Retrieves the full CMDI document, as imported, for an individual record
 *RecordsApi* | [**getRecord**](docs/RecordsApi.md#getRecord) | **GET** /records/{id} | Retrieve an individual record by its identifier
 *RecordsApi* | [**getRecords**](docs/RecordsApi.md#getRecords) | **GET** /records | Retrieve one or more records by query and/or filtered
 *RecordsApi* | [**getRecordsCount**](docs/RecordsApi.md#getRecordsCount) | **GET** /records/count | Retrieve the exact number of records that can be retrieved by query and/or filtered as JSON object with a single property &#39;numFound&#39;

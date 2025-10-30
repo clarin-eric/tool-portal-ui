@@ -4,11 +4,78 @@ All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**getMetadataFile**](RecordsApi.md#getMetadataFile) | **GET** /records/{id}/cmdi | Retrieves the full CMDI document, as imported, for an individual record |
 | [**getRecord**](RecordsApi.md#getRecord) | **GET** /records/{id} | Retrieve an individual record by its identifier |
 | [**getRecords**](RecordsApi.md#getRecords) | **GET** /records | Retrieve one or more records by query and/or filtered |
 | [**getRecordsCount**](RecordsApi.md#getRecordsCount) | **GET** /records/count | Retrieve the exact number of records that can be retrieved by query and/or filtered as JSON object with a single property &#39;numFound&#39; |
 | [**saveRecord**](RecordsApi.md#saveRecord) | **POST** /records | Submit a new record |
 
+
+
+## getMetadataFile
+
+> File getMetadataFile(id)
+
+Retrieves the full CMDI document, as imported, for an individual record
+
+### Example
+
+```java
+// Import classes:
+import eu.clarin.cmdi.vlo.openapi.client.ApiClient;
+import eu.clarin.cmdi.vlo.openapi.client.ApiException;
+import eu.clarin.cmdi.vlo.openapi.client.Configuration;
+import eu.clarin.cmdi.vlo.openapi.client.models.*;
+import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost:8080");
+
+        RecordsApi apiInstance = new RecordsApi(defaultClient);
+        String id = "id_example"; // String | 
+        try {
+            File result = apiInstance.getMetadataFile(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling RecordsApi#getMetadataFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | **String**|  | |
+
+### Return type
+
+[**File**](File.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: */*, text/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **500** | Internal Server Error |  -  |
+| **200** | A CMDI document for the record specified identifier that is present in the catalogue |  -  |
+| **404** | No record with the specified identifier is present in the catalogue |  -  |
 
 
 ## getRecord

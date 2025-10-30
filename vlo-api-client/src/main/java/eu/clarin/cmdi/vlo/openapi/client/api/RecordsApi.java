@@ -2,6 +2,7 @@ package eu.clarin.cmdi.vlo.openapi.client.api;
 
 import eu.clarin.cmdi.vlo.openapi.client.ApiClient;
 
+import java.io.File;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 
@@ -25,7 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-09T17:54:17.658131+02:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-30T18:42:32.083747+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
 public class RecordsApi {
     private ApiClient apiClient;
 
@@ -45,6 +46,88 @@ public class RecordsApi {
         this.apiClient = apiClient;
     }
 
+    /**
+     * Retrieves the full CMDI document, as imported, for an individual record
+     * 
+     * <p><b>500</b> - Internal Server Error
+     * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
+     * <p><b>404</b> - No record with the specified identifier is present in the catalogue
+     * @param id The id parameter
+     * @return File
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    private ResponseSpec getMetadataFileRequestCreation(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        Object postBody = null;
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new RestClientResponseException("Missing the required parameter 'id' when calling getMetadataFile", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
+        }
+        // create path and map variables
+        final Map<String, Object> pathParams = new HashMap<>();
+
+        pathParams.put("id", id);
+
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
+
+        final String[] localVarAccepts = { 
+            "*/*", "text/xml"
+        };
+        final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String[] localVarContentTypes = { };
+        final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] {  };
+
+        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/records/{id}/cmdi", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    }
+
+    /**
+     * Retrieves the full CMDI document, as imported, for an individual record
+     * 
+     * <p><b>500</b> - Internal Server Error
+     * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
+     * <p><b>404</b> - No record with the specified identifier is present in the catalogue
+     * @param id The id parameter
+     * @return File
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public File getMetadataFile(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+        return getMetadataFileRequestCreation(id).body(localVarReturnType);
+    }
+
+    /**
+     * Retrieves the full CMDI document, as imported, for an individual record
+     * 
+     * <p><b>500</b> - Internal Server Error
+     * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
+     * <p><b>404</b> - No record with the specified identifier is present in the catalogue
+     * @param id The id parameter
+     * @return ResponseEntity&lt;File&gt;
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<File> getMetadataFileWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+        return getMetadataFileRequestCreation(id).toEntity(localVarReturnType);
+    }
+
+    /**
+     * Retrieves the full CMDI document, as imported, for an individual record
+     * 
+     * <p><b>500</b> - Internal Server Error
+     * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
+     * <p><b>404</b> - No record with the specified identifier is present in the catalogue
+     * @param id The id parameter
+     * @return ResponseSpec
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public ResponseSpec getMetadataFileWithResponseSpec(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        return getMetadataFileRequestCreation(id);
+    }
     /**
      * Retrieve an individual record by its identifier
      * 

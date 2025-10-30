@@ -16,7 +16,7 @@ package eu.clarin.cmdi.vlo.openapi.client;
 import java.util.Collection;
 import java.util.Iterator;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-09T17:54:17.658131+02:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-30T18:42:32.083747+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).

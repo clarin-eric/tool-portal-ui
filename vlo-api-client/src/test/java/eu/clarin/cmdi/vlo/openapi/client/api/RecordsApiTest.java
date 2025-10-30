@@ -13,6 +13,7 @@
 
 package eu.clarin.cmdi.vlo.openapi.client.api;
 
+import java.io.File;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import org.junit.jupiter.api.Disabled;
@@ -32,6 +33,19 @@ public class RecordsApiTest {
 
     private final RecordsApi api = new RecordsApi();
 
+    
+    /**
+     * Retrieves the full CMDI document, as imported, for an individual record
+     *
+     * 
+     */
+    @Test
+    public void getMetadataFileTest()  {
+        String id = null;
+        File response = api.getMetadataFile(id);
+
+        // TODO: test validations
+    }
     
     /**
      * Retrieve an individual record by its identifier

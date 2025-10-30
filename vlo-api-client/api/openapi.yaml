@@ -134,6 +134,45 @@ paths:
       x-accepts:
       - '*/*'
       - application/json
+  /records/{id}/cmdi:
+    get:
+      operationId: getMetadataFile
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "500":
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Internal Server Error
+        "200":
+          content:
+            text/xml:
+              schema:
+                format: binary
+                type: string
+          description: A CMDI document for the record specified identifier that is
+            present in the catalogue
+        "404":
+          content:
+            text/xml:
+              schema:
+                format: binary
+                type: string
+          description: No record with the specified identifier is present in the catalogue
+      summary: "Retrieves the full CMDI document, as imported, for an individual record"
+      tags:
+      - Records
+      x-accepts:
+      - '*/*'
+      - text/xml
   /records/count:
     get:
       operationId: getRecordsCount
