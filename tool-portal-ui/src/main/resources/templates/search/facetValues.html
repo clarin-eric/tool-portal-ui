@@ -39,9 +39,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
              th:id="|facet-values-${facet.name}|">
             <!-- Selected values -->
             <ul th:if="${selection}" class="m-0 p-0" style="list-style: none;">
-                <li th:each="selected : ${selection}">
-                    [[${selected}]]
-                    <a th:href="@{/search(q=${query},fq=${searchFilters},removefq=|${facet.name}:${selected}|)}"><i class="fa-solid fa-xmark"></i></a>
+                <li th:each="value : ${selection}">
+                    [[${@facetValueService.getLabel(facet.name, value, #locale)}]]
+                    <a th:href="@{/search(q=${query},fq=${searchFilters},removefq=|${facet.name}:${value}|)}"><i class="fa-solid fa-xmark"></i></a>
                 </li>
             </ul>
 

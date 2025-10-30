@@ -75,7 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <ul>
                                 <th:block th:each="key: ${filterQueryMap.keySet()}">
                                     <li th:each="value: ${filterQueryMap.get(key)}">
-                                        [[|#{|fields.labels.${key}|}: ${value}|]]
+                                        [[|#{|fields.labels.${key}|}: ${@facetValueService.getLabel(key, value, #locale)}|]]
                                         <a th:href="@{/search(q=${query},fq=${searchFilters},removefq=|${key}:${value}|)}"><i class="fa-solid fa-xmark"></i></a>
                                     </li>
                                 </th:block>
