@@ -13,7 +13,6 @@
 
 package eu.clarin.cmdi.vlo.openapi.client.api;
 
-import java.io.File;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 import org.junit.jupiter.api.Disabled;
@@ -42,7 +41,7 @@ public class RecordsApiTest {
     @Test
     public void getMetadataFileTest()  {
         String id = null;
-        File response = api.getMetadataFile(id);
+        String response = api.getMetadataFile(id);
 
         // TODO: test validations
     }

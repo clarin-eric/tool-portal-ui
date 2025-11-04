@@ -19,7 +19,6 @@ package eu.clarin.toolportal.ui.web.controller;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +54,15 @@ public class RecordsController {
         model.addAttribute("includeBackLink", includeBackLink);
 
         return "records/record";
+    }
+    
+    
+    @GetMapping("/{recordId}/metadata")
+    public String allMetadata(Model model,
+            @PathVariable String recordId) {
+        String xml = service.getCmdiXml(recordId);
+        model.addAttribute("xml", xml);
+        return "records/allMetadata";
     }
 
 }

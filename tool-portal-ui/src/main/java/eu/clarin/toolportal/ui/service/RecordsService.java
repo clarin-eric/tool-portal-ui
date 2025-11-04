@@ -20,6 +20,7 @@ import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.cmdi.vlo.openapi.client.api.RecordsApi;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
+import java.io.File;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +62,11 @@ public class RecordsService {
 
     public static VloRecordSearchResult applyFilter(VloRecordSearchResult result, RecordFilter filter) {
         return result.records(applyFilter(result.getRecords(), filter));
+    }
+    
+    public String getCmdiXml(String id) {
+        final String xml = records.getMetadataFile(id);
+        return xml;
     }
 
 }

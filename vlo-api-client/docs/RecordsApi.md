@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost:8080*
 
 ## getMetadataFile
 
-> File getMetadataFile(id)
+> String getMetadataFile(id)
 
 Retrieves the full CMDI document, as imported, for an individual record
 
@@ -36,7 +36,7 @@ public class Example {
         RecordsApi apiInstance = new RecordsApi(defaultClient);
         String id = "id_example"; // String | 
         try {
-            File result = apiInstance.getMetadataFile(id);
+            String result = apiInstance.getMetadataFile(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling RecordsApi#getMetadataFile");
@@ -58,7 +58,7 @@ public class Example {
 
 ### Return type
 
-[**File**](File.md)
+**String**
 
 ### Authorization
 
@@ -67,7 +67,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: */*, text/xml
+- **Accept**: */*, text/plain
 
 
 ### HTTP response details

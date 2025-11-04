@@ -2,7 +2,6 @@ package eu.clarin.cmdi.vlo.openapi.client.api;
 
 import eu.clarin.cmdi.vlo.openapi.client.ApiClient;
 
-import java.io.File;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecordSearchResult;
 
@@ -26,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-30T18:42:32.083747+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
 public class RecordsApi {
     private ApiClient apiClient;
 
@@ -53,7 +52,7 @@ public class RecordsApi {
      * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
      * <p><b>404</b> - No record with the specified identifier is present in the catalogue
      * @param id The id parameter
-     * @return File
+     * @return String
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getMetadataFileRequestCreation(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
@@ -73,7 +72,7 @@ public class RecordsApi {
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
-            "*/*", "text/xml"
+            "*/*", "text/plain"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         final String[] localVarContentTypes = { };
@@ -81,7 +80,7 @@ public class RecordsApi {
 
         String[] localVarAuthNames = new String[] {  };
 
-        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+        ParameterizedTypeReference<String> localVarReturnType = new ParameterizedTypeReference<>() {};
         return apiClient.invokeAPI("/records/{id}/cmdi", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
@@ -92,11 +91,11 @@ public class RecordsApi {
      * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
      * <p><b>404</b> - No record with the specified identifier is present in the catalogue
      * @param id The id parameter
-     * @return File
+     * @return String
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public File getMetadataFile(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
-        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+    public String getMetadataFile(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        ParameterizedTypeReference<String> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getMetadataFileRequestCreation(id).body(localVarReturnType);
     }
 
@@ -107,11 +106,11 @@ public class RecordsApi {
      * <p><b>200</b> - A CMDI document for the record specified identifier that is present in the catalogue
      * <p><b>404</b> - No record with the specified identifier is present in the catalogue
      * @param id The id parameter
-     * @return ResponseEntity&lt;File&gt;
+     * @return ResponseEntity&lt;String&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<File> getMetadataFileWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
-        ParameterizedTypeReference<File> localVarReturnType = new ParameterizedTypeReference<>() {};
+    public ResponseEntity<String> getMetadataFileWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
+        ParameterizedTypeReference<String> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getMetadataFileRequestCreation(id).toEntity(localVarReturnType);
     }
 
