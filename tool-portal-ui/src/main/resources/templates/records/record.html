@@ -29,8 +29,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </nav>
 
             <main th:object="${record}">
-                <div class="container-md">
 
+
+                <div class="mt-3">
+                    <form action="/search">
+                        <div th:replace="~{search/search :: searchFormContents('')}"></div>
+                    </form>
+                </div>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/search}">Search</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Record</li>
+                    </ol>
+                </nav>
+
+                <div class="container-md">
                     <div class="row mt-md-2">
                         <div class="col-md-8">
                             <h1 th:text="*{fields?.name[0]}">Title</h1>

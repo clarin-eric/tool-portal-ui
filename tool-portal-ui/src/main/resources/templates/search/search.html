@@ -32,9 +32,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <main hx-swap="outerHTML show:none" hx-indicator="#search-results-and-facets">
 
                 <!-- Search form -->
-                <div class="m-3">
+                <div class="mt-3">
                     <form action="/search" hx-boost="true" hx-target="#search-results-and-facets">
-                        <div class="d-flex">
+                        <div th:fragment="searchFormContents(query)" class="d-flex">
                             <div class="ms-auto w-50 p-2">
                                 <input type="search" class="form-control"
                                        name="q" th:value="${query}" />
@@ -46,6 +46,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </form>
                 </div>
+
+                <nav id="breadcrumbs" aria-label="breadcrumb" hx-swap-oob="true" 
+                     th:with="hasQuery = ${!#strings.isEmpty(query) || !searchFilters.isEmpty()}">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li th:unless="${hasQuery}" class="breadcrumb-item active" aria-current="page">Search</li>
+                        <li th:if="${hasQuery}" class="breadcrumb-item"><a th:href="@{/search}">Search</a></li>
+                        <li th:if="${hasQuery}" class="breadcrumb-item active" aria-current="page">Results</li>
+                    </ol>
+                </nav>
 
                 <!-- Search results and facets -->
                 <div class="row" id="search-results-and-facets">

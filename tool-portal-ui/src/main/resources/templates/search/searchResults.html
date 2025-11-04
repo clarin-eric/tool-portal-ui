@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <a th:href="|records/${record.id}|"
                    th:hx-get="|records/${record.id}?backLink=true|"
                    th:hx-push-url="|records/${record.id}|"
-                   hx-target="main" hx-select="main" hx-swap="outerHTML">
+                   hx-target="main" hx-select="main" hx-swap="outerHTML show:top">
                     <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
                     <span th:unless="*{fields['name']}" th:text="#{record.untitleRecord}">[Untitled record]</span>
                 </a>

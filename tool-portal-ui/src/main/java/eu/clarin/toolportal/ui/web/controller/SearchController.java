@@ -84,7 +84,7 @@ public class SearchController {
     }
 
     @GetMapping
-    public String index(Model model,
+    public List<ModelAndView> index(Model model,
             @RequestParam(name = "q", defaultValue = DEFAULT_QUERY) String query,
             @RequestParam(name = "fq", defaultValue = "") List<String> filterQuery,
             @RequestParam(name = "addfq", defaultValue = "") List<String> addToFilterQuery,
@@ -96,13 +96,13 @@ public class SearchController {
             HttpServletResponse response) {
         final Map<String, Collection<String>> filterQueryMap
                 = constructFilterQueryMap(filterQuery, addToFilterQuery, removeFromFilterQuery);
-        
+
         // Query record service
         // TODO: use search service once available
         final List<String> searchFilters = flattenFilterMap(filterQueryMap);
         final VloRecordSearchResult result
                 = RecordsService.applyFilter(recordsService.getRecords(query, searchFilters, from, size), recordFilter);
-        
+
         // Set model attributes
         model.addAttribute("result", result);
         model.addAttribute("query", query);
@@ -120,17 +120,19 @@ public class SearchController {
                     .ifPresent(url -> pushUrl(response, url));
             if (isHtmxTarget(headers, "search-results")) {
                 //request from pagination, return only search results
-                return "search/search :: #search-results";
+                return ImmutableList.of(new ModelAndView("search/search :: #search-results"),
+                        new ModelAndView("search/search :: #breadcrumbs"));
             } else {
                 //return search results and facets
                 addFacetsToModel(model, query, searchFilters);
-                return "search/search :: #search-results-and-facets";
+                return ImmutableList.of(new ModelAndView("search/search :: #search-results-and-facets"),
+                        new ModelAndView("search/search :: #breadcrumbs"));
             }
         } else {
             //return entire page
             addFacetsToModel(model, query, searchFilters);
 
-            return "search/search";
+            return ImmutableList.of(new ModelAndView("search/search"));
         }
     }
 
