@@ -44,6 +44,14 @@ public class HtmxUtils {
         return headers.containsKey(HX_REQUEST_HEADER);
     }
 
+    /**
+     * Determines whether the specified target is the target of the HTMX
+     * request
+     * 
+     * @param headers
+     * @param target
+     * @return false iff the target does not match, or the request is not an HTMX request
+     */
     public static boolean isHtmxTarget(Map<String, String> headers, String target) {
         return Objects.equals(target, headers.get(HX_TARGET_REQUEST_HEADER));
     }

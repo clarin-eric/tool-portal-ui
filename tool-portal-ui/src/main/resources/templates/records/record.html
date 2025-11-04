@@ -75,6 +75,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                  class="mb-2" >
                                 <p th:text="${description}">description</p>
                             </div>
+
+                            <div  class="border p-2">
+                                <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[xml]</div>
+                            </div>
+
                         </div>
                         <div class="col-md-4">
                             <div th:if="*{resources}" class="mt-2 mb-2">
@@ -97,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 </div>
             </main>
-            
+
             <footer th:replace="~{fragments/base :: footer}"></footer>
 
         </div>

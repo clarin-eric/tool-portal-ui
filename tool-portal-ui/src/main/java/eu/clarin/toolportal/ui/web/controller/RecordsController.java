@@ -19,10 +19,13 @@ package eu.clarin.toolportal.ui.web.controller;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
+import eu.clarin.toolportal.ui.web.HtmxUtils;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -55,14 +58,20 @@ public class RecordsController {
 
         return "records/record";
     }
-    
-    
+
     @GetMapping("/{recordId}/metadata")
     public String allMetadata(Model model,
-            @PathVariable String recordId) {
+            @RequestHeader Map<String, String> headers,
+            @PathVariable String recordId,
+            @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
         String xml = service.getCmdiXml(recordId);
         model.addAttribute("xml", xml);
-        return "records/allMetadata";
+        if (HtmxUtils.isHtmxRequest(headers)) {
+            // serve only fragment
+            return "records/allMetadata :: allMetadata";
+        } else {
+            return record(model, recordId, includeBackLink);
+        }
     }
 
 }

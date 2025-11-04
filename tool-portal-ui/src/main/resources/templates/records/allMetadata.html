@@ -23,9 +23,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <main class="p-3">
-            <div class="p-3 border">
-                <pre th:text="${xml}"></pre>
+            <div th:fragment="allMetadata(xml)" id="recordAllMetadata">
+                <div th:unless="${xml}">
+                    <a class="btn btn-primary" 
+                       th:href="@{/records/{id}/metadata(id=${record.id})}" 
+                       hx-boost="true"
+                       hx-target="#recordAllMetadata"
+                       hx-select="#recordAllMetadata"
+                       hx-swap="outerHTML show:none">Show all metadata</a>
+                </div>
+
+                <div th:if="${xml}">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#allMetadataContainer" aria-expanded="true" aria-controls="allMetadataContainer">
+                        Show/hide all metadata
+                    </button>
+                    <div id="allMetadataContainer" 
+                         class="border-top mt-2 pt-2 collapse show overflow-auto" 
+                         style="max-height: 20em;">
+                        <pre class="overflow-visible" th:text="${xml}"></pre>
+                    </div>
+                </div>
             </div>
-        </main>
-    </body>
+    </main>
+</body>
 </html>
