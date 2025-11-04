@@ -23,9 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <main class="p-3">
-            <div th:fragment="allMetadata(xml)" id="recordAllMetadata">
-                <pre class="overflow-auto" th:text="${xml}"></pre>
+            <div th:fragment="overview(record)" class="pt-2" id="recordOverview"
+                 th:object="${record}">
+                <div th:if="*{fields['description']}" 
+                     th:each="description:*{fields['description']}"
+                     class="mb-2" >
+                    <p th:text="${description}">description</p>
+                </div>
             </div>
-    </main>
-</body>
+        </main>
+    </body>
 </html>

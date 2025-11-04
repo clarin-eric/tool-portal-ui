@@ -58,47 +58,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="row">
                         <div class="col-md-8">
 
-                            <ul class="nav nav-underline border-bottom">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Overview</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Detailed metadata</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Links</a>
-                                </li>
-                            </ul>
-
-                            <div class="pt-2">
-
-                                <div th:if="*{fields['description']}" 
-                                     th:each="description:*{fields['description']}"
-                                     class="mb-2" >
-                                    <p th:text="${description}">description</p>
-                                </div>
-
-                                <div  class="border p-2">
-                                    <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[xml]</div>
-                                </div>
-
+                            <div th:replace="~{ :: mainContentTabs(
+                                 record=${record}, tab=${tab}, xml=${xml})}">
+                                [TABBED "MAIN" CONTENT (Default: overview) + NAVS]
                             </div>
 
                         </div>
                         <div class="col-md-4">
-                            
-                            
 
-                                <div class="me-2">
-                                    <div class="mb-2" th:each="field: ${ {
-                                         'creator','organisation','license'} }">
-                                        <th:block th:if="${#maps.containsKey(record.fields, field)}">
-                                            <strong>[[ #{|fields.labels.${field}|} ]]:</strong><br />
-                                            [[ ${record.fields[__${field}__]} ]]
-                                        </th:block>
-                                    </div>
+                            <div class="me-2">
+                                <div class="mb-2" th:each="field: ${ {
+                                     'creator','organisation','license'} }">
+                                    <th:block th:if="${#maps.containsKey(record.fields, field)}">
+                                        <strong>[[ #{|fields.labels.${field}|} ]]:</strong><br />
+                                        [[ ${record.fields[__${field}__]} ]]
+                                    </th:block>
                                 </div>
-                            
+                            </div>
+
                             <div th:if="*{resources}" class="mt-2 mb-2">
                                 <h2 class="h5">Resources:</h2>
                                 <div class="card mb-2" th:each="resource: *{resources}">
@@ -124,4 +101,57 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </div>
     </body>
+
+    <th:block th:remove="all">
+
+        <!-- Tabbed main content section -->
+
+        <div th:fragment="mainContentTabs(record, tab, xml)"
+             th:with="recordId = ${record.id}">
+
+            <ul id="mainContentTabsNav" th:fragment="mainContentTabsNav(recordId, tab)" 
+                class="nav nav-underline border-bottom" 
+                hx-boost="true"
+                hx-target="#recordTabsContent"
+                hx-swap="innerHTML show:none">
+
+                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
+                    current='overview', href=@{/records/{id}(id=${recordId})}, 
+                    hxSelect='#recordOverview', label='Overview')}">[Overview]</li>
+
+                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
+                    current='metadata', href=@{/records/{id}/metadata(id=${recordId})},
+                    hxSelect='#recordAllMetadata', label='Detailed metadata')}">[Detailed metadata]</li>
+
+                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
+                    current='links', href=@{/records/{id}/links(id=${recordId})},
+                    hxSelect='#recordLinks', label='Links')}">[Links]</li>
+            </ul>
+
+            <div id="recordTabsContent" class="pt-2"
+                 th:switch="${tab}">
+
+                <div th:case="metadata">
+                    <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[overview]</div>
+                </div>
+
+                <div th:case="links">
+                    <div>Links: TODO</div>
+                </div>
+
+                <div th:case="*">
+                    <div th:replace="~{records/overview :: overview(${record})}">[overview]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav item for main content section -->
+        <li th:fragment="mainContentNavItem(tab, current,href,hxSelect,label)" class="nav-item">
+            <a class="nav-link"
+               hx-select-oob="#mainContentTabsNav"
+               th:aria-current="${tab == current} ? 'page'"
+               th:classappend="${tab == current} ? 'active'"
+               th:href="${href}"
+               th:hx-select="${hxSelect}">[[${label}]]</a>
+    </th:block>
 </html>

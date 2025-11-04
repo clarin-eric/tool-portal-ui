@@ -16,10 +16,12 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
+import com.google.common.collect.ImmutableList;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import eu.clarin.toolportal.ui.web.HtmxUtils;
+import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -47,8 +50,10 @@ public class RecordsController {
     }
 
     @GetMapping("/{recordId}")
-    public String record(Model model,
+    public List<ModelAndView> record(Model model,
+            @RequestHeader Map<String, String> headers,
             @PathVariable String recordId,
+            @RequestParam(name = "tab", defaultValue = "overview") String tab,
             @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
         final VloRecord record = RecordsService.applyFilter(
                 service.getRecordById(recordId),
@@ -56,11 +61,24 @@ public class RecordsController {
         model.addAttribute("record", record);
         model.addAttribute("includeBackLink", includeBackLink);
 
-        return "records/record";
+        if (HtmxUtils.isHtmxTarget(headers, "recordTabsContent")) {
+            // serve only fragment
+            model.addAttribute("recordId", recordId);
+            model.addAttribute("tab", tab);
+            return ImmutableList.of(
+                    //overview tab content
+                    new ModelAndView("records/overview :: overview"),
+                    //main contents nav bar with updated state
+                    new ModelAndView("records/record :: mainContentTabsNav"));
+        } else {
+            // serve full page with specified tab selected
+            model.addAttribute("tab", tab);
+            return ImmutableList.of(new ModelAndView("records/record"));
+        }
     }
 
     @GetMapping("/{recordId}/metadata")
-    public String allMetadata(Model model,
+    public List<ModelAndView> allMetadata(Model model,
             @RequestHeader Map<String, String> headers,
             @PathVariable String recordId,
             @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
@@ -68,9 +86,16 @@ public class RecordsController {
         model.addAttribute("xml", xml);
         if (HtmxUtils.isHtmxRequest(headers)) {
             // serve only fragment
-            return "records/allMetadata :: allMetadata";
+            model.addAttribute("recordId", recordId);
+            model.addAttribute("tab", "metadata");
+            return ImmutableList.of(
+                    //all metadata fragment
+                    new ModelAndView("records/allMetadata :: allMetadata"),
+                    //main contents nav bar with updated state
+                    new ModelAndView("records/record :: mainContentTabsNav"));
         } else {
-            return record(model, recordId, includeBackLink);
+            // serve full page with "all metadata" tab selected
+            return record(model, headers, recordId, "metadata", includeBackLink);
         }
     }
 
