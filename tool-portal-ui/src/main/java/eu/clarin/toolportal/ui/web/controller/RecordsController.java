@@ -53,13 +53,11 @@ public class RecordsController {
     public List<ModelAndView> record(Model model,
             @RequestHeader Map<String, String> headers,
             @PathVariable String recordId,
-            @RequestParam(name = "tab", defaultValue = "overview") String tab,
-            @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
+            @RequestParam(name = "tab", defaultValue = "overview") String tab) {
         final VloRecord record = RecordsService.applyFilter(
                 service.getRecordById(recordId),
                 recordFilter);
         model.addAttribute("record", record);
-        model.addAttribute("includeBackLink", includeBackLink);
 
         if (HtmxUtils.isHtmxTarget(headers, "recordTabsContent")) {
             // serve only fragment
@@ -80,8 +78,7 @@ public class RecordsController {
     @GetMapping("/{recordId}/metadata")
     public List<ModelAndView> allMetadata(Model model,
             @RequestHeader Map<String, String> headers,
-            @PathVariable String recordId,
-            @RequestParam(name = "backLink", defaultValue = "false") Boolean includeBackLink) {
+            @PathVariable String recordId) {
         String xml = service.getCmdiXml(recordId);
         model.addAttribute("xml", xml);
         if (HtmxUtils.isHtmxRequest(headers)) {
@@ -95,7 +92,7 @@ public class RecordsController {
                     new ModelAndView("records/record :: mainContentTabsNav"));
         } else {
             // serve full page with "all metadata" tab selected
-            return record(model, headers, recordId, "metadata", includeBackLink);
+            return record(model, headers, recordId, "metadata");
         }
     }
 

@@ -29,13 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </nav>
 
             <main th:object="${record}">
-                <div th:if="${includeBackLink}" class="mt-2 mb-2">
-                    <a class="btn btn-outline-primary btn-sm" href="/search" hx-on:click="event.preventDefault(); history.back();">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        Back to search results
-                    </a>
-                </div>
-
                 <div class="container-md">
 
                     <div class="row mt-md-2">
