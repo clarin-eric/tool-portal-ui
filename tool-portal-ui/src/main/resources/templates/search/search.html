@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <!-- Search form -->
                 <div class="mt-3">
                     <form id="searchForm" action="/search" hx-swap-oob="true" hx-boost="true" hx-target="#search-results-and-facets">
-                        <div th:fragment="searchFormContents(query)" class="d-flex">
+                        <div th:fragment="searchFormContents(query, searchFilters)" class="d-flex">
                             <div class="ms-auto w-50 p-2">
                                 <input type="search" class="form-control"
                                        name="q" th:value="${query}" />
@@ -118,6 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                         <div th:if="${result}" th:replace="~{search/searchResults :: search-results(
                              query=${query},
+                             searchFilters=${searchFilters},
                              result=${result},
                              currentPage=${currentPage},
                              pageCount=${pageCount},

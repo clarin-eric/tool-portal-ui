@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ul id="results-list" class="d-block ps-0">
                     <li class="card mb-2 p-2" th:each="record: *{records}">
-                        <article th:replace="~{:: resultItem(${record})}">
+                        <article th:replace="~{:: resultItem(${record}, ${query}, ${searchFilters})}">
                             [result item]
                         </article>
                     </li>
@@ -46,11 +46,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
         <!-- Single search result item (representing a record or record group) -->
-        <article th:fragment="resultItem(record)" th:object="${record}">
+        <article th:fragment="resultItem(record, query, searchFilters)" th:object="${record}">
             <h3>
-                <a th:href="|records/${record.id}|"
-                   th:hx-get="|records/${record.id}?backLink=true|"
-                   th:hx-push-url="|records/${record.id}|"
+                <a hx-boost="true" th:href="@{records/{recordId}(recordId=${record.id},q=${query},fq=${searchFilters})}"
                    hx-target="main" hx-select="main" hx-swap="outerHTML show:top">
                     <span th:if="*{fields['name']}" th:text="*{fields.name[0]}">[Record title]</span>
                     <span th:unless="*{fields['name']}" th:text="#{record.untitleRecord}">[Untitled record]</span>

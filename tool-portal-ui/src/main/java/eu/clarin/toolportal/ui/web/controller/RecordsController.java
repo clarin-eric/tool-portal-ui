@@ -21,6 +21,7 @@ import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import eu.clarin.toolportal.ui.web.HtmxUtils;
+import static eu.clarin.toolportal.ui.web.controller.SearchController.DEFAULT_QUERY;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
@@ -53,11 +54,15 @@ public class RecordsController {
     public List<ModelAndView> record(Model model,
             @RequestHeader Map<String, String> headers,
             @PathVariable String recordId,
+            @RequestParam(name = "q", required = false) String query,
+            @RequestParam(name = "fq", required = false) List<String> filterQuery,
             @RequestParam(name = "tab", defaultValue = "overview") String tab) {
         final VloRecord record = RecordsService.applyFilter(
                 service.getRecordById(recordId),
                 recordFilter);
         model.addAttribute("record", record);
+        model.addAttribute("query", query);
+        model.addAttribute("searchFilters", filterQuery);
 
         if (HtmxUtils.isHtmxTarget(headers, "recordTabsContent")) {
             // serve only fragment
@@ -78,7 +83,9 @@ public class RecordsController {
     @GetMapping("/{recordId}/metadata")
     public List<ModelAndView> allMetadata(Model model,
             @RequestHeader Map<String, String> headers,
-            @PathVariable String recordId) {
+            @PathVariable String recordId,
+            @RequestParam(name = "q", required = false) String query,
+            @RequestParam(name = "fq", required = false) List<String> filterQuery) {
         String xml = service.getCmdiXml(recordId);
         model.addAttribute("xml", xml);
         if (HtmxUtils.isHtmxRequest(headers)) {
@@ -92,7 +99,7 @@ public class RecordsController {
                     new ModelAndView("records/record :: mainContentTabsNav"));
         } else {
             // serve full page with "all metadata" tab selected
-            return record(model, headers, recordId, "metadata");
+            return record(model, headers, recordId, query, filterQuery, "metadata");
         }
     }
 
