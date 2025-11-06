@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <!-- Search form -->
                 <div class="mt-3">
-                    <form action="/search" hx-boost="true" hx-target="#search-results-and-facets">
+                    <form id="searchForm" action="/search" hx-swap-oob="true" hx-boost="true" hx-target="#search-results-and-facets">
                         <div th:fragment="searchFormContents(query)" class="d-flex">
                             <div class="ms-auto w-50 p-2">
                                 <input type="search" class="form-control"
@@ -77,15 +77,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <!-- Active filters -->
                         <div class="m-3 p-2 border rounded" th:unless="${filterQueryMap.isEmpty() &amp;&amp; #strings.isEmpty(query)}"
-                             hx-boost="true" hx-target="main" hx-select="main">
+                             hx-boost="true" hx-target="#search-results-and-facets"
+                                hx-select="#search-results-and-facets">
                             <h2 class="h5">Active filters:
                                 <a th:href="@{/search}" title="Clear all"><i class="fa-solid fa-xmark"></i></a></h2>
                             <div th:unless="${#strings.isEmpty(query)}">
                                 Query: [[${query}]]
                                 <a th:href="@{/search(fq=${searchFilters})}"><i class="fa-solid fa-xmark"></i></a>
                             </div>
-                            <ul hx-target="#search-results-and-facets"
-                                hx-select="#search-results-and-facets">
+                            <ul>
                                 <th:block th:each="key: ${filterQueryMap.keySet()}">
                                     <li th:each="value: ${filterQueryMap.get(key)}">
                                         [[|#{|fields.labels.${key}|}: ${@facetValueService.getLabel(key, value, #locale)}|]]

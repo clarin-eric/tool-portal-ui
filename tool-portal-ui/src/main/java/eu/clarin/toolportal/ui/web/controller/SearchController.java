@@ -121,12 +121,14 @@ public class SearchController {
             if (isHtmxTarget(headers, "search-results")) {
                 //request from pagination, return only search results
                 return ImmutableList.of(new ModelAndView("search/search :: #search-results"),
-                        new ModelAndView("search/search :: #breadcrumbs"));
+                        new ModelAndView("search/search :: #breadcrumbs"),
+                        new ModelAndView("search/search :: #searchForm"));
             } else if (isHtmxTarget(headers, "search-results-and-facets")) {
                 //return search results and facets
                 addFacetsToModel(model, query, searchFilters);
                 return ImmutableList.of(new ModelAndView("search/search :: #search-results-and-facets"),
-                        new ModelAndView("search/search :: #breadcrumbs"));
+                        new ModelAndView("search/search :: #breadcrumbs"),
+                        new ModelAndView("search/search :: #searchForm"));
             }
         }
         //return entire page
