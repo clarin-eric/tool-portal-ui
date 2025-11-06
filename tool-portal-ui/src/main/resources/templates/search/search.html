@@ -38,6 +38,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <div class="ms-auto w-50 p-2">
                                 <input type="search" class="form-control"
                                        name="q" th:value="${query}" />
+                                <th:block th:unless="${#lists.isEmpty(searchFilters)}">
+                                    <input th:each="searchFilter : ${searchFilters}" 
+                                           type="hidden" name="fq" 
+                                           th:value="${searchFilter}" />
+                                </th:block>
                             </div>
                             <div class="p-2">
                                 <input type="submit" class="btn btn-primary"
@@ -61,24 +66,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="row" id="search-results-and-facets">
 
                     <!-- Facets -->
-                    <section id="facets" class="col-lg-3">
+                    <section id="facets" class="col-lg-3" 
+                             th:with="hasResults = ${result != null &amp;&amp; result.numFound > 0}">
                         <h2 class="h3" th:text="#{search.facets.resultFilters}">[Result filters]</h2>
 
-                        <div th:unless="${facets}" th:text="#{search.facets.noInformation}">
-                            [No facet information]
+                        <div th:unless="${hasResults}">
+                            <span th:text="#{search.facets.noInformation}">
+                                [No facet information]
+                            </span>
                         </div>
-                        <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets},${query},${searchFilters},${filterQueryMap})}">
-                            [Facets]
-                        </div>
+
+                        <th:block th:if="${hasResults}">
+                            <div th:unless="${facets}" th:text="#{search.facets.noInformation}">
+                                [No facet information]
+                            </div>
+                            <div th:if="${facets}" th:replace="~{search/facets :: facets(${facets},${query},${searchFilters},${filterQueryMap})}">
+                                [Facets]
+                            </div>
+                        </th:block>
                     </section>
 
                     <!-- Search results -->
                     <section id="search-results" class="col-lg-9">
 
                         <!-- Active filters -->
-                        <div class="m-3 p-2 border rounded" th:unless="${filterQueryMap.isEmpty() &amp;&amp; #strings.isEmpty(query)}"
+                        <div class="m-3 p-2 border rounded" th:unless="${#maps.isEmpty(filterQueryMap) &amp;&amp; #strings.isEmpty(query)}"
                              hx-boost="true" hx-target="#search-results-and-facets"
-                                hx-select="#search-results-and-facets">
+                             hx-select="#search-results-and-facets">
                             <h2 class="h5">Active filters:
                                 <a th:href="@{/search}" title="Clear all"><i class="fa-solid fa-xmark"></i></a></h2>
                             <div th:unless="${#strings.isEmpty(query)}">
