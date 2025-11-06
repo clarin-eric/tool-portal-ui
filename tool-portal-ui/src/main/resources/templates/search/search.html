@@ -76,13 +76,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <section id="search-results" class="col-lg-9">
 
                         <!-- Active filters -->
-                        <div class="m-3 p-2 border rounded" th:unless="${filterQueryMap.isEmpty()}"
-                             hx-boost="true"
-                             hx-target="#search-results-and-facets"
-                             hx-select="#search-results-and-facets">
+                        <div class="m-3 p-2 border rounded" th:unless="${filterQueryMap.isEmpty() &amp;&amp; #strings.isEmpty(query)}"
+                             hx-boost="true" hx-target="main" hx-select="main">
                             <h2 class="h5">Active filters:
-                                <a th:href="@{/search(q=${query})}" title="Clear all"><i class="fa-solid fa-xmark"></i></a></h2>
-                            <ul>
+                                <a th:href="@{/search}" title="Clear all"><i class="fa-solid fa-xmark"></i></a></h2>
+                            <div th:unless="${#strings.isEmpty(query)}">
+                                Query: [[${query}]]
+                                <a th:href="@{/search(fq=${searchFilters})}"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
+                            <ul hx-target="#search-results-and-facets"
+                                hx-select="#search-results-and-facets">
                                 <th:block th:each="key: ${filterQueryMap.keySet()}">
                                     <li th:each="value: ${filterQueryMap.get(key)}">
                                         [[|#{|fields.labels.${key}|}: ${@facetValueService.getLabel(key, value, #locale)}|]]
