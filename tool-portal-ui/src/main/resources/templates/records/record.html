@@ -79,7 +79,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                      'creator','organisation','license'} }">
                                     <th:block th:if="${#maps.containsKey(record.fields, field)}">
                                         <strong>[[ #{|fields.labels.${field}|} ]]:</strong><br />
-                                        [[ ${record.fields[__${field}__]} ]]
+                                        <ul class="list-group list-group-flush">
+                                            <li th:each="value : ${record.fields[__${field}__]}" 
+                                                class="list-group-item" th:text="${value}">value</li>
+                                        </ul>
                                     </th:block>
                                 </div>
                             </div>
