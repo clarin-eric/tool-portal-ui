@@ -1,0 +1,7 @@
+.footer-hidden-info {
+    
+    &::selection {
+        color: #000;
+        background: #ccc;
+    }
+}

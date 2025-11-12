@@ -123,7 +123,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         
-            <!--            <plugin>
+            <plugin>
                 <groupId>io.github.cleydyr</groupId>
                 <artifactId>dart-sass-maven-plugin</artifactId>
                 <version>1.5.0</version>
@@ -135,13 +135,13 @@
                             <goal>compile-sass</goal>
                         </goals>
                         <configuration>
-                            <outputFolder>${project.build.directory}/classes/static/css</outputFolder>
+                            <outputFolder>${project.build.directory}/classes/static/css/compiled</outputFolder>
                             <style>COMPRESSED</style>
                             <noSourceMap>true</noSourceMap>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             
             <!-- 
                 Generate some properties that we can display in the about page
