@@ -66,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="row">
                         <div class="col-md-8">
 
-                            <div th:replace="~{ :: mainContentTabs(
+                            <div th:replace="~{ records/contentTabs :: mainContentTabs(
                                  record=${record}, tab=${tab}, xml=${xml})}">
                                 [TABBED "MAIN" CONTENT (Default: overview) + NAVS]
                             </div>
@@ -112,57 +112,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </div>
     </body>
-
-    <th:block th:remove="all">
-
-        <!-- Tabbed main content section -->
-
-        <div th:fragment="mainContentTabs(record, tab, xml)"
-             th:with="recordId = ${record.id}">
-
-            <ul id="mainContentTabsNav" th:fragment="mainContentTabsNav(recordId, tab)" 
-                class="nav nav-underline border-bottom" 
-                hx-boost="true"
-                hx-target="#recordTabsContent"
-                hx-swap="innerHTML show:none">
-
-                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
-                    current='overview', href=@{/records/{id}(id=${recordId})}, 
-                    hxSelect='#recordOverview', label='Overview')}">[Overview]</li>
-
-                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
-                    current='metadata', href=@{/records/{id}/metadata(id=${recordId})},
-                    hxSelect='#recordAllMetadata', label='Detailed metadata')}">[Detailed metadata]</li>
-
-                <li th:replace="~{ :: mainContentNavItem(tab=${tab},
-                    current='links', href=@{/records/{id}/links(id=${recordId})},
-                    hxSelect='#recordLinks', label='Links')}">[Links]</li>
-            </ul>
-
-            <div id="recordTabsContent" class="pt-2"
-                 th:switch="${tab}">
-
-                <div th:case="metadata">
-                    <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[overview]</div>
-                </div>
-
-                <div th:case="links">
-                    <div>Links: TODO</div>
-                </div>
-
-                <div th:case="*">
-                    <div th:replace="~{records/overview :: overview(${record})}">[overview]</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nav item for main content section -->
-        <li th:fragment="mainContentNavItem(tab, current,href,hxSelect,label)" class="nav-item">
-            <a class="nav-link"
-               hx-select-oob="#mainContentTabsNav"
-               th:aria-current="${tab == current} ? 'page'"
-               th:classappend="${tab == current} ? 'active'"
-               th:href="${href}"
-               th:hx-select="${hxSelect}">[[${label}]]</a>
-    </th:block>
 </html>

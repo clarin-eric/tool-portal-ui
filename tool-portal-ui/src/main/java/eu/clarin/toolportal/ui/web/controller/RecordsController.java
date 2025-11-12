@@ -72,7 +72,7 @@ public class RecordsController {
                     //overview tab content
                     new ModelAndView("records/overview :: overview"),
                     //main contents nav bar with updated state
-                    new ModelAndView("records/record :: mainContentTabsNav"));
+                    new ModelAndView("records/contentTabs :: mainContentTabsNav"));
         } else {
             // serve full page with specified tab selected
             model.addAttribute("tab", tab);
@@ -96,7 +96,7 @@ public class RecordsController {
                     //all metadata fragment
                     new ModelAndView("records/allMetadata :: allMetadata"),
                     //main contents nav bar with updated state
-                    new ModelAndView("records/record :: mainContentTabsNav"));
+                    new ModelAndView("records/contentTabs :: mainContentTabsNav"));
         } else {
             // serve full page with "all metadata" tab selected
             return record(model, headers, recordId, query, filterQuery, "metadata");
