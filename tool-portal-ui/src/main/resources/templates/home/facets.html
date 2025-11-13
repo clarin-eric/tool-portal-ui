@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2025 twagoo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head th:replace="~{fragments/base :: head}">
+        <title>CLARIN Tool Portal</title> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <main>
+
+            <th:block th:fragment="facets(facets)">
+                <th:block th:each="facet : ${facets}">
+                    <div th:replace="~{ :: facet(
+                         field=${facet.name}, 
+                         values=${facet.values})}">[facet]</div>
+                </th:block>
+            </th:block>
+
+            <div th:fragment="facet(field, values)" class="col-lg-6 mt-2 p-2">
+                <h3 class="h4">Browse by [[#{|fields.labels.${facet.name}|}]]</h3>
+                <span th:each="facetValue : ${values}" class="d-inline-block" >
+                    <a th:href="@{/search(addfq=|${facet.name}:${facetValue.value}|)}"
+                       th:text="${@facetValueService.getLabel(facet.name, facetValue.value, #locale)}">
+                        {value}
+                    </a>&nbsp;&nbsp;&nbsp;
+                </span>
+                (<a th:href="@{|/search#facet_${field}|}">more...</a>)
+            </div>
+
+            <div th:fragment="placeholder(field)" class="col-lg-6 mt-2 p-2">
+                <h3 class="h4">Browse by [[#{|fields.labels.${field}|}]]</h3>
+                <a href="#" class="disabled placeholder">something</a>
+                <a href="#" class="disabled placeholder">somethingsomething</a>
+                <a href="#" class="disabled placeholder">something</a>
+                <a href="#" class="disabled placeholder">somethingsomethingsomething</a>
+                <a href="#" class="disabled placeholder">somethingsomething</a>
+                <a href="#" class="disabled placeholder">somethingsomething</a>
+                <a href="#" class="disabled placeholder">something</a>
+                <a href="#" class="disabled placeholder">somethingsomethingsomething</a>
+                <a href="#" class="disabled placeholder">something</a>
+                <a href="#" class="disabled placeholder">somethingsomething</a>
+                <a th:href="@{|/search#facet_${field}|}">more...</a>
+            </div>
+        </main>
+    </body>
+</html>

@@ -21,7 +21,6 @@ import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import eu.clarin.toolportal.ui.web.HtmxUtils;
-import static eu.clarin.toolportal.ui.web.controller.SearchController.DEFAULT_QUERY;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;

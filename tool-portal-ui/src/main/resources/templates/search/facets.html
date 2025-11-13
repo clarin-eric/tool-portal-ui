@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
              hx-select="#search-results-and-facets">
             <th:block th:each="facet: ${facets}">
                 <div class="facet ms-0 mb-3 p-1 border"
+                     th:id="|facet_${facet.name}|"
                      th:if="${facet.getValueCount()} > 0">
                     <h3 class="h4" th:text="#{|fields.labels.${facet.name}|}">[Facet name]</h3>
 
