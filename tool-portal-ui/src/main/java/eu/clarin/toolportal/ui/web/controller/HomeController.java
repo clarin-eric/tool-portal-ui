@@ -16,10 +16,12 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -30,7 +32,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class HomeController {
 
     @GetMapping
-    public RedirectView index() {
-        return new RedirectView("/search", true);
+    public List<ModelAndView> index() {
+        return ImmutableList.of(new ModelAndView("home/home"));
     }
 }
