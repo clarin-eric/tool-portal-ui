@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 [Navigation]
             </nav>
 
-            <main hx-swap="outerHTML show:none" hx-indicator="#search-results-and-facets">
+            <main hx-swap="outerHTML show:none">
 
                 <div class="mt-3 p-2">
                     <form id="searchForm" th:action="@{/search}">
@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         <input type="submit" class="btn btn-primary"
                                                th:value="#{search.form.buttonText}" />
                                         <a th:href="@{/search}" class="btn btn-secondary"
-                                               th:text="#{search.form.showAllButtonText}" />
+                                           th:text="#{search.form.showAllButtonText}" />
                                     </div>
                                 </div>
                             </div>
@@ -56,17 +56,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <h1 class="h3">Highlighted tools</h1>
 
                     <div class="row">
-                        <div class="col-md-4 mt-1">
-                            <h4 class="placeholder col-10">Title</h4>
-                            <span class="placeholder col-12" style="height: 10em;"></span>
-                        </div>
-                        <div class="col-md-4 mt-1">
-                            <h4 class="placeholder col-10">Title</h4>
-                            <span class="placeholder col-12" style="height: 10em;"></span>
-                        </div>
-                        <div class="col-md-4 mt-1">
-                            <h4 class="placeholder col-10">Title</h4>
-                            <span class="placeholder col-12" style="height: 10em;"></span>
+                        <div th:each="recordId : ${highlightedIds}" class="col-md-4 mt-1 placeholder-glow">
+                            <div hx-trigger="revealed delay:.2s" hx-swap="outerHTML" th:hx-get="@{/home/highlighted/{id}(id=${recordId})}">
+                                <h2 class="placeholder col-10">Title</h2>
+                                <span class="placeholder col-12" style="height: 8em;"></span>
+                                <a th:href="@{/records/{id}(id=${recordId})}">More info</a>
+                            </div>
                         </div>
                     </div>
 
@@ -74,7 +69,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <a th:href="@{/search}" class="btn btn-outline-primary">Show more tools</a>
                     </div>
                 </div>
-
 
                 <div class="border-top pt-2 px-5">
 
