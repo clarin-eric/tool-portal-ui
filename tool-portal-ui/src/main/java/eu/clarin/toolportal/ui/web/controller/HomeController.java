@@ -87,7 +87,7 @@ public class HomeController {
             model.addAttribute("description", fields.get("description"));
         }
 
-        return new ModelAndView("/home/highlighted :: highlight");
+        return new ModelAndView("home/highlighted :: highlight");
     }
 
     @GetMapping(path = "/home/facets", produces = MediaType.TEXT_HTML_VALUE)
@@ -97,6 +97,6 @@ public class HomeController {
 
         model.addAttribute("facets", facets);
 
-        return new ModelAndView("/home/facets :: facets");
+        return new ModelAndView("home/facets :: facets");
     }
 }
