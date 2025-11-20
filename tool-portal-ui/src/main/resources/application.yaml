@@ -14,6 +14,18 @@ ui:
 #  port: 8091
 #
 #ui:
+#  home:
+#    highlightedItemsCount: 3
+#    highlightedItemIds:
+#      - https_58__47__47_hdl.handle.net_47_11234_47_1-1702_64_format_61_cmdi
+#      - https_58__47__47_hdl.handle.net_47_11356_47_1328_64_format_61_cmdi
+#      - https_58__47__47_tool-portal.clarin.eu_47_metadata_47_switchboard_47_TranscriptionPortal.json
+#    facetValueCount: 12
+#    facets:
+#      - fieldOfStudy
+#      - toolType
+#      - languageCode
+#      - keywords
 #  search:
 #    facetValuesShown: 8
 #    primaryFacets:

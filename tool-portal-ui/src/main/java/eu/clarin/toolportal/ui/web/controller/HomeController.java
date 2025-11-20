@@ -16,10 +16,9 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
-import com.google.common.collect.ImmutableList;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
-import eu.clarin.toolportal.ui.configuration.SearchConfigurationProperties;
+import eu.clarin.toolportal.ui.configuration.HomeConfigurationProperties;
 import eu.clarin.toolportal.ui.service.FacetsService;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
@@ -42,31 +41,24 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/")
 public class HomeController {
 
+    
     private final RecordsService recordsService;
     private final RecordFilter recordFilter;
     private final FacetsService facetsService;
-    private final SearchConfigurationProperties searchConfig;
+    
+    private final HomeConfigurationProperties config;
 
-    public HomeController(RecordsService recordsService, RecordFilter recordFilter, FacetsService facetsService, SearchConfigurationProperties searchConfig) {
+    public HomeController(RecordsService recordsService, RecordFilter recordFilter, FacetsService facetsService, HomeConfigurationProperties searchConfig) {
         this.recordsService = recordsService;
         this.recordFilter = recordFilter;
         this.facetsService = facetsService;
-        this.searchConfig = searchConfig;
+        this.config = searchConfig;
     }
-
-    //TODO: make configurable
-    public final List<String> homepageFacets = ImmutableList.of("fieldOfStudy", "toolType", "languageCode", "keywords");
 
     @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView index(Model model) {
-        //TODO: make configurable
-        model.addAttribute("highlightedIds", List.of(
-                "CSD_32_Tools_47_WebCelex.cmdi.xml",
-                "https_58__47__47_tool-portal.clarin.eu_47_metadata_47_codemeta_47_galahad-train-battery_1.1.0.json",
-                "https_58__47__47_tool-portal.clarin.eu_47_metadata_47_switchboard_47_ELAN.json"));
-
-        //TODO: make configurable
-        model.addAttribute("facets", homepageFacets);
+        model.addAttribute("highlightedIds", config.getHighlightedItemIds());
+        model.addAttribute("facets", config.getFacets());
 
         return new ModelAndView("home/home");
     }
@@ -93,7 +85,7 @@ public class HomeController {
     @GetMapping(path = "/home/facets", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView facets(Model model) {
 
-        final List<Facet> facets = facetsService.getFacets(null, Collections.emptyList(), homepageFacets, 12);
+        final List<Facet> facets = facetsService.getFacets(null, Collections.emptyList(), config.getFacets(), config.getFacetValueCount());
 
         model.addAttribute("facets", facets);
 
