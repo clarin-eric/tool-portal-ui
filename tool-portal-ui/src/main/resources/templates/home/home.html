@@ -53,12 +53,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </form>
                 </div>
 
-                <div class="border-top mt-3 p-3">
+                <div class="border-top mt-2 p-3">
 
                     <h1 class="h3">Highlighted tools</h1>
 
                     <div class="row">
-                        <div th:each="recordId : ${highlightedIds}" class="col-md-4 mt-1 placeholder-glow">
+                        <div th:each="recordId : ${highlightedIds}" class="col-md mt-1 placeholder-glow">
                             <div hx-trigger="revealed delay:.2s" hx-swap="outerHTML" th:hx-get="@{/home/highlighted/{id}(id=${recordId})}">
                                 <div th:replace="~{home/highlighted :: placeholder(${recordId})}">[highlighted record placeholder]</div>
                             </div>
@@ -70,8 +70,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 </div>
 
-                <div class="border-top mt-3 pt-3 px-5">
-                    <div class="px-5 row" hx-trigger="revealed delay:.2s" hx-swap="innerHTML" th:hx-get="@{/home/facets}">
+                <div class="border-top mt-3 pt-3 px-md-5">
+                    <div class="px-lg-5 row" hx-trigger="revealed delay:.2s" hx-swap="innerHTML" th:hx-get="@{/home/facets}">
                         <th:block th:each="facet : ${facets}" >
                             <div th:replace="~{home/facets :: placeholder(${facet})}">[facet values placeholder]</div>
                         </th:block>

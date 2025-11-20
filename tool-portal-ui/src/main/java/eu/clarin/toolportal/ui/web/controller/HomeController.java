@@ -16,12 +16,14 @@
  */
 package eu.clarin.toolportal.ui.web.controller;
 
+import com.google.common.collect.Lists;
 import eu.clarin.cmdi.vlo.openapi.client.model.Facet;
 import eu.clarin.cmdi.vlo.openapi.client.model.VloRecord;
 import eu.clarin.toolportal.ui.configuration.HomeConfigurationProperties;
 import eu.clarin.toolportal.ui.service.FacetsService;
 import eu.clarin.toolportal.ui.service.RecordsService;
 import eu.clarin.toolportal.ui.service.filter.RecordFilter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +43,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/")
 public class HomeController {
 
-    
     private final RecordsService recordsService;
     private final RecordFilter recordFilter;
     private final FacetsService facetsService;
-    
+
     private final HomeConfigurationProperties config;
 
     public HomeController(RecordsService recordsService, RecordFilter recordFilter, FacetsService facetsService, HomeConfigurationProperties searchConfig) {
@@ -57,7 +58,10 @@ public class HomeController {
 
     @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView index(Model model) {
-        model.addAttribute("highlightedIds", config.getHighlightedItemIds());
+
+        List<String> itemIds = getHighlightedItems();
+
+        model.addAttribute("highlightedIds", itemIds);
         model.addAttribute("facets", config.getFacets());
 
         return new ModelAndView("home/home");
@@ -80,6 +84,21 @@ public class HomeController {
         }
 
         return new ModelAndView("home/highlighted :: highlight");
+    }
+
+    private List<String> getHighlightedItems() {
+        final List<String> itemIds;
+        if (config.getHighlightedItemIds().size() > config.getHighlightedItemsCount()) {
+            // More configured ids than items in list
+            final ArrayList<String> itemIdsCopy = Lists.newArrayList(config.getHighlightedItemIds());
+            // Show a random selection
+            Collections.shuffle(itemIdsCopy);
+            itemIds = itemIdsCopy.subList(0, config.getHighlightedItemIds().size() - 1);
+        } else {
+            itemIds = config.getHighlightedItemIds();
+            //TODO: add random items to meet configured size;
+        }
+        return itemIds;
     }
 
     @GetMapping(path = "/home/facets", produces = MediaType.TEXT_HTML_VALUE)

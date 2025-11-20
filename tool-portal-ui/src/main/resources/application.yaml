@@ -17,9 +17,12 @@ ui:
 #  home:
 #    highlightedItemsCount: 3
 #    highlightedItemIds:
-#      - https_58__47__47_hdl.handle.net_47_11234_47_1-1702_64_format_61_cmdi
+#      #CLASSLA Bulgarian
 #      - https_58__47__47_hdl.handle.net_47_11356_47_1328_64_format_61_cmdi
+#      #Transcription portal
 #      - https_58__47__47_tool-portal.clarin.eu_47_metadata_47_switchboard_47_TranscriptionPortal.json
+#      #UDPipe
+#      - https_58__47__47_hdl.handle.net_47_11234_47_1-1702_64_format_61_cmdi
 #    facetValueCount: 12
 #    facets:
 #      - fieldOfStudy

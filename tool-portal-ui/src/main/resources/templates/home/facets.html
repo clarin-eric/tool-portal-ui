@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </th:block>
             </th:block>
 
-            <div th:fragment="facet(field, values)" class="col-lg-6 mt-2 p-2">
+            <div th:fragment="facet(field, values)" class="col-lg-6 mt-2 p-lg-2">
                 <h3 class="h4">Browse by [[#{|fields.labels.${facet.name}|}]]</h3>
                 <span th:each="facetValue : ${values}" class="d-inline-block" >
                     <a th:href="@{/search(addfq=|${facet.name}:${facetValue.value}|)}"
@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 (<a th:href="@{|/search#facet_${field}|}">more...</a>)
             </div>
 
-            <div th:fragment="placeholder(field)" class="col-lg-6 mt-2 p-2">
+            <div th:fragment="placeholder(field)" class="col-lg-6 mt-2 p-lg-2">
                 <h3 class="h4">Browse by [[#{|fields.labels.${field}|}]]</h3>
                 <a href="#" class="disabled placeholder">something</a>
                 <a href="#" class="disabled placeholder">somethingsomething</a>

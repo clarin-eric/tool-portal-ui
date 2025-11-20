@@ -26,9 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <!-- Highlighted item card -->
             <div th:fragment="highlight" class="card">
-                <div class="card-body">
+                <div class="card-body mb-2" style="height: 16em; overflow: hidden;">
                     <h2 class="card-title h5" th:text="${title[0]}">[title]More info</h2>
-                    <p th:text="${description[0]}" style="height: 12em; overflow: hidden;">[description]</p>
+                    <p th:text="${description[0]}">[description]</p>
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/records/{id}(id=${id})}" class="card-link stretched-link">More info</a>
@@ -37,9 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <!-- Highlighted item placeholder card -->
             <div th:fragment="placeholder(id)" class="card">
-                <div class="card-body">
+                <div class="card-body" style="height: 16em;">
                     <h2 class="card-title h5 placeholder col-10">Title</h2>
-                    <span class="placeholder col-12" style="height: 12em;"></span>
+                    <span class="placeholder col-12"></span>
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/records/{id}(id=${id})}" class="card-link stretched-link">More info</a>
