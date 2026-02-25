@@ -17,13 +17,13 @@
 package eu.clarin.toolportal.ui.configuration;
 
 import com.google.common.collect.ImmutableSet;
-import java.util.Collections;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
@@ -34,9 +34,11 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  */
 @Configuration
 public class TemplateConfiguration {
-    
-    private final String snippetsDir = "/Users/twagoo/git/tool-portal-ui/tool-portal-ui/src/main/resources/templates/import";
-    
+
+    //TODO: make this configurable
+    private final String externalImportDir = null;
+    private final String fallbackImportClassPathDir = "/templates/import";
+
     @Bean
     public MessageSource messageSource() {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -53,26 +55,47 @@ public class TemplateConfiguration {
         messageSource.setCacheSeconds(60);
         return messageSource;
     }
-    
+
     @Bean
     public SpringTemplateEngine templateEnginge(MessageSource messageSource, ITemplateResolver templateResolver) {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolvers(ImmutableSet.of(templateResolver, injectableSnippetsTemplateResolver()));
+
+        final ITemplateResolver importResolver;
+        if (externalImportDir != null) {
+            importResolver = injectableSnippetsTemplateResolver();
+        } else {
+            importResolver = injectableSnippetsFallbackTemplateResolver();
+        }
+
+        engine.setTemplateResolvers(ImmutableSet.of(templateResolver, importResolver));
         engine.setMessageSource(messageSource);
-        
+
         return engine;
     }
-    
+
     private ITemplateResolver injectableSnippetsTemplateResolver() {
         final FileTemplateResolver resolver = new FileTemplateResolver();
-        
-        resolver.setPrefix(snippetsDir + "/");
+
+        resolver.setPrefix(externalImportDir + "/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         resolver.setCharacterEncoding("UTF-8");
         resolver.setCacheable(false);
         resolver.setOrder(null);
-        
+
+        return resolver;
+    }
+
+    private ITemplateResolver injectableSnippetsFallbackTemplateResolver() {
+        final ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver(getClass().getClassLoader());
+
+        resolver.setPrefix(fallbackImportClassPathDir + "/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCacheable(false);
+        resolver.setOrder(null);
+
         return resolver;
     }
 }
