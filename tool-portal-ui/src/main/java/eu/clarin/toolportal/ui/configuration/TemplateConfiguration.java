@@ -16,11 +16,16 @@
  */
 package eu.clarin.toolportal.ui.configuration;
 
+import com.google.common.collect.ImmutableSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /**
@@ -30,6 +35,11 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  */
 @Configuration
 public class TemplateConfiguration {
+
+    @Autowired
+    private TemplateConfigurationProperties templateConfigurationProperties;
+
+    private final String fallbackImportClassPathDir = "/templates/import";
 
     @Bean
     public MessageSource messageSource() {
@@ -51,8 +61,43 @@ public class TemplateConfiguration {
     @Bean
     public SpringTemplateEngine templateEnginge(MessageSource messageSource, ITemplateResolver templateResolver) {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResolver);
+
+        final ITemplateResolver importResolver;
+        if (templateConfigurationProperties.getExternalFragmentsDir() == null) {
+            importResolver = injectableSnippetsFallbackTemplateResolver();
+        } else {
+            importResolver = injectableSnippetsTemplateResolver(templateConfigurationProperties.getExternalFragmentsDir());
+        }
+
+        engine.setTemplateResolvers(ImmutableSet.of(templateResolver, importResolver));
         engine.setMessageSource(messageSource);
+
         return engine;
+    }
+
+    private ITemplateResolver injectableSnippetsTemplateResolver(String importDirectory) {
+        final FileTemplateResolver resolver = new FileTemplateResolver();
+
+        resolver.setPrefix(importDirectory + "/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCacheable(false);
+        resolver.setOrder(null);
+
+        return resolver;
+    }
+
+    private ITemplateResolver injectableSnippetsFallbackTemplateResolver() {
+        final ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver(getClass().getClassLoader());
+
+        resolver.setPrefix(fallbackImportClassPathDir + "/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCacheable(false);
+        resolver.setOrder(null);
+
+        return resolver;
     }
 }
