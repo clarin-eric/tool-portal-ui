@@ -17,6 +17,7 @@
 package eu.clarin.toolportal.ui.configuration;
 
 import com.google.common.collect.ImmutableSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,9 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 @Configuration
 public class TemplateConfiguration {
 
-    //TODO: make this configurable
-    private final String externalImportDir = null;
+    @Autowired
+    private TemplateConfigurationProperties templateConfigurationProperties;
+
     private final String fallbackImportClassPathDir = "/templates/import";
 
     @Bean
@@ -61,10 +63,10 @@ public class TemplateConfiguration {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
 
         final ITemplateResolver importResolver;
-        if (externalImportDir != null) {
-            importResolver = injectableSnippetsTemplateResolver();
-        } else {
+        if (templateConfigurationProperties.getExternalFragmentsDir() == null) {
             importResolver = injectableSnippetsFallbackTemplateResolver();
+        } else {
+            importResolver = injectableSnippetsTemplateResolver(templateConfigurationProperties.getExternalFragmentsDir());
         }
 
         engine.setTemplateResolvers(ImmutableSet.of(templateResolver, importResolver));
@@ -73,10 +75,10 @@ public class TemplateConfiguration {
         return engine;
     }
 
-    private ITemplateResolver injectableSnippetsTemplateResolver() {
+    private ITemplateResolver injectableSnippetsTemplateResolver(String importDirectory) {
         final FileTemplateResolver resolver = new FileTemplateResolver();
 
-        resolver.setPrefix(externalImportDir + "/");
+        resolver.setPrefix(importDirectory + "/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         resolver.setCharacterEncoding("UTF-8");
