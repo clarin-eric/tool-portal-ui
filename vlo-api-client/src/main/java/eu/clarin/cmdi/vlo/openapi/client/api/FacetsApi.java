@@ -24,7 +24,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class FacetsApi {
     private ApiClient apiClient;
 
@@ -75,7 +75,7 @@ public class FacetsApi {
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "q", q));
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "valueCountLimit", valueCountLimit));
-        
+
         final String[] localVarAccepts = { 
             "*/*", "application/json"
         };
@@ -138,6 +138,7 @@ public class FacetsApi {
     public ResponseSpec getFacetWithResponseSpec(@jakarta.annotation.Nonnull String facetName, @jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer valueCountLimit) throws RestClientResponseException {
         return getFacetRequestCreation(facetName, q, fq, valueCountLimit);
     }
+
     /**
      * Get the facets and their (top) values and their counts
      * 
@@ -164,7 +165,7 @@ public class FacetsApi {
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fields", fields));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "valueCountLimit", valueCountLimit));
-        
+
         final String[] localVarAccepts = { 
             "*/*", "application/json"
         };

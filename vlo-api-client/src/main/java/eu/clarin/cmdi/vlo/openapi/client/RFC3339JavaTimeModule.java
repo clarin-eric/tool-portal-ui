@@ -17,16 +17,23 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.Module.SetupContext;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class RFC3339JavaTimeModule extends SimpleModule {
     private static final long serialVersionUID = 1L;
 
     public RFC3339JavaTimeModule() {
         super("RFC3339JavaTimeModule");
-
-        addDeserializer(Instant.class, RFC3339InstantDeserializer.INSTANT);
-        addDeserializer(OffsetDateTime.class, RFC3339InstantDeserializer.OFFSET_DATE_TIME);
-        addDeserializer(ZonedDateTime.class, RFC3339InstantDeserializer.ZONED_DATE_TIME);
     }
+
+   @Override
+   public void setupModule(SetupContext context) {
+       super.setupModule(context);
+
+       addDeserializer(Instant.class, RFC3339InstantDeserializer.INSTANT);
+       addDeserializer(OffsetDateTime.class, RFC3339InstantDeserializer.OFFSET_DATE_TIME);
+       addDeserializer(ZonedDateTime.class, RFC3339InstantDeserializer.ZONED_DATE_TIME);
+   }
+
 }

@@ -12,8 +12,6 @@
 
 package eu.clarin.cmdi.vlo.openapi.client;
 
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
@@ -21,8 +19,9 @@ import java.util.Date;
 import java.text.DecimalFormat;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class RFC3339DateFormat extends DateFormat {
   private static final long serialVersionUID = 1L;
   private static final TimeZone TIMEZONE_Z = TimeZone.getTimeZone("UTC");

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * VloRecordSearchResult
@@ -35,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VloRecordSearchResult.JSON_PROPERTY_NUM_FOUND,
   VloRecordSearchResult.JSON_PROPERTY_START
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class VloRecordSearchResult {
   public static final String JSON_PROPERTY_RECORDS = "records";
   @jakarta.annotation.Nullable
@@ -71,7 +72,7 @@ public class VloRecordSearchResult {
    * @return records
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_RECORDS)
+  @JsonProperty(value = JSON_PROPERTY_RECORDS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<VloRecord> getRecords() {
@@ -79,7 +80,7 @@ public class VloRecordSearchResult {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RECORDS)
+  @JsonProperty(value = JSON_PROPERTY_RECORDS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRecords(@jakarta.annotation.Nullable List<VloRecord> records) {
     this.records = records;
@@ -96,7 +97,7 @@ public class VloRecordSearchResult {
    * @return numFound
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_NUM_FOUND)
+  @JsonProperty(value = JSON_PROPERTY_NUM_FOUND, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Long getNumFound() {
@@ -104,7 +105,7 @@ public class VloRecordSearchResult {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NUM_FOUND)
+  @JsonProperty(value = JSON_PROPERTY_NUM_FOUND, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setNumFound(@jakarta.annotation.Nullable Long numFound) {
     this.numFound = numFound;
@@ -121,7 +122,7 @@ public class VloRecordSearchResult {
    * @return start
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_START)
+  @JsonProperty(value = JSON_PROPERTY_START, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Long getStart() {
@@ -129,7 +130,7 @@ public class VloRecordSearchResult {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_START)
+  @JsonProperty(value = JSON_PROPERTY_START, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setStart(@jakarta.annotation.Nullable Long start) {
     this.start = start;
@@ -171,10 +172,7 @@ public class VloRecordSearchResult {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

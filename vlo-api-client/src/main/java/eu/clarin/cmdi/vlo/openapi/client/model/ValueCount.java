@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * ValueCount
@@ -31,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   ValueCount.JSON_PROPERTY_LABEL,
   ValueCount.JSON_PROPERTY_COUNT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class ValueCount {
   public static final String JSON_PROPERTY_VALUE = "value";
   @jakarta.annotation.Nullable
@@ -59,7 +60,7 @@ public class ValueCount {
    * @return value
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getValue() {
@@ -67,7 +68,7 @@ public class ValueCount {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValue(@jakarta.annotation.Nullable String value) {
     this.value = value;
@@ -84,7 +85,7 @@ public class ValueCount {
    * @return label
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonProperty(value = JSON_PROPERTY_LABEL, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getLabel() {
@@ -92,7 +93,7 @@ public class ValueCount {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_LABEL)
+  @JsonProperty(value = JSON_PROPERTY_LABEL, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLabel(@jakarta.annotation.Nullable String label) {
     this.label = label;
@@ -109,7 +110,7 @@ public class ValueCount {
    * @return count
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Long getCount() {
@@ -117,7 +118,7 @@ public class ValueCount {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCount(@jakarta.annotation.Nullable Long count) {
     this.count = count;
@@ -159,10 +160,7 @@ public class ValueCount {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

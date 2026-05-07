@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Resource
@@ -32,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Resource.JSON_PROPERTY_TYPE,
   Resource.JSON_PROPERTY_MEDIA_TYPE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class Resource {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable
@@ -64,7 +65,7 @@ public class Resource {
    * @return id
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getId() {
@@ -72,7 +73,7 @@ public class Resource {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(@jakarta.annotation.Nullable String id) {
     this.id = id;
@@ -89,7 +90,7 @@ public class Resource {
    * @return ref
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_REF)
+  @JsonProperty(value = JSON_PROPERTY_REF, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getRef() {
@@ -97,7 +98,7 @@ public class Resource {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_REF)
+  @JsonProperty(value = JSON_PROPERTY_REF, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRef(@jakarta.annotation.Nullable String ref) {
     this.ref = ref;
@@ -114,7 +115,7 @@ public class Resource {
    * @return type
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonProperty(value = JSON_PROPERTY_TYPE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getType() {
@@ -122,7 +123,7 @@ public class Resource {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonProperty(value = JSON_PROPERTY_TYPE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setType(@jakarta.annotation.Nullable String type) {
     this.type = type;
@@ -139,7 +140,7 @@ public class Resource {
    * @return mediaType
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MEDIA_TYPE)
+  @JsonProperty(value = JSON_PROPERTY_MEDIA_TYPE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getMediaType() {
@@ -147,7 +148,7 @@ public class Resource {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MEDIA_TYPE)
+  @JsonProperty(value = JSON_PROPERTY_MEDIA_TYPE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMediaType(@jakarta.annotation.Nullable String mediaType) {
     this.mediaType = mediaType;
@@ -191,10 +192,7 @@ public class Resource {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class RecordsApi {
     private ApiClient apiClient;
 
@@ -127,6 +127,7 @@ public class RecordsApi {
     public ResponseSpec getMetadataFileWithResponseSpec(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
         return getMetadataFileRequestCreation(id);
     }
+
     /**
      * Retrieve an individual record by its identifier
      * 
@@ -209,6 +210,7 @@ public class RecordsApi {
     public ResponseSpec getRecordWithResponseSpec(@jakarta.annotation.Nonnull String id) throws RestClientResponseException {
         return getRecordRequestCreation(id);
     }
+
     /**
      * Retrieve one or more records by query and/or filtered
      * 
@@ -235,7 +237,7 @@ public class RecordsApi {
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "from", from));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "size", size));
-        
+
         final String[] localVarAccepts = { 
             "*/*", "application/json"
         };
@@ -298,6 +300,7 @@ public class RecordsApi {
     public ResponseSpec getRecordsWithResponseSpec(@jakarta.annotation.Nullable String q, @jakarta.annotation.Nullable List<String> fq, @jakarta.annotation.Nullable Integer from, @jakarta.annotation.Nullable Integer size) throws RestClientResponseException {
         return getRecordsRequestCreation(q, fq, from, size);
     }
+
     /**
      * Retrieve the exact number of records that can be retrieved by query and/or filtered as JSON object with a single property &#39;numFound&#39;
      * 
@@ -320,7 +323,7 @@ public class RecordsApi {
 
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "query", query));
         queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "fq", fq));
-        
+
         final String[] localVarAccepts = { 
             "*/*", "application/json"
         };
@@ -377,6 +380,7 @@ public class RecordsApi {
     public ResponseSpec getRecordsCountWithResponseSpec(@jakarta.annotation.Nullable String query, @jakarta.annotation.Nullable List<String> fq) throws RestClientResponseException {
         return getRecordsCountRequestCreation(query, fq);
     }
+
     /**
      * Submit a new record
      * 

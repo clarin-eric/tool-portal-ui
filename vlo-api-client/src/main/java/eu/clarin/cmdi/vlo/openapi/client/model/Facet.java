@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Facet
@@ -36,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Facet.JSON_PROPERTY_VALUES,
   Facet.JSON_PROPERTY_HAS_MORE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class Facet {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable
@@ -68,7 +69,7 @@ public class Facet {
    * @return name
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getName() {
@@ -76,7 +77,7 @@ public class Facet {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setName(@jakarta.annotation.Nullable String name) {
     this.name = name;
@@ -93,7 +94,7 @@ public class Facet {
    * @return valueCount
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Integer getValueCount() {
@@ -101,7 +102,7 @@ public class Facet {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValueCount(@jakarta.annotation.Nullable Integer valueCount) {
     this.valueCount = valueCount;
@@ -126,7 +127,7 @@ public class Facet {
    * @return values
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUES)
+  @JsonProperty(value = JSON_PROPERTY_VALUES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<ValueCount> getValues() {
@@ -134,7 +135,7 @@ public class Facet {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUES)
+  @JsonProperty(value = JSON_PROPERTY_VALUES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setValues(@jakarta.annotation.Nullable List<ValueCount> values) {
     this.values = values;
@@ -151,7 +152,7 @@ public class Facet {
    * @return hasMore
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_HAS_MORE)
+  @JsonProperty(value = JSON_PROPERTY_HAS_MORE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Boolean getHasMore() {
@@ -159,7 +160,7 @@ public class Facet {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_HAS_MORE)
+  @JsonProperty(value = JSON_PROPERTY_HAS_MORE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHasMore(@jakarta.annotation.Nullable Boolean hasMore) {
     this.hasMore = hasMore;
@@ -203,10 +204,7 @@ public class Facet {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

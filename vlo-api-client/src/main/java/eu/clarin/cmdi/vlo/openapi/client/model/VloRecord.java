@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * VloRecord
@@ -43,7 +44,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VloRecord.JSON_PROPERTY_PATH_VALUES_MAP,
   VloRecord.JSON_PROPERTY_FIELDS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-11-03T12:14:54.664908+01:00[Europe/Amsterdam]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-05-07T16:13:57.244122+03:00[Europe/Riga]", comments = "Generator version: 7.22.0")
 public class VloRecord {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nullable
@@ -95,7 +96,7 @@ public class VloRecord {
    * @return id
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getId() {
@@ -103,7 +104,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(@jakarta.annotation.Nullable String id) {
     this.id = id;
@@ -120,7 +121,7 @@ public class VloRecord {
    * @return dataRoot
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DATA_ROOT)
+  @JsonProperty(value = JSON_PROPERTY_DATA_ROOT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getDataRoot() {
@@ -128,7 +129,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DATA_ROOT)
+  @JsonProperty(value = JSON_PROPERTY_DATA_ROOT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDataRoot(@jakarta.annotation.Nullable String dataRoot) {
     this.dataRoot = dataRoot;
@@ -145,7 +146,7 @@ public class VloRecord {
    * @return sourcePath
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SOURCE_PATH)
+  @JsonProperty(value = JSON_PROPERTY_SOURCE_PATH, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getSourcePath() {
@@ -153,7 +154,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SOURCE_PATH)
+  @JsonProperty(value = JSON_PROPERTY_SOURCE_PATH, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSourcePath(@jakarta.annotation.Nullable String sourcePath) {
     this.sourcePath = sourcePath;
@@ -170,7 +171,7 @@ public class VloRecord {
    * @return selflink
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SELFLINK)
+  @JsonProperty(value = JSON_PROPERTY_SELFLINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getSelflink() {
@@ -178,7 +179,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SELFLINK)
+  @JsonProperty(value = JSON_PROPERTY_SELFLINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSelflink(@jakarta.annotation.Nullable String selflink) {
     this.selflink = selflink;
@@ -195,7 +196,7 @@ public class VloRecord {
    * @return profileId
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PROFILE_ID)
+  @JsonProperty(value = JSON_PROPERTY_PROFILE_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getProfileId() {
@@ -203,7 +204,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PROFILE_ID)
+  @JsonProperty(value = JSON_PROPERTY_PROFILE_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setProfileId(@jakarta.annotation.Nullable String profileId) {
     this.profileId = profileId;
@@ -228,7 +229,7 @@ public class VloRecord {
    * @return resources
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_RESOURCES)
+  @JsonProperty(value = JSON_PROPERTY_RESOURCES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<Resource> getResources() {
@@ -236,7 +237,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RESOURCES)
+  @JsonProperty(value = JSON_PROPERTY_RESOURCES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResources(@jakarta.annotation.Nullable List<Resource> resources) {
     this.resources = resources;
@@ -261,7 +262,7 @@ public class VloRecord {
    * @return landingPages
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_LANDING_PAGES)
+  @JsonProperty(value = JSON_PROPERTY_LANDING_PAGES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<Resource> getLandingPages() {
@@ -269,7 +270,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_LANDING_PAGES)
+  @JsonProperty(value = JSON_PROPERTY_LANDING_PAGES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLandingPages(@jakarta.annotation.Nullable List<Resource> landingPages) {
     this.landingPages = landingPages;
@@ -294,7 +295,7 @@ public class VloRecord {
    * @return pathValuesMap
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PATH_VALUES_MAP)
+  @JsonProperty(value = JSON_PROPERTY_PATH_VALUES_MAP, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, List<String>> getPathValuesMap() {
@@ -302,7 +303,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PATH_VALUES_MAP)
+  @JsonProperty(value = JSON_PROPERTY_PATH_VALUES_MAP, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setPathValuesMap(@jakarta.annotation.Nullable Map<String, List<String>> pathValuesMap) {
     this.pathValuesMap = pathValuesMap;
@@ -327,7 +328,7 @@ public class VloRecord {
    * @return fields
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_FIELDS)
+  @JsonProperty(value = JSON_PROPERTY_FIELDS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Map<String, List<Object>> getFields() {
@@ -335,7 +336,7 @@ public class VloRecord {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FIELDS)
+  @JsonProperty(value = JSON_PROPERTY_FIELDS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFields(@jakarta.annotation.Nullable Map<String, List<Object>> fields) {
     this.fields = fields;
@@ -389,10 +390,7 @@ public class VloRecord {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }
