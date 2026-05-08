@@ -40,6 +40,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/records")
 public class RecordsController {
 
+    private static final String OVERVIEW_TAB = "overview";
+    private static final String METADATA_TAB = "metadata";
+    private static final String LINKS_TAB = "links";
+
     private final RecordsService service;
 
     private final RecordFilter recordFilter;
@@ -55,7 +59,7 @@ public class RecordsController {
             @PathVariable String recordId,
             @RequestParam(name = "q", required = false) String query,
             @RequestParam(name = "fq", required = false) List<String> filterQuery,
-            @RequestParam(name = "tab", defaultValue = "overview") String tab) {
+            @RequestParam(name = "tab", defaultValue = OVERVIEW_TAB) String tab) {
         final VloRecord record = RecordsService.applyFilter(
                 service.getRecordById(recordId),
                 recordFilter);
@@ -85,12 +89,13 @@ public class RecordsController {
             @PathVariable String recordId,
             @RequestParam(name = "q", required = false) String query,
             @RequestParam(name = "fq", required = false) List<String> filterQuery) {
-        String xml = service.getCmdiXml(recordId);
+        final String xml = service.getCmdiXml(recordId);
         model.addAttribute("xml", xml);
+
         if (HtmxUtils.isHtmxRequest(headers)) {
             // serve only fragment
             model.addAttribute("recordId", recordId);
-            model.addAttribute("tab", "metadata");
+            model.addAttribute("tab", METADATA_TAB);
             return ImmutableList.of(
                     //all metadata fragment
                     new ModelAndView("records/allMetadata :: allMetadata"),
@@ -98,7 +103,34 @@ public class RecordsController {
                     new ModelAndView("records/contentTabs :: mainContentTabsNav"));
         } else {
             // serve full page with "all metadata" tab selected
-            return record(model, headers, recordId, query, filterQuery, "metadata");
+            return record(model, headers, recordId, query, filterQuery, METADATA_TAB);
+        }
+    }
+
+    @GetMapping("/{recordId}/links")
+    public List<ModelAndView> links(Model model,
+            @RequestHeader Map<String, String> headers,
+            @PathVariable String recordId,
+            @RequestParam(name = "q", required = false) String query,
+            @RequestParam(name = "fq", required = false) List<String> filterQuery) {
+
+        final VloRecord record = RecordsService.applyFilter(
+                service.getRecordById(recordId),
+                recordFilter);
+        model.addAttribute("record", record);
+
+        if (HtmxUtils.isHtmxRequest(headers)) {
+            // serve only fragment
+            model.addAttribute("recordId", recordId);
+            model.addAttribute("tab", LINKS_TAB);
+            return ImmutableList.of(
+                    //all metadata fragment
+                    new ModelAndView("records/links :: links"),
+                    //main contents nav bar with updated state
+                    new ModelAndView("records/contentTabs :: mainContentTabsNav"));
+        } else {
+            // serve full page with "links" tab selected
+            return record(model, headers, recordId, query, filterQuery, LINKS_TAB);
         }
     }
 

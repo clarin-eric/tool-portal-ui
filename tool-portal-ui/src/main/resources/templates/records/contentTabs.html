@@ -45,11 +45,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
              th:switch="${tab}">
 
             <div th:case="metadata">
-                <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[overview]</div>
+                <div th:replace="~{records/allMetadata :: allMetadata(${xml})}">[metadata]</div>
             </div>
 
             <div th:case="links">
-                <div>Links: TODO</div>
+                <div th:replace="~{records/links :: links(${record})}">[links]</div>
             </div>
 
             <div th:case="*">

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2025 twagoo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head th:replace="~{fragments/base :: head}">
+        <title>CLARIN Tool Portal</title> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <main class="p-3">
+            <div th:fragment="links(record)" id="recordLinks" th:object="${record}">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Type</th>
+                            <th scope="col">Link</th>
+                            <th scope="col">Media type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="resource : *{landingPages}">
+                        <tr th:fragment="linkRow(resource)" th:object="${resource}">
+                            <td th:text="*{type}">type</td>
+                            <td>
+                                <a th:href="*{ref}" th:text="*{ref}">[Link]</a>
+                            </td>
+                            <td th:text="*{mediaType}">mediaType</td>
+                        </tr>
+                    </th:block> 
+                    <th:block th:each="resource : *{resources}">
+                        <tr th:replace="~{this :: linkRow(${resource})}"></tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>
