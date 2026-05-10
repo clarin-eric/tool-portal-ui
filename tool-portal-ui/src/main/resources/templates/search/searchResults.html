@@ -18,14 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 
     <body>
-        <div th:fragment="search-results(query, result, currentPage, pageCount, resultsPerPage)">
+        <div th:fragment="search-results(query, searchFilters, result, currentPage, pageCount, resultsPerPage)">
 
             <div th:text="#{search.results.recordsFound(${result.numFound})}">N record(s) found</div>
 
             <div th:if="${result.numFound > 0}" th:object="${result}">
                 <h2 th:text="#{search.results.searchResults}">[Search results]</h2>
 
-                <nav th:replace="~{search/pagination :: pagination(${query}, ${currentPage},${pageCount},${resultsPerPage})}">
+                <nav th:replace="~{search/pagination :: pagination(${query}, ${searchFilters}, ${currentPage},${pageCount},${resultsPerPage})}">
                     [Pagination]
                 </nav>
 
@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </ul>
 
                 <div hx-swap="outerHTML show:top">
-                    <nav th:replace="~{search/pagination :: pagination(${query}, ${currentPage},${pageCount},${resultsPerPage})}">
+                    <nav th:replace="~{search/pagination :: pagination(${query}, ${searchFilters}, ${currentPage},${pageCount},${resultsPerPage})}">
                         [Pagination]
                     </nav>
                 </div>

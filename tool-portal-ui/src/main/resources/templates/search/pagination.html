@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <!-- Pagination -->
-        <nav th:fragment="pagination(query, currentPage, pageCount, resultsPerPage)" aria-label="Page navigation for search results"
+        <nav th:fragment="pagination(query, searchFilters, currentPage, pageCount, resultsPerPage)" aria-label="Page navigation for search results"
              th:with="linkCount=7">
             <ul class="pagination"
                 hx-target="#search-results"
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <th:block th:if="${currentPage > 1}">
                     <li th:replace="~{::paginationLink(#{search.pagination.previous},
                         ${currentPage - 1},
-                        ${query},${currentPage},${resultsPerPage})}"></li>
+                        ${query},${searchFilters},${currentPage},${resultsPerPage})}"></li>
                 </th:block>
                 <th:block th:if="${currentPage <= 1}">
                     <li class="page-item disabled">
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <!-- First page -->
                 <th:block th:if="${currentPage > (1+linkCount/2)}">
-                    <li th:replace="~{::paginationLink('1',1,${query},${currentPage},${resultsPerPage})}">[first]</li>
+                    <li th:replace="~{::paginationLink('1',1,${query},${searchFilters},${currentPage},${resultsPerPage})}">[first]</li>
                     <li th:if="${currentPage > (2+linkCount/2)}" class="page-item disabled"><span class="page-link disabled">...</span></li>
                 </th:block>
 
@@ -48,21 +48,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <th:block th:with="start=${(currentPage <= linkCount / 2) ? 1 : currentPage-(linkCount/2)},
                           end=${((start + linkCount) < pageCount) ? (start+linkCount) : pageCount}">
                     <th:block th:each="page: ${#numbers.sequence(start,end)}">
-                        <li th:replace="~{::paginationLink(${page},${page},${query},${currentPage},${resultsPerPage})}">[page]</li>
+                        <li th:replace="~{::paginationLink(${page},${page},${query},${searchFilters},${currentPage},${resultsPerPage})}">[page]</li>
                     </th:block>
                 </th:block>
 
                 <!-- Last page -->
                 <th:block th:if="${currentPage + 1 < (pageCount - linkCount/2)}">
                     <li th:if="${currentPage + 2 < (pageCount - linkCount/2)}" class="page-item disabled"><span class="page-link disabled">...</span></li>
-                    <li th:replace="~{::paginationLink(${pageCount},${pageCount},${query},${currentPage},${resultsPerPage})}">[last]</li>
+                    <li th:replace="~{::paginationLink(${pageCount},${pageCount},${query},${searchFilters},${currentPage},${resultsPerPage})}">[last]</li>
                 </th:block>
 
                 <!-- Next page -->
                 <th:block th:if="${currentPage < pageCount}">
                     <li th:replace="~{::paginationLink(#{search.pagination.next},
                         ${currentPage + 1},
-                        ${query},${currentPage},${resultsPerPage})}">[next]</li>
+                        ${query},${searchFilters},${currentPage},${resultsPerPage})}">[next]</li>
                 </th:block>
                 <th:block th:if="${currentPage >= pageCount}">
                     <li class="page-item disabled">
@@ -73,11 +73,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </nav>
 
         <!-- Link in the search result pagination -->
-    <li th:fragment="paginationLink(label, pageNumber, query, currentPage, resultsPerPage)" class="page-item">
+    <li th:fragment="paginationLink(label, pageNumber, query, searchFilters, currentPage, resultsPerPage)" class="page-item">
         <a class="page-link" th:classappend="${pageNumber == currentPage} ? 'active'" 
            hx-boost="true"
            th:href="@{/search(
            q=${query},
+           fq=${searchFilters},
            from=${(pageNumber - 1) * resultsPerPage},
            size=${resultsPerPage})}"
            th:text="${label}">[NUMBER]</a>
